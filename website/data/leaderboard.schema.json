@@ -1,0 +1,340 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Debug-Agent public CANNBench leaderboard snapshot",
+  "description": "All pass_rate and remaining_failure_reduction fields are unit fractions in [0,1]. snapshot_at is an ISO 8601 timestamp with explicit Asia/Shanghai UTC offset. No credentials or private account metadata are permitted.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "snapshot_at",
+    "snapshot_date",
+    "timezone",
+    "sources",
+    "scope",
+    "solution",
+    "rankings",
+    "overall_comparison",
+    "level4_comparison",
+    "level4_operators",
+    "level4_gap",
+    "notes"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "snapshot_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "snapshot_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "timezone": {
+      "const": "Asia/Shanghai"
+    },
+    "sources": {
+      "type": "object",
+      "required": [
+        "leaderboard",
+        "leaderboard_api",
+        "benchmark_metadata"
+      ],
+      "additionalProperties": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "scope": {
+      "type": "object"
+    },
+    "solution": {
+      "type": "object",
+      "required": [
+        "name",
+        "overall",
+        "standard",
+        "hidden",
+        "level4"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "overall": {
+          "type": "object",
+          "required": [
+            "passed",
+            "total",
+            "failed",
+            "pass_rate"
+          ],
+          "properties": {
+            "passed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "total": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "failed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "pass_rate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        },
+        "standard": {
+          "type": "object",
+          "required": [
+            "passed",
+            "total"
+          ],
+          "properties": {
+            "passed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "total": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "hidden": {
+          "type": "object",
+          "required": [
+            "passed",
+            "total"
+          ],
+          "properties": {
+            "passed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "total": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "level4": {
+          "type": "object",
+          "required": [
+            "passed",
+            "total",
+            "failed",
+            "pass_rate"
+          ],
+          "properties": {
+            "passed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "total": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "failed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "pass_rate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        }
+      }
+    },
+    "rankings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "rank",
+          "eligible_solutions",
+          "basis"
+        ],
+        "properties": {
+          "rank": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "eligible_solutions": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "basis": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "overall_comparison": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "passed",
+          "total",
+          "failed",
+          "pass_rate"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "passed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "failed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "pass_rate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "level4_comparison": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "passed",
+          "total",
+          "failed",
+          "pass_rate"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "passed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "failed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "pass_rate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "level4_operators": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "passed",
+          "total",
+          "failed",
+          "pass_rate",
+          "standard",
+          "hidden"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "passed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "failed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "pass_rate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "standard": {
+            "type": "object",
+            "required": [
+              "passed",
+              "total"
+            ],
+            "properties": {
+              "passed": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "total": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          },
+          "hidden": {
+            "type": "object",
+            "required": [
+              "passed",
+              "total"
+            ],
+            "properties": {
+              "passed": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "total": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "level4_gap": {
+      "type": "object"
+    },
+    "notes": {
+      "type": "object",
+      "required": [
+        "zh",
+        "en"
+      ],
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

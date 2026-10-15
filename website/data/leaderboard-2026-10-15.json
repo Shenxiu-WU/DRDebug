@@ -1,0 +1,315 @@
+{
+  "$schema": "./leaderboard.schema.json",
+  "schema_version": 1,
+  "snapshot_at": "2026-10-15T15:14:34.409483+08:00",
+  "snapshot_date": "2026-10-15",
+  "timezone": "Asia/Shanghai",
+  "sources": {
+    "leaderboard": "https://cannbench.com/leaderboard/official-tasks",
+    "leaderboard_api": "https://cannbench.com/api/leaderboard?benchmark_slug=official-tasks&mode=solution&hardware=910c&version=1.1&detail=operators",
+    "benchmark_metadata": "https://cannbench.com/api/benchmarks/official-tasks"
+  },
+  "scope": {
+    "benchmark": "Official-Tasks",
+    "benchmark_slug": "official-tasks",
+    "version_family": "1.1",
+    "package_version": "1.1.2",
+    "mode": "solution",
+    "hardware": "A3",
+    "hardware_api": "910c",
+    "chip": "Ascend 910C",
+    "case_sets": [
+      "standard",
+      "hidden"
+    ],
+    "operators": 53,
+    "standard_cases_per_operator": 20,
+    "hidden_cases_per_operator": 80,
+    "complete_cases": 5300,
+    "level4_operators": 8,
+    "level4_complete_cases": 800,
+    "public_solutions": 170
+  },
+  "solution": {
+    "name": "Debug-Agent Claude Code Kimi K3",
+    "overall": {
+      "passed": 5278,
+      "total": 5300,
+      "failed": 22,
+      "pass_rate": 0.9958490566037735
+    },
+    "standard": {
+      "passed": 1060,
+      "total": 1060
+    },
+    "hidden": {
+      "passed": 4218,
+      "total": 4240
+    },
+    "level4": {
+      "passed": 799,
+      "total": 800,
+      "failed": 1,
+      "pass_rate": 0.99875
+    }
+  },
+  "rankings": {
+    "overall_passed_cases": {
+      "rank": 1,
+      "eligible_solutions": 170,
+      "basis": "passed_case_count"
+    },
+    "overall_pass_rate": {
+      "rank": 1,
+      "eligible_solutions": 15,
+      "basis": "complete_5300_case_coverage"
+    },
+    "level4_passed_cases": {
+      "rank": 1,
+      "eligible_solutions": 170,
+      "basis": "passed_case_count"
+    },
+    "level4_pass_rate": {
+      "rank": 1,
+      "eligible_solutions": 19,
+      "basis": "complete_800_case_coverage"
+    }
+  },
+  "overall_comparison": [
+    {
+      "name": "Debug-Agent Claude Code Kimi K3",
+      "passed": 5278,
+      "total": 5300,
+      "failed": 22,
+      "pass_rate": 0.9958490566037735
+    },
+    {
+      "name": "SLAI-CUHKSZ-KernelCAT",
+      "passed": 5276,
+      "total": 5300,
+      "failed": 24,
+      "pass_rate": 0.9954716981132076
+    },
+    {
+      "name": "infynai-kernaut",
+      "passed": 5263,
+      "total": 5300,
+      "failed": 37,
+      "pass_rate": 0.9930188679245283
+    },
+    {
+      "name": "SwissTeam",
+      "passed": 5254,
+      "total": 5300,
+      "failed": 46,
+      "pass_rate": 0.9913207547169811
+    },
+    {
+      "name": "CANNBOT LINGXI-EVO",
+      "passed": 5251,
+      "total": 5300,
+      "failed": 49,
+      "pass_rate": 0.990754716981132
+    },
+    {
+      "name": "ForgeKernel",
+      "passed": 5245,
+      "total": 5300,
+      "failed": 55,
+      "pass_rate": 0.9896226415094339
+    }
+  ],
+  "level4_comparison": [
+    {
+      "name": "Debug-Agent Claude Code Kimi K3",
+      "passed": 799,
+      "total": 800,
+      "failed": 1,
+      "pass_rate": 0.99875
+    },
+    {
+      "name": "ForgeKernel",
+      "passed": 788,
+      "total": 800,
+      "failed": 12,
+      "pass_rate": 0.985
+    },
+    {
+      "name": "SLAI-CUHKSZ-KernelCAT",
+      "passed": 783,
+      "total": 800,
+      "failed": 17,
+      "pass_rate": 0.97875
+    },
+    {
+      "name": "CANNBOT LINGXI-EVO",
+      "passed": 782,
+      "total": 800,
+      "failed": 18,
+      "pass_rate": 0.9775
+    },
+    {
+      "name": "VibeOP",
+      "passed": 779,
+      "total": 800,
+      "failed": 21,
+      "pass_rate": 0.97375
+    },
+    {
+      "name": "SwissTeam",
+      "passed": 777,
+      "total": 800,
+      "failed": 23,
+      "pass_rate": 0.97125
+    },
+    {
+      "name": "infynai-kernaut",
+      "passed": 773,
+      "total": 800,
+      "failed": 27,
+      "pass_rate": 0.96625
+    }
+  ],
+  "level4_operators": [
+    {
+      "name": "GQA",
+      "standard": {
+        "passed": 20,
+        "total": 20
+      },
+      "hidden": {
+        "passed": 80,
+        "total": 80
+      },
+      "passed": 100,
+      "total": 100,
+      "failed": 0,
+      "pass_rate": 1.0
+    },
+    {
+      "name": "GroupedMatmulSwigluQuant",
+      "standard": {
+        "passed": 20,
+        "total": 20
+      },
+      "hidden": {
+        "passed": 80,
+        "total": 80
+      },
+      "passed": 100,
+      "total": 100,
+      "failed": 0,
+      "pass_rate": 1.0
+    },
+    {
+      "name": "GRU",
+      "standard": {
+        "passed": 20,
+        "total": 20
+      },
+      "hidden": {
+        "passed": 80,
+        "total": 80
+      },
+      "passed": 100,
+      "total": 100,
+      "failed": 0,
+      "pass_rate": 1.0
+    },
+    {
+      "name": "LSTM",
+      "standard": {
+        "passed": 20,
+        "total": 20
+      },
+      "hidden": {
+        "passed": 80,
+        "total": 80
+      },
+      "passed": 100,
+      "total": 100,
+      "failed": 0,
+      "pass_rate": 1.0
+    },
+    {
+      "name": "MHA",
+      "standard": {
+        "passed": 20,
+        "total": 20
+      },
+      "hidden": {
+        "passed": 80,
+        "total": 80
+      },
+      "passed": 100,
+      "total": 100,
+      "failed": 0,
+      "pass_rate": 1.0
+    },
+    {
+      "name": "MLA",
+      "standard": {
+        "passed": 20,
+        "total": 20
+      },
+      "hidden": {
+        "passed": 80,
+        "total": 80
+      },
+      "passed": 100,
+      "total": 100,
+      "failed": 0,
+      "pass_rate": 1.0
+    },
+    {
+      "name": "MlaProlog",
+      "standard": {
+        "passed": 20,
+        "total": 20
+      },
+      "hidden": {
+        "passed": 79,
+        "total": 80
+      },
+      "passed": 99,
+      "total": 100,
+      "failed": 1,
+      "pass_rate": 0.99
+    },
+    {
+      "name": "SparseFlashAttention",
+      "standard": {
+        "passed": 20,
+        "total": 20
+      },
+      "hidden": {
+        "passed": 80,
+        "total": 80
+      },
+      "passed": 100,
+      "total": 100,
+      "failed": 0,
+      "pass_rate": 1.0
+    }
+  ],
+  "level4_gap": {
+    "nearest_complete_coverage_competitor": "ForgeKernel",
+    "ours_remaining_failures": 1,
+    "competitor_remaining_failures": 12,
+    "additional_passed_cases": 11,
+    "pass_rate_percentage_points": 1.375,
+    "remaining_failure_reduction": 0.9166666666666666
+  },
+  "notes": {
+    "zh": [
+      "通过率比较仅纳入标准与隐藏测试完整覆盖的方案：全量 5,300 例，Level 4 共 800 例。",
+      "公开榜单默认按综合得分排序；此处展示测试用例通过数与通过率。",
+      "榜单持续变化，数据为 2026 年 10 月 15 日快照。"
+    ],
+    "en": [
+      "Pass-rate comparisons include solutions with complete standard + hidden test coverage: 5,300 cases overall and 800 Level 4 cases.",
+      "The public leaderboard defaults to combined score; this page compares passed test cases and pass rates.",
+      "The leaderboard changes over time. Data is a snapshot from 15 October 2026."
+    ]
+  }
+}

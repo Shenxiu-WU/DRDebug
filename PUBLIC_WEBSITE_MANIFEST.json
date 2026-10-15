@@ -1,0 +1,15 @@
+{
+  ".github/workflows/deploy-pages.yml": "48a7f7a1cff5db94ed2a7b1fdc13ae146e5910f6da1cbe80766cdfd3329b074d",
+  "website/README.md": "94dc542302996c99ec4132f48120c0caf758fc641fef12bbe9fdd0abc07b4dcb",
+  "website/assets/favicon.svg": "4bb8a03a6ca6ea97d09cd44221930224e0ec7f760a4cd906597776177c3b07e3",
+  "website/assets/research/architecture-overview.svg": "7904b6b90d1a866c930865f64b06b58c8af6c26b9bf8db07ed109c8fab9a04aa",
+  "website/assets/research/repair-mechanisms.svg": "94662408aff8df93b1578f1aff44460ee7741eded76804080dbb1c6684b1f480",
+  "website/dashboard.js": "ed3c2a1a2634a0ea8429bd456794501361227a69c37fb59976dcc3b589b60404",
+  "website/data/leaderboard-2026-10-15.json": "995372048a70ee9b80fac6cf8e78f343ebb3d636641528e4c54e84cd3a9d8ca6",
+  "website/data/leaderboard.schema.json": "b88faab411bd8ec70da1784fdf995644698e3f4738f88209a801be8b0c7ba6a3",
+  "website/examples/fp16-reduction-demo.py": "ccbf1cc1cfa043a472482c6370838000ee5f05e6e7a1777e80fbd088b7c6ecc2",
+  "website/index.html": "d486bf3cfc6ab050321290217e7832dbc058ef88cb585df4f776c140fbd537aa",
+  "website/script.js": "861bae6bf7b92ca94eea5e62e1bad6b224a05da84ce4fc9c643f98483f294533",
+  "website/styles.css": "941cc9fd5d394b0cad75d5947a93adf0096b181ea6983762bb892675fc052c5e",
+  "website/theme.js": "043563c21e2969494f87a55b3f9acb7d763c33c384e80c8abb83e772d8606c04"
+}
