@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "description": "Frozen cohort and case-set hashes.",
+      "sha256": "009a121a4c635e0691c14f815d42ecfa72bd0bf486ef0d6da697098e90f00444",
+      "source_id": "dataset_audit"
+    },
+    {
+      "description": "Debug-Agent Qwen outcomes and tokens.",
+      "sha256": "65a9736e7224f64b0253149536f743dcb90fae5cd21674cfa8cb1f3d0b3d36cc",
+      "source_id": "debug_agent_qwen"
+    },
+    {
+      "description": "Three Qwen regeneration trials per operator.",
+      "sha256": "d5b2197a524eb806e3106f09b57fe599060d7099891f87efcd9989af2d23ac49",
+      "source_id": "regenerate_qwen"
+    },
+    {
+      "description": "Debug-Agent Kimi outcomes and tokens.",
+      "sha256": "c6dca3854a378be9fc80436e74e75f7fc326355c250da42e1f7b6cfa17b10cb9",
+      "source_id": "debug_agent_kimi"
+    },
+    {
+      "description": "CANNBot-Debug Qwen outcomes and token ledger.",
+      "sha256": "f8a4090cf68aa64f38111a79849da0915a22dc54e719f376e85a2945c89c38a1",
+      "source_id": "cannbot_qwen_tokens"
+    },
+    {
+      "description": "CANNBot-Debug Qwen final source-level integrity evidence.",
+      "sha256": "4d7d5f5538400a28a2b227ef169a82c633775e6b2ff31dcea49b71dfc383d98f",
+      "source_id": "cannbot_qwen_integrity"
+    },
+    {
+      "description": "CANNBot-Debug Kimi outcomes, tokens, and integrity evidence.",
+      "sha256": "bc7bdafba0037b4219d85a2527640a42edfb8be1e8504f86c415ba46638cb072",
+      "source_id": "cannbot_kimi"
+    },
+    {
+      "description": "Six component configurations with per-operator outcomes and burden.",
+      "sha256": "a8620c6f97659ba79c217eb9d7904caadc2058e3f8574d001e01b0d9f7d93330",
+      "source_id": "component_ablations"
+    }
+  ]
+}

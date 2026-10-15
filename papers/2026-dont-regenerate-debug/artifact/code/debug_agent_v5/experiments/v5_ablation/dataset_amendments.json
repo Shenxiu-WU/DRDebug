@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "amendments": [
+    {
+      "operator": "level5/005_inplace_index_add_with_sorted",
+      "reason": "materialize model.py:INPUT_CASES for lightweight/full-eval switching",
+      "source": "model.py:INPUT_CASES",
+      "case_count": 5,
+      "files": [
+        "/workspace/debug_agent_assets/cannbot_debug_inputs_n27_20260723/tasks/level5/005_inplace_index_add_with_sorted/5_inplace_index_add_with_sorted.json",
+        "/workspace/debug_agent_assets/cannbot_debug_inputs_n27_20260723/tasks/level5/005_inplace_index_add_with_sorted/5_inplace_index_add_with_sorted.json.bak"
+      ],
+      "sha256": "be1a86f965ae1d0191b577cec1a42a0f37511c97a276964c02f6c7a43b3e9c29",
+      "empty_placeholder_used": false
+    },
+    {
+      "operator": "level2/020_FusedRopeWithQkNormAndKvCacheUpdate",
+      "reason": "add the model.json compatibility filename expected by model.py",
+      "source": "20_FusedRopeWithQkNormAndKvCacheUpdate.json",
+      "case_count": 10,
+      "files": [
+        "/workspace/debug_agent_assets/cannbot_debug_inputs_n27_20260723/tasks/level2/020_FusedRopeWithQkNormAndKvCacheUpdate/model.json"
+      ],
+      "sha256": "e8e2b09a52da82d6ac7cccb54edf410523046adee8d2af4ed1bad3cc2aa1344d",
+      "empty_placeholder_used": false
+    },
+    {
+      "operator": "level2/025_MaskedSoftmaxWithAttentionDropoutBackward",
+      "reason": "add the model.json compatibility filename expected by model.py",
+      "source": "25_MaskedSoftmaxWithAttentionDropoutBackward.json",
+      "case_count": 10,
+      "files": [
+        "/workspace/debug_agent_assets/cannbot_debug_inputs_n27_20260723/tasks/level2/025_MaskedSoftmaxWithAttentionDropoutBackward/model.json"
+      ],
+      "sha256": "0a893d02f5e1b872550adee6d72ed27fd5be5f0774b3d3525ab9a15571173780",
+      "empty_placeholder_used": false
+    },
+    {
+      "operator": "level2/029_TanhGatedResidualAddBackward",
+      "reason": "add the model.json compatibility filename expected by model.py",
+      "source": "29_TanhGatedResidualAddBackward.json",
+      "case_count": 10,
+      "files": [
+        "/workspace/debug_agent_assets/cannbot_debug_inputs_n27_20260723/tasks/level2/029_TanhGatedResidualAddBackward/model.json"
+      ],
+      "sha256": "f390eb7d1f4bb5832a1a5b8a20de4b282c42a792605de9384904ba2f5fc40e6b",
+      "empty_placeholder_used": false
+    }
+  ]
+}

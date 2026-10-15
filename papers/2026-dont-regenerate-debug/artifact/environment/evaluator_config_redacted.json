@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "cohort_size": 27,
+  "models": {
+    "qwen": {
+      "name": "qwen3.8-max-preview",
+      "context_window_tokens": 1000000,
+      "effort": "max"
+    },
+    "kimi": {
+      "name": "kimi-k3",
+      "context_window_tokens": 1000000,
+      "effort": "max"
+    }
+  },
+  "task_budget": {
+    "max_attempts": 5,
+    "max_turns_per_call": 240,
+    "soft_task_turns": 480,
+    "hard_task_turns": 600,
+    "wall_time_seconds": 43200
+  },
+  "success_endpoint": {
+    "candidate_materialized": true,
+    "full_coverage_numerical_evaluation": "pass",
+    "final_source_level_integrity_verdict": "CLEAN"
+  },
+  "token_accounting": {
+    "uncached_tokens": "input_tokens + output_tokens",
+    "all_tokens": "input_tokens + output_tokens + cache_creation_tokens + cache_read_tokens",
+    "deduplication_unit": "session, agent, and message identity"
+  },
+  "credentials": "redacted",
+  "infrastructure_identifiers": "redacted"
+}

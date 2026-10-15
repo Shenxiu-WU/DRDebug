@@ -1,0 +1,47 @@
+{
+  "notes": {
+    "minus_diagnostic": "The bundled diagnostic-evidence configuration disables probe, forensics, and knowledge-base access.",
+    "minus_full_evaluation_shadow": "Derived at the first compact objective pass of the Full trajectory; not an independent execution."
+  },
+  "reported_profiles": [
+    {
+      "configuration": "full",
+      "disabled_components": []
+    },
+    {
+      "configuration": "minus_kb",
+      "disabled_components": [
+        "knowledge_base"
+      ]
+    },
+    {
+      "configuration": "minus_diagnostic",
+      "disabled_components": [
+        "diagnostic_evidence",
+        "forensics",
+        "probe",
+        "knowledge_base"
+      ]
+    },
+    {
+      "configuration": "minus_adaptive_scheduling",
+      "disabled_components": [
+        "adaptive_scheduling"
+      ]
+    },
+    {
+      "configuration": "minus_anti_cheat",
+      "disabled_components": [
+        "anti_cheat"
+      ]
+    },
+    {
+      "configuration": "minus_full_evaluation_shadow",
+      "disabled_components": [
+        "full_evaluation"
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "validation_status": "pass"
+}

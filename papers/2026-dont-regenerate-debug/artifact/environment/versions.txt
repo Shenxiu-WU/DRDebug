@@ -1,0 +1,11 @@
+Artifact schema: 1
+Analysis runtime: Python 3.10 or newer, standard library only
+Primary Qwen model: qwen3.8-max-preview
+Primary Kimi model: kimi-k3
+Declared context window: 1,000,000 tokens for both model strata
+Per-call turn ceiling: 240
+Task soft turn budget: 480
+Task hard turn budget: 600
+Repair attempts per operator task: at most 5
+Operator-task wall-time ceiling: 43,200 seconds
+Numerical runtime: Ascend C compilation and NPU evaluation environment required

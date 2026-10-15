@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "pricing_id": "official_offline_20260724_v2",
+  "captured_at": "2026-07-24",
+  "fx": {
+    "usd_cny": 6.8047,
+    "source": "https://www.safe.gov.cn/pc.html",
+    "quote": "100 USD = 680.47 CNY"
+  },
+  "models": {
+    "kimi-k3": {
+      "aliases": ["k3", "k3[1m]", "kimi-k3"],
+      "currency": "CNY",
+      "per_million": {
+        "input_tokens": 20.0,
+        "output_tokens": 100.0,
+        "cache_read_tokens": 2.0,
+        "cache_creation_tokens": 20.0
+      },
+      "source": "https://platform.kimi.com/docs/pricing/chat-k3",
+      "note": "Kimi Platform pay-as-you-go proxy; Kimi Code itself uses membership billing. Cache creation is charged at cache-miss input rate."
+    },
+    "claude-opus-4-8": {
+      "aliases": ["claude-opus-4-8", "opus-4.8", "claude-opus-4-8-20260527"],
+      "currency": "USD",
+      "per_million": {
+        "input_tokens": 5.0,
+        "output_tokens": 25.0,
+        "cache_read_tokens": 0.5,
+        "cache_creation_tokens": 6.25
+      },
+      "source": "https://www-cdn.anthropic.com/files/4zrzovbb/website/3684c2faafb97418665782cea0001f439f74b1d2.pdf",
+      "note": "Standard global API with the default five-minute cache-write TTL."
+    },
+    "qwen3.8-max-preview": {
+      "aliases": ["qwen3.8-max-preview"],
+      "currency": "CNY",
+      "billing_mode": "subscription_credits_unattributed",
+      "source": "https://help.aliyun.com/zh/model-studio/token-plan-personal-overview",
+      "note": "Alibaba Cloud Token Plan is a fixed-fee subscription. Credits vary dynamically with model, token usage, thinking mode, and tool calls; the official documentation says actual Credits are available only in the console usage details. No auditable per-token tariff is available, so per-run monetary cost is deliberately left unattributed."
+    }
+  },
+  "disclaimer": "Kimi K3 and Claude costs are offline per-token estimates. Qwen3.8 Token Plan rows retain exact token volume but no fabricated monetary cost because the subscription's dynamic Credits are not present in the experiment artifacts."
+}

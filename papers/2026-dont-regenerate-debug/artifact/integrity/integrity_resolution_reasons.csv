@@ -1,0 +1,352 @@
+candidate_id,final_integrity_verdict,resolution_code,evidence_summary
+D-Q:level1/003_Add:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level1/005_Cumsum:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level1/007_Sum:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level1/010_LayerNorm:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level1/017_AdamW:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level1/024_EmbeddingDenseBackward:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level1/025_NLLLoss:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level1/031_IOU:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level2/002_GroupNormSwish:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level2/005_MoeInitRouting:t1,PURITY_VIOLATION,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level2/006_MoeFinalizeRouting:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level2/011_DequantSwigluQuant:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level2/020_FusedRopeWithQkNormAndKvCacheUpdate:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level2/023_HyenaFftSizePaddingRfft:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level2/025_MaskedSoftmaxWithAttentionDropoutBackward:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level2/029_TanhGatedResidualAddBackward:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level2/030_TimeDecayExponentialStabilization:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level3/001_BatchMatmul:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level3/004_MatmulTransA:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level3/005_MatmulTransB:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level3/006_ConvStandard1d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level3/008_ConvStandard3d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level3/009_ConvDepthwise2d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level5/005_inplace_index_add_with_sorted:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level5/010_scatter_elements_v2:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level6/021_UnfoldGrad:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-Q:level7/004_NormRopeConcat:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/003_Add:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/003_Add:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/003_Add:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/005_Cumsum:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/005_Cumsum:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/005_Cumsum:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/007_Sum:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/007_Sum:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/007_Sum:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/010_LayerNorm:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/010_LayerNorm:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/010_LayerNorm:t3,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/017_AdamW:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/017_AdamW:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/017_AdamW:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/024_EmbeddingDenseBackward:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/024_EmbeddingDenseBackward:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/024_EmbeddingDenseBackward:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/025_NLLLoss:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/025_NLLLoss:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/025_NLLLoss:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/031_IOU:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/031_IOU:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level1/031_IOU:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/002_GroupNormSwish:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/002_GroupNormSwish:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/002_GroupNormSwish:t3,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/005_MoeInitRouting:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/005_MoeInitRouting:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/005_MoeInitRouting:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/006_MoeFinalizeRouting:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/006_MoeFinalizeRouting:t2,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/006_MoeFinalizeRouting:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/011_DequantSwigluQuant:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/011_DequantSwigluQuant:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/011_DequantSwigluQuant:t3,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/020_FusedRopeWithQkNormAndKvCacheUpdate:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/020_FusedRopeWithQkNormAndKvCacheUpdate:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/020_FusedRopeWithQkNormAndKvCacheUpdate:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/023_HyenaFftSizePaddingRfft:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/023_HyenaFftSizePaddingRfft:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/023_HyenaFftSizePaddingRfft:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/025_MaskedSoftmaxWithAttentionDropoutBackward:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/025_MaskedSoftmaxWithAttentionDropoutBackward:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/025_MaskedSoftmaxWithAttentionDropoutBackward:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/029_TanhGatedResidualAddBackward:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/029_TanhGatedResidualAddBackward:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/029_TanhGatedResidualAddBackward:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/030_TimeDecayExponentialStabilization:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/030_TimeDecayExponentialStabilization:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level2/030_TimeDecayExponentialStabilization:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/001_BatchMatmul:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/001_BatchMatmul:t2,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/001_BatchMatmul:t3,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/004_MatmulTransA:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/004_MatmulTransA:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/004_MatmulTransA:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/005_MatmulTransB:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/005_MatmulTransB:t2,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/005_MatmulTransB:t3,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/006_ConvStandard1d:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/006_ConvStandard1d:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/006_ConvStandard1d:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/008_ConvStandard3d:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/008_ConvStandard3d:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/008_ConvStandard3d:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/009_ConvDepthwise2d:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/009_ConvDepthwise2d:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level3/009_ConvDepthwise2d:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level5/005_inplace_index_add_with_sorted:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level5/005_inplace_index_add_with_sorted:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level5/005_inplace_index_add_with_sorted:t3,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level5/010_scatter_elements_v2:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level5/010_scatter_elements_v2:t2,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level5/010_scatter_elements_v2:t3,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level6/021_UnfoldGrad:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level6/021_UnfoldGrad:t2,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level6/021_UnfoldGrad:t3,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level7/004_NormRopeConcat:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level7/004_NormRopeConcat:t2,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+R-Q:level7/004_NormRopeConcat:t3,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level1/003_Add:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level1/005_Cumsum:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level1/007_Sum:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level1/010_LayerNorm:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level1/017_AdamW:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level1/024_EmbeddingDenseBackward:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level1/025_NLLLoss:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level1/031_IOU:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level2/002_GroupNormSwish:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level2/005_MoeInitRouting:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level2/006_MoeFinalizeRouting:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level2/011_DequantSwigluQuant:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level2/020_FusedRopeWithQkNormAndKvCacheUpdate:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level2/023_HyenaFftSizePaddingRfft:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level2/025_MaskedSoftmaxWithAttentionDropoutBackward:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level2/029_TanhGatedResidualAddBackward:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level2/030_TimeDecayExponentialStabilization:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level3/001_BatchMatmul:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level3/004_MatmulTransA:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level3/005_MatmulTransB:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level3/006_ConvStandard1d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level3/008_ConvStandard3d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level3/009_ConvDepthwise2d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level5/005_inplace_index_add_with_sorted:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level5/010_scatter_elements_v2:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level6/021_UnfoldGrad:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+D-K:level7/004_NormRopeConcat:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+CBD-Q:level1/003_Add:t1,PURITY_VIOLATION,exclude_framework_materialized_broadcast,"ModelNew invokes the generated Add kernel, so this is not reference-result cheating. However, x.expand(...).contiguous() and y.expand(...).contiguous() materialize broadcasting outside the kernel in 32/50 frozen cases. This is the same conservative purity exclusion previously applied to Regenerate Add."
+CBD-Q:level1/005_Cumsum:t1,NOT_APPLICABLE,confirm_custom_kernel_chain,ModelNew directly invokes the generated Cumsum kernel. Reference-operator mentions occur only in kernel comments; no executable reference path exists.
+CBD-Q:level1/007_Sum:t1,CLEAN,confirm_custom_kernel_chain,The evaluated nonempty inputs are only permuted/reshaped before the generated reduction kernel. No framework Sum or reference-result path is reachable for the 44 frozen cases.
+CBD-Q:level1/010_LayerNorm:t1,NOT_APPLICABLE,confirm_custom_kernel_chain,Reshape and default affine-buffer allocation precede the generated LayerNorm kernel. No framework LayerNorm is invoked.
+CBD-Q:level1/017_AdamW:t1,NOT_APPLICABLE,confirm_custom_kernel_chain,The adapter only flattens tensors and passes scalar attributes to the generated AdamW kernel. Mentions of the reference operator are comments about numerical behavior.
+CBD-Q:level1/024_EmbeddingDenseBackward:t1,CLEAN,confirm_custom_kernel_chain,The adapter performs reshape/index dtype normalization and invokes the generated EmbeddingDenseBackward kernel; no framework embedding backward or reference output is used.
+CBD-Q:level1/025_NLLLoss:t1,CLEAN,confirm_custom_kernel_chain,"Permutation, dtype normalization, optional-weight allocation, and output reshape are boundary plumbing. NLLLoss arithmetic and reduction execute in generated kernels."
+CBD-Q:level1/031_IOU:t1,NOT_APPLICABLE,confirm_custom_kernel_chain,Coordinate slicing and output dtype conversion are staging; IOU arithmetic executes in the generated kernel. Reference-operator mentions are comments only.
+CBD-Q:level2/002_GroupNormSwish:t1,NOT_APPLICABLE,false_positive_asc_launch_not_scanned,NO_KERNEL_LAUNCH is a scanner false positive: the launch is present in an .asc file that the rule did not recognize. No framework GroupNorm/Swish or reference-result path exists. Full-eval remains a runtime failure.
+CBD-Q:level2/005_MoeInitRouting:t1,NOT_APPLICABLE,false_positive_asc_launch_not_scanned,"NO_KERNEL_LAUNCH is a scanner false positive: ModelNew calls the custom extension and the launch is in an .asc file. Mentions of torch_npu/golden are comments describing semantics, not executable monkey-patch, cache, or reference-output code. Full-eval remains a runtime failure."
+CBD-Q:level2/006_MoeFinalizeRouting:t1,NOT_APPLICABLE,false_positive_tensor_type_declarations,The three CPP_ATEN_CALL findings point only to at::Tensor declarations that unwrap optional inputs. They do not invoke an ATen operator. The generated kernel launch chain is present and no reference path exists. Full-eval remains a 49/50 precision failure.
+CBD-Q:level2/011_DequantSwigluQuant:t1,NOT_APPLICABLE,confirm_custom_kernel_chain,Optional scale buffers are initialized in the adapter; Dequant-SwiGLU-Quant arithmetic executes in the generated kernel. Golden mentions are implementation comments only.
+CBD-Q:level2/020_FusedRopeWithQkNormAndKvCacheUpdate:t1,CLEAN,confirm_custom_kernel_chain,"ModelNew directly invokes the generated fused custom op; the fused normalization, RoPE, and cache update execute in the generated kernel."
+CBD-Q:level2/023_HyenaFftSizePaddingRfft:t1,CLEAN,confirm_custom_kernel_chain,"Input dtype normalization is boundary handling; padding, RFFT, and normalization execute in the generated kernel."
+CBD-Q:level2/025_MaskedSoftmaxWithAttentionDropoutBackward:t1,NOT_APPLICABLE,raw_clean_false_negative_framework_materialized_broadcast,"The generated kernel is called and no reference result is used, but mask.expand(...).to(...).contiguous() materializes broadcasted mask values outside the kernel in 47/51 frozen cases. This is the same conservative purity class as Add. Full-eval already fails."
+CBD-Q:level2/029_TanhGatedResidualAddBackward:t1,NOT_APPLICABLE,confirm_custom_kernel_chain,The adapter only flattens/restores tensors around the generated backward kernel; no framework tanh/backward reference path is used.
+CBD-Q:level2/030_TimeDecayExponentialStabilization:t1,NOT_APPLICABLE,confirm_custom_kernel_chain,Contiguous and fp32 conversion are dtype/layout staging; the recurrent time-decay computation executes in the generated kernel.
+CBD-Q:level3/001_BatchMatmul:t1,CLEAN,confirm_custom_kernel_chain,Framework calls only allocate/pad/crop buffers. Matrix multiplication executes in the generated custom kernel. Host-side golden code exists only in standalone CPU/simulator test files and is not imported or linked into ModelNew's runtime path.
+CBD-Q:level3/004_MatmulTransA:t1,CLEAN,confirm_layout_staging_and_custom_kernel,"A.t().contiguous(), padding, and cropping are layout staging only; multiplication executes in the generated Ascend C kernel. No framework matmul or reference output is used."
+CBD-Q:level3/005_MatmulTransB:t1,CLEAN,confirm_custom_kernel_chain,The adapter only makes inputs contiguous and invokes the generated MatmulTransB kernel.
+CBD-Q:level3/006_ConvStandard1d:t1,NOT_APPLICABLE,confirm_weight_initialization_and_custom_kernel,"nn.Conv1d is instantiated only to reproduce the task-defined random weights; its forward method is never called. Layout/padding follows, and convolution arithmetic executes in the generated kernel. The RNG coupling is evaluation-specific but does not return a framework convolution result."
+CBD-Q:level3/008_ConvStandard3d:t1,NOT_APPLICABLE,raw_clean_false_negative_case_manifest_specialization,"The custom Conv3d kernel is launched, but ModelNew opens the frozen 8_ConvStandard3d.json, precomputes a weight/bias sequence for every case, and indexes it by evaluation call order. It does not read reference outputs, but it is case-manifest specialization rather than a general adapter and is conservatively excluded. Full-eval already fails."
+CBD-Q:level3/009_ConvDepthwise2d:t1,NOT_APPLICABLE,confirm_frozen_reference_and_custom_kernel,The deterministic seed is part of the frozen source task itself: candidate_task/model.py is byte-identical to the recorded input source (SHA-256 cd623afdbe2bc7cc846ab1e8a2c90cf4777d05c9f465ca535f20fddcc0905e48). ModelNew uses the same task-defined weight initialization and invokes the generated depthwise kernel.
+CBD-Q:level5/005_inplace_index_add_with_sorted:t1,CLEAN,confirm_output_init_layout_and_custom_kernel,"Clone, permutation, reshape, and scalar construction initialize/stage the output. Index-add semantics execute in the generated kernel; the adapter does not call torch.index_add."
+CBD-Q:level5/010_scatter_elements_v2:t1,CLEAN,confirm_output_init_layout_and_custom_kernel,"Permutation, dtype conversion, padding, and output initialization are staging. Scatter/reduction semantics execute in the generated kernel; all six frozen cases are nonempty."
+CBD-Q:level6/021_UnfoldGrad:t1,CLEAN,confirm_custom_kernel_chain,"The evaluated inputs are permuted/reshaped around the generated UnfoldGrad kernel. All eight frozen cases have a nonempty window domain, so the empty-domain allocation branch is not used."
+CBD-Q:level7/004_NormRopeConcat:t1,CLEAN,confirm_custom_kernel_chain,"Contiguous conversion and optional affine placeholder allocation are boundary plumbing. Normalization, RoPE, and concatenation execute in the generated fused kernel."
+CBD-K:level1/003_Add:t1,PURITY_VIOLATION,exclude_framework_materialized_broadcast,"ModelNew invokes the generated Add kernel, but x.expand(...).contiguous() and y.expand(...).contiguous() materialize broadcast semantics outside the kernel. This is the same conservative rule used for Regenerate Add."
+CBD-K:level1/005_Cumsum:t1,NOT_APPLICABLE,confirm_custom_kernel_chain,"ModelNew reaches a generated extension and Ascend C kernel launch; manual source review found no reference-output path, high-level framework substitute, case cache, monkey patch, or dynamic execution."
+CBD-K:level1/007_Sum:t1,CLEAN,confirm_custom_kernel_chain,The evaluated nonempty inputs are permuted/reshaped before the generated reduction kernel. The framework zero-output branch is not reached by the 44 frozen cases.
+CBD-K:level1/010_LayerNorm:t1,CLEAN,confirm_custom_kernel_chain,"ModelNew reaches a generated extension and Ascend C kernel launch; manual source review found no reference-output path, high-level framework substitute, case cache, monkey patch, or dynamic execution."
+CBD-K:level1/017_AdamW:t1,NOT_APPLICABLE,confirm_custom_kernel_chain,"ModelNew reaches a generated extension and Ascend C kernel launch; manual source review found no reference-output path, high-level framework substitute, case cache, monkey patch, or dynamic execution."
+CBD-K:level1/024_EmbeddingDenseBackward:t1,CLEAN,confirm_custom_kernel_chain,"ModelNew reaches a generated extension and Ascend C kernel launch; manual source review found no reference-output path, high-level framework substitute, case cache, monkey patch, or dynamic execution."
+CBD-K:level1/025_NLLLoss:t1,CLEAN,confirm_custom_kernel_chain,"ModelNew reaches a generated extension and Ascend C kernel launch; manual source review found no reference-output path, high-level framework substitute, case cache, monkey patch, or dynamic execution."
+CBD-K:level1/031_IOU:t1,NOT_APPLICABLE,confirm_custom_kernel_chain,"ModelNew reaches a generated extension and Ascend C kernel launch; manual source review found no reference-output path, high-level framework substitute, case cache, monkey patch, or dynamic execution."
+CBD-K:level2/002_GroupNormSwish:t1,CLEAN,confirm_custom_kernel_chain,"ModelNew reaches a generated extension and Ascend C kernel launch; manual source review found no reference-output path, high-level framework substitute, case cache, monkey patch, or dynamic execution."
+CBD-K:level2/005_MoeInitRouting:t1,NOT_APPLICABLE,confirm_custom_kernel_chain,The adapter calls the generated routing kernel. A CPU golden program exists only as an unlinked standalone debug source and is not on the runtime path.
+CBD-K:level2/006_MoeFinalizeRouting:t1,CLEAN,confirm_custom_kernel_chain,ATen calls in the binding allocate output/tiling buffers only; routing arithmetic executes in generated Ascend C kernels.
+CBD-K:level2/011_DequantSwigluQuant:t1,NOT_APPLICABLE,confirm_custom_kernel_chain,"ModelNew reaches a generated extension and Ascend C kernel launch; manual source review found no reference-output path, high-level framework substitute, case cache, monkey patch, or dynamic execution."
+CBD-K:level2/020_FusedRopeWithQkNormAndKvCacheUpdate:t1,CLEAN,confirm_custom_kernel_chain,"ModelNew reaches a generated extension and Ascend C kernel launch; manual source review found no reference-output path, high-level framework substitute, case cache, monkey patch, or dynamic execution."
+CBD-K:level2/023_HyenaFftSizePaddingRfft:t1,CLEAN,confirm_custom_kernel_chain,"ModelNew reaches a generated extension and Ascend C kernel launch; manual source review found no reference-output path, high-level framework substitute, case cache, monkey patch, or dynamic execution."
+CBD-K:level2/025_MaskedSoftmaxWithAttentionDropoutBackward:t1,NOT_APPLICABLE,flag_framework_materialized_mask_broadcast,"The generated custom kernel executes, but mask.expand(B,H,T,T) followed by dtype conversion/contiguous materializes mask broadcast outside the kernel."
+CBD-K:level2/029_TanhGatedResidualAddBackward:t1,CLEAN,confirm_custom_kernel_chain,"ModelNew reaches a generated extension and Ascend C kernel launch; manual source review found no reference-output path, high-level framework substitute, case cache, monkey patch, or dynamic execution."
+CBD-K:level2/030_TimeDecayExponentialStabilization:t1,CLEAN,confirm_custom_kernel_chain,"ModelNew reaches a generated extension and Ascend C kernel launch; manual source review found no reference-output path, high-level framework substitute, case cache, monkey patch, or dynamic execution."
+CBD-K:level3/001_BatchMatmul:t1,NOT_APPLICABLE,confirm_custom_kernel_chain,Framework calls only pad/crop buffers; matrix multiplication executes in the generated custom kernel.
+CBD-K:level3/004_MatmulTransA:t1,CLEAN,confirm_custom_kernel_chain,Transpose/contiguous/padding are layout staging; no framework matmul is used.
+CBD-K:level3/005_MatmulTransB:t1,CLEAN,confirm_custom_kernel_chain,"ModelNew reaches a generated extension and Ascend C kernel launch; manual source review found no reference-output path, high-level framework substitute, case cache, monkey patch, or dynamic execution."
+CBD-K:level3/006_ConvStandard1d:t1,NOT_APPLICABLE,confirm_custom_kernel_chain,nn.Conv1d is instantiated only to reproduce task-defined random weights; its forward is never called and convolution executes in the custom kernel.
+CBD-K:level3/008_ConvStandard3d:t1,NOT_APPLICABLE,flag_case_manifest_and_call_order_dependence,"The adapter reads the frozen case JSON, precomputes one parameter set per case, and selects it using a mutable call index. The custom Conv3d kernel executes, but this case-list/call-order dependence violates endpoint purity."
+CBD-K:level3/009_ConvDepthwise2d:t1,NOT_APPLICABLE,confirm_custom_kernel_chain,nn.Conv2d is instantiated only to reproduce task-defined weights under the reference RNG convention; its forward is never called and convolution executes in the custom kernel.
+CBD-K:level5/005_inplace_index_add_with_sorted:t1,CLEAN,confirm_custom_kernel_chain,Clone/layout/output initialization is boundary staging; index-add semantics execute in the generated kernel.
+CBD-K:level5/010_scatter_elements_v2:t1,CLEAN,confirm_custom_kernel_chain,Permutation/padding/output initialization is boundary staging; scatter and reduction semantics execute in the generated kernel.
+CBD-K:level6/021_UnfoldGrad:t1,CLEAN,confirm_custom_kernel_chain,The generated unfold-backward kernel is the runtime path. The CPU golden program is standalone and unlinked.
+CBD-K:level7/004_NormRopeConcat:t1,CLEAN,confirm_custom_kernel_chain,"ModelNew reaches a generated extension and Ascend C kernel launch; manual source review found no reference-output path, high-level framework substitute, case cache, monkey patch, or dynamic execution."
+ABL-full:level1/003_Add:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level1/005_Cumsum:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level1/007_Sum:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level1/010_LayerNorm:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level1/017_AdamW:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level1/024_EmbeddingDenseBackward:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level1/025_NLLLoss:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level1/031_IOU:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level2/002_GroupNormSwish:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level2/005_MoeInitRouting:t1,PURITY_VIOLATION,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level2/006_MoeFinalizeRouting:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level2/011_DequantSwigluQuant:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level2/020_FusedRopeWithQkNormAndKvCacheUpdate:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level2/023_HyenaFftSizePaddingRfft:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level2/025_MaskedSoftmaxWithAttentionDropoutBackward:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level2/029_TanhGatedResidualAddBackward:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level2/030_TimeDecayExponentialStabilization:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level3/001_BatchMatmul:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level3/004_MatmulTransA:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level3/005_MatmulTransB:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level3/006_ConvStandard1d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level3/008_ConvStandard3d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level3/009_ConvDepthwise2d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level5/005_inplace_index_add_with_sorted:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level5/010_scatter_elements_v2:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level6/021_UnfoldGrad:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-full:level7/004_NormRopeConcat:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level1/003_Add:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level1/005_Cumsum:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level1/007_Sum:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level1/010_LayerNorm:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level1/017_AdamW:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level1/024_EmbeddingDenseBackward:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level1/025_NLLLoss:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level1/031_IOU:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level2/002_GroupNormSwish:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level2/005_MoeInitRouting:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level2/006_MoeFinalizeRouting:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level2/011_DequantSwigluQuant:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level2/020_FusedRopeWithQkNormAndKvCacheUpdate:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level2/023_HyenaFftSizePaddingRfft:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level2/025_MaskedSoftmaxWithAttentionDropoutBackward:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level2/029_TanhGatedResidualAddBackward:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level2/030_TimeDecayExponentialStabilization:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level3/001_BatchMatmul:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level3/004_MatmulTransA:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level3/005_MatmulTransB:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level3/006_ConvStandard1d:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level3/008_ConvStandard3d:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level3/009_ConvDepthwise2d:t1,PURITY_VIOLATION,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level5/005_inplace_index_add_with_sorted:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level5/010_scatter_elements_v2:t1,PURITY_VIOLATION,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level6/021_UnfoldGrad:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_kb:level7/004_NormRopeConcat:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level1/003_Add:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level1/005_Cumsum:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level1/007_Sum:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level1/010_LayerNorm:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level1/017_AdamW:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level1/024_EmbeddingDenseBackward:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level1/025_NLLLoss:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level1/031_IOU:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level2/002_GroupNormSwish:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level2/005_MoeInitRouting:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level2/006_MoeFinalizeRouting:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level2/011_DequantSwigluQuant:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level2/020_FusedRopeWithQkNormAndKvCacheUpdate:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level2/023_HyenaFftSizePaddingRfft:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level2/025_MaskedSoftmaxWithAttentionDropoutBackward:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level2/029_TanhGatedResidualAddBackward:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level2/030_TimeDecayExponentialStabilization:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level3/001_BatchMatmul:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level3/004_MatmulTransA:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level3/005_MatmulTransB:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level3/006_ConvStandard1d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level3/008_ConvStandard3d:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level3/009_ConvDepthwise2d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level5/005_inplace_index_add_with_sorted:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level5/010_scatter_elements_v2:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level6/021_UnfoldGrad:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_diagnostic:level7/004_NormRopeConcat:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level1/003_Add:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level1/005_Cumsum:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level1/007_Sum:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level1/010_LayerNorm:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level1/017_AdamW:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level1/024_EmbeddingDenseBackward:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level1/025_NLLLoss:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level1/031_IOU:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level2/002_GroupNormSwish:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level2/005_MoeInitRouting:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level2/006_MoeFinalizeRouting:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level2/011_DequantSwigluQuant:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level2/020_FusedRopeWithQkNormAndKvCacheUpdate:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level2/023_HyenaFftSizePaddingRfft:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level2/025_MaskedSoftmaxWithAttentionDropoutBackward:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level2/029_TanhGatedResidualAddBackward:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level2/030_TimeDecayExponentialStabilization:t1,PURITY_VIOLATION,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level3/001_BatchMatmul:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level3/004_MatmulTransA:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level3/005_MatmulTransB:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level3/006_ConvStandard1d:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level3/008_ConvStandard3d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level3/009_ConvDepthwise2d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level5/005_inplace_index_add_with_sorted:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level5/010_scatter_elements_v2:t1,PURITY_VIOLATION,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level6/021_UnfoldGrad:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_adaptive_scheduling:level7/004_NormRopeConcat:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level1/003_Add:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level1/005_Cumsum:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level1/007_Sum:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level1/010_LayerNorm:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level1/017_AdamW:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level1/024_EmbeddingDenseBackward:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level1/025_NLLLoss:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level1/031_IOU:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level2/002_GroupNormSwish:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level2/005_MoeInitRouting:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level2/006_MoeFinalizeRouting:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level2/011_DequantSwigluQuant:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level2/020_FusedRopeWithQkNormAndKvCacheUpdate:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level2/023_HyenaFftSizePaddingRfft:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level2/025_MaskedSoftmaxWithAttentionDropoutBackward:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level2/029_TanhGatedResidualAddBackward:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level2/030_TimeDecayExponentialStabilization:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level3/001_BatchMatmul:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level3/004_MatmulTransA:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level3/005_MatmulTransB:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level3/006_ConvStandard1d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level3/008_ConvStandard3d:t1,PURITY_VIOLATION,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level3/009_ConvDepthwise2d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level5/005_inplace_index_add_with_sorted:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level5/010_scatter_elements_v2:t1,PURITY_VIOLATION,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level6/021_UnfoldGrad:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_anti_cheat:level7/004_NormRopeConcat:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level1/003_Add:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level1/005_Cumsum:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level1/007_Sum:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level1/010_LayerNorm:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level1/017_AdamW:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level1/024_EmbeddingDenseBackward:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level1/025_NLLLoss:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level1/031_IOU:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level2/002_GroupNormSwish:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level2/005_MoeInitRouting:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level2/006_MoeFinalizeRouting:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level2/011_DequantSwigluQuant:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level2/020_FusedRopeWithQkNormAndKvCacheUpdate:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level2/023_HyenaFftSizePaddingRfft:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level2/025_MaskedSoftmaxWithAttentionDropoutBackward:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level2/029_TanhGatedResidualAddBackward:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level2/030_TimeDecayExponentialStabilization:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level3/001_BatchMatmul:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level3/004_MatmulTransA:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level3/005_MatmulTransB:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level3/006_ConvStandard1d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level3/008_ConvStandard3d:t1,NOT_APPLICABLE,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level3/009_ConvDepthwise2d:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level5/005_inplace_index_add_with_sorted:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level5/010_scatter_elements_v2:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level6/021_UnfoldGrad:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.
+ABL-minus_full_evaluation_shadow:level7/004_NormRopeConcat:t1,CLEAN,shared_integrity_criterion,Final verdict recorded under the shared source-level integrity criterion.

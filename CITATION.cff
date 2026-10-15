@@ -1,0 +1,51 @@
+cff-version: 1.2.0
+message: "Please cite the paper when using this research artifact."
+type: software
+url: https://github.com/Shenxiu-WU/DRDebug
+title: "DRDebug: Don’t Regenerate, Debug"
+authors:
+  - family-names: Sun
+    given-names: Yansong
+  - family-names: Wu
+    given-names: Shenxiu
+  - family-names: Chen
+    given-names: Siyuan
+  - family-names: Hou
+    given-names: Runlin
+  - family-names: Qiu
+    given-names: Junhao
+  - family-names: Cao
+    given-names: Junming
+  - family-names: Shao
+    given-names: Shudi
+  - family-names: Lu
+    given-names: Zhichao
+  - family-names: Zhang
+    given-names: Qingfu
+preferred-citation:
+  type: article
+  title: "Don't Regenerate, Debug: A Domain-Specific Agent for Repairing Near-Miss Hardware Operators"
+  authors:
+    - family-names: Sun
+      given-names: Yansong
+    - family-names: Wu
+      given-names: Shenxiu
+    - family-names: Chen
+      given-names: Siyuan
+    - family-names: Hou
+      given-names: Runlin
+    - family-names: Qiu
+      given-names: Junhao
+    - family-names: Cao
+      given-names: Junming
+    - family-names: Shao
+      given-names: Shudi
+    - family-names: Lu
+      given-names: Zhichao
+    - family-names: Zhang
+      given-names: Qingfu
+  journal: arXiv
+  year: 2026
+  date-published: 2026-08-03
+  doi: 10.48550/arXiv.2608.02712
+  url: https://arxiv.org/abs/2608.02712

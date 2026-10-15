@@ -1,0 +1,21 @@
+{
+  "name": "ops-direct-invoke",
+  "description": "Ascend C Kernel 直调算子开发 Team。含完整工作流（设计→实现→审查→性能验收）、4 个专业 Agent 和工程模板。",
+  "version": "1.2.4",
+  "author": {
+    "name": "CANNBot"
+  },
+  "homepage": "https://example.invalid/public-repository",
+  "repository": "https://example.invalid/public-repository",
+  "license": "CANN-2.0",
+  "dependencies": [
+    "ops-direct-invoke-skills",
+    "infra-skills"
+  ],
+  "agents": [
+    "./agents/ascendc-kernel-architect.md",
+    "./agents/ascendc-kernel-design-reviewer.md",
+    "./agents/ascendc-kernel-developer.md",
+    "./agents/ascendc-kernel-reviewer.md"
+  ]
+}

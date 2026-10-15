@@ -1,0 +1,14 @@
+{
+  "derivation": "automatic_anticheat_verdicts + final_integrity_metadata -> final_integrity_results",
+  "inputs": {
+    "automatic_anticheat_verdicts.csv": "cf886abcb28c1e819df4b9e883a959b253f77443e342635973debe1713d2cc5d",
+    "integrity_resolution_reasons.csv": "43df14a66519f33f30ff46eb5ed1836e7e0412ce987d16de27c25f611e5c5eab"
+  },
+  "output": {
+    "final_integrity_results.csv": "07bc26673906f83290bcecbcb8a2a57ca9be892707e107370a8374181a3fbd58"
+  },
+  "schema_version": 1,
+  "script": {
+    "build_final_integrity_results.py": "1675c471995af80d4070b2491081c271eceefef70c5560cfcf95dce24d165b57"
+  }
+}

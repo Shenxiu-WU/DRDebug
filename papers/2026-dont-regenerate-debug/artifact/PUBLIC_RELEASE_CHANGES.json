@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "paper": "arXiv:2608.02712",
+  "release_date": "2026-10-16",
+  "source_manifest_sha256": "0ad7ebfa4981bce6a187e16500c56772433fd700ac02ee8c18a992e58b425453",
+  "source_manifest_entries": 618,
+  "changes": [
+    {
+      "path": "KNOWN_LIMITATIONS.md",
+      "source_sha256": null,
+      "release_sha256": "439758c1a4f2edd9eba021610ee2731832019c72ac3a10d34214c9115f892463",
+      "reason": "Describe the released scope, reproduction limits, and available public protocol."
+    },
+    {
+      "path": "README.md",
+      "source_sha256": "59385c87748007d5f6416b2c9ad8187ad6efc8e35969f4b8d40b513e2009331b",
+      "release_sha256": "b2fbe2e8d21fda141e3de5f6d7a9f7c8dd413593473822034b15ac851bf25727",
+      "reason": "Describe the released scope, reproduction limits, and available public protocol."
+    },
+    {
+      "path": "code/README.md",
+      "source_sha256": "f5ad0481c5dfc818bf6b57864198e58bf6c9a0f7367155089454deebada5a576",
+      "release_sha256": "24a5da6f52caf084932b65c7f11e91a04bb15d191387b44a518e2f1ea208b543",
+      "reason": "Describe the released scope, reproduction limits, and available public protocol."
+    },
+    {
+      "path": "code/cannbot/experiment_harness/shared/prepare_qwen_k3_supplement.py",
+      "source_sha256": "a53890c1a2eb1e2fe92fbbe9372d05aa690af337a653535277fb7bbaca58d67d",
+      "release_sha256": "062cc12bb24da743f51c19215a248cac97ddd7efd58c02b518e49be0f48b9a99",
+      "reason": "Replace machine paths or internal provider-slot aliases with neutral placeholders."
+    },
+    {
+      "path": "code/cannbot/experiment_harness/shared/run_debug_fresh.py",
+      "source_sha256": "e0d79fa799a89d7fac4951450d8e2e7901b02be7ee4f8be32224603f85836ca6",
+      "release_sha256": "4847438f0171387df5bf281cf29e657d075e50f8bf87c38a4654ecbc95e89e4c",
+      "reason": "Replace machine paths or internal provider-slot aliases with neutral placeholders."
+    },
+    {
+      "path": "code/cannbot/skills/ascendc-direct-invoke-template/references/kirin_add_template/LICENSE.Apache-2.0",
+      "source_sha256": null,
+      "release_sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+      "reason": "Restore and clarify third-party license and historical-reference provenance."
+    },
+    {
+      "path": "code/cannbot/skills/ascendc-direct-invoke-template/references/kirin_add_template/UPSTREAM.md",
+      "source_sha256": "87e50b01eea57657b0873030bd45914651cdb9050f02d14205f7fcb78ead9730",
+      "release_sha256": "61b903f040d84da1637075d06d2d1d6ccae76700cd186f4674dc3d2dcfd83ea9",
+      "reason": "Restore and clarify third-party license and historical-reference provenance."
+    },
+    {
+      "path": "code/cannbot/skills/ascendc-direct-invoke-template/references/kirin_add_template/UPSTREAM_THIRD_PARTY_NOTICE",
+      "source_sha256": null,
+      "release_sha256": "338e8deae7be287500ee433f6d93226fe2597226651ea3ee5f352b0d7b12cecc",
+      "reason": "Restore and clarify third-party license and historical-reference provenance."
+    },
+    {
+      "path": "code/debug_agent_v5/README_RELEASE.md",
+      "source_sha256": "8948fbd16da549922d906ee16c83d018863820282463389aa7fa0bba08cb1546",
+      "release_sha256": "c7813f60096d421d84fd1cec192bf400d71b7cc33004843be427d386017893b0",
+      "reason": "Describe the released scope, reproduction limits, and available public protocol."
+    },
+    {
+      "path": "code/debug_agent_v5/experiments/v5_ablation/README.md",
+      "source_sha256": "448f5da1bb9de2e0c816c2ca72d3c53ede11d86fbbedcb62f4dc4c031f1746c6",
+      "release_sha256": "20dc40db699b71ffe919047253ab262f54d0a3f3024717acb5cc014a4af8ebbf",
+      "reason": "Describe the released scope, reproduction limits, and available public protocol."
+    },
+    {
+      "path": "code/debug_agent_v5/utils/run_ascendc_debug_batch_cc.md",
+      "source_sha256": "96a420c69cec06e8a7cc7eef93b119018b140d20b6f98ea510140662bff5d6fb",
+      "release_sha256": "eca5359ba728a4fce5a2497d84a5e51ec1c3d5dbf458dca0c3b2d9aa7c2b54f3",
+      "reason": "Replace machine paths or internal provider-slot aliases with neutral placeholders."
+    },
+    {
+      "path": "code/debug_agent_v5/utils/supervise_ascendc_debug_batch_cc_quota.py",
+      "source_sha256": "0209809fcca2b375c9e94b0408092b1bfd4827ddf5fd7c5335ac2d4ea5a749d5",
+      "release_sha256": "bb4daee34f9256bf00c7db235c50375eb72c103b9453e12e9a6a70b278bafb83",
+      "reason": "Replace machine paths or internal provider-slot aliases with neutral placeholders."
+    },
+    {
+      "path": "code/debug_agent_v5/utils/tests/test_v5_asset_paths.py",
+      "source_sha256": "e5e24dcacadb61b6b38c5a3711412fc1f07bf1ab46e92be2a62de0bd6085be90",
+      "release_sha256": "d878fcca18d60285c6354728a86ab6b6636aa36c433ce0406617e025896bf4a5",
+      "reason": "Scope a static asset check to files included in the public artifact."
+    }
+  ],
+  "unchanged_scope": "Experimental CSV/JSON records, knowledge snapshots, representative kernels and repair algorithms are preserved. Path/default aliases, documentation, a static asset test and license notices have publication-only changes."
+}

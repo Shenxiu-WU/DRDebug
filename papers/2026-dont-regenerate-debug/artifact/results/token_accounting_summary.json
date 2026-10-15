@@ -1,0 +1,139 @@
+{
+  "rq1_rq2": {
+    "debug_agent_qwen": {
+      "all_tokens_per_attempt": 18959314.0,
+      "all_tokens_per_pass": 28438971.0,
+      "all_tokens_total": 511901478,
+      "attempted_runs": 27,
+      "pass_at_1": 18,
+      "uncached_tokens_per_attempt": 247271.74074074073,
+      "uncached_tokens_per_pass": 370907.6111111111,
+      "uncached_tokens_total": 6676337
+    },
+    "debug_all_token_reduction_vs_regenerate_pass_at_3_per_pass": 0.9284559271294536,
+    "regenerate_qwen_all_81_runs": {
+      "all_tokens_per_attempt": 53981864.97530864,
+      "all_tokens_per_pass": 208215764.9047619,
+      "all_tokens_total": 4372531063,
+      "attempted_runs": 81,
+      "pass_at_1": 21,
+      "uncached_tokens_per_attempt": 434908.13580246916,
+      "uncached_tokens_per_pass": 1677502.8095238095,
+      "uncached_tokens_total": 35227559
+    },
+    "regenerate_qwen_pass_at_3_budget": {
+      "all_tokens_per_attempt": 53981864.97530864,
+      "all_tokens_per_pass": 397502823.90909094,
+      "all_tokens_total": 4372531063,
+      "attempted_runs": 81,
+      "pass_at_1": 11,
+      "uncached_tokens_per_attempt": 434908.13580246916,
+      "uncached_tokens_per_pass": 3202505.3636363638,
+      "uncached_tokens_total": 35227559
+    }
+  },
+  "rq3": {
+    "CBD-K": {
+      "all_tokens_per_attempt": 34085860.18518519,
+      "all_tokens_per_pass": 57519889.0625,
+      "all_tokens_total": 920318225,
+      "attempted_runs": 27,
+      "pass_at_1": 16,
+      "uncached_tokens_per_attempt": 716724.7777777778,
+      "uncached_tokens_per_pass": 1209473.0625,
+      "uncached_tokens_total": 19351569
+    },
+    "CBD-Q": {
+      "all_tokens_per_attempt": 37534815.925925925,
+      "all_tokens_per_pass": 84453335.83333333,
+      "all_tokens_total": 1013440030,
+      "attempted_runs": 27,
+      "pass_at_1": 12,
+      "uncached_tokens_per_attempt": 203624.66666666666,
+      "uncached_tokens_per_pass": 458155.5,
+      "uncached_tokens_total": 5497866
+    },
+    "D-K": {
+      "all_tokens_per_attempt": 7504752.333333333,
+      "all_tokens_per_pass": 9648967.285714285,
+      "all_tokens_total": 202628313,
+      "attempted_runs": 27,
+      "pass_at_1": 21,
+      "uncached_tokens_per_attempt": 375929.81481481483,
+      "uncached_tokens_per_pass": 483338.3333333333,
+      "uncached_tokens_total": 10150105
+    },
+    "D-Q": {
+      "all_tokens_per_attempt": 18959314.0,
+      "all_tokens_per_pass": 28438971.0,
+      "all_tokens_total": 511901478,
+      "attempted_runs": 27,
+      "pass_at_1": 18,
+      "uncached_tokens_per_attempt": 247271.74074074073,
+      "uncached_tokens_per_pass": 370907.6111111111,
+      "uncached_tokens_total": 6676337
+    }
+  },
+  "rq4": {
+    "full": {
+      "all_tokens_per_attempt": 18959314.0,
+      "all_tokens_per_pass": 28438971.0,
+      "all_tokens_total": 511901478,
+      "attempted_runs": 27,
+      "pass_at_1": 18,
+      "uncached_tokens_per_attempt": 247271.74074074073,
+      "uncached_tokens_per_pass": 370907.6111111111,
+      "uncached_tokens_total": 6676337
+    },
+    "minus_adaptive_scheduling": {
+      "all_tokens_per_attempt": 13602810.74074074,
+      "all_tokens_per_pass": 20404216.111111112,
+      "all_tokens_total": 367275890,
+      "attempted_runs": 27,
+      "pass_at_1": 18,
+      "uncached_tokens_per_attempt": 164974.2962962963,
+      "uncached_tokens_per_pass": 247461.44444444444,
+      "uncached_tokens_total": 4454306
+    },
+    "minus_anti_cheat": {
+      "all_tokens_per_attempt": 14851742.888888888,
+      "all_tokens_per_pass": 28642647.0,
+      "all_tokens_total": 400997058,
+      "attempted_runs": 27,
+      "pass_at_1": 14,
+      "uncached_tokens_per_attempt": 168614.88888888888,
+      "uncached_tokens_per_pass": 325185.85714285716,
+      "uncached_tokens_total": 4552602
+    },
+    "minus_diagnostic": {
+      "all_tokens_per_attempt": 17944863.666666668,
+      "all_tokens_per_pass": 32300754.6,
+      "all_tokens_total": 484511319,
+      "attempted_runs": 27,
+      "pass_at_1": 15,
+      "uncached_tokens_per_attempt": 198113.66666666666,
+      "uncached_tokens_per_pass": 356604.6,
+      "uncached_tokens_total": 5349069
+    },
+    "minus_full_evaluation_shadow": {
+      "all_tokens_per_attempt": 16409285.74074074,
+      "all_tokens_per_pass": 36920892.916666664,
+      "all_tokens_total": 443050715,
+      "attempted_runs": 27,
+      "pass_at_1": 12,
+      "uncached_tokens_per_attempt": 213301.33333333334,
+      "uncached_tokens_per_pass": 479928.0,
+      "uncached_tokens_total": 5759136
+    },
+    "minus_kb": {
+      "all_tokens_per_attempt": 21671236.740740743,
+      "all_tokens_per_pass": 45009491.692307696,
+      "all_tokens_total": 585123392,
+      "attempted_runs": 27,
+      "pass_at_1": 13,
+      "uncached_tokens_per_attempt": 235823.7037037037,
+      "uncached_tokens_per_pass": 489787.6923076923,
+      "uncached_tokens_total": 6367240
+    }
+  }
+}
