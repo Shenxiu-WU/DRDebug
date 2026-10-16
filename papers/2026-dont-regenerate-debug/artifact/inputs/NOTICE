@@ -1,0 +1,5 @@
+DRDebug paper original near-miss input companion
+
+The original wrappers and kernel sources are retained with the project license and all file-level notices. Historical NPUKernelBench reference programs and case specifications are separately attributed under Apache-2.0; the exact historical upstream revision is not asserted. See https://github.com/weich97/NPUKernelBench and ../../dataset/NOTICE for the source declaration and standard license-text provenance. The project MIT license does not replace third-party licenses.
+
+Every task carries its license texts and SOURCE_NOTICE.md so a prepared working copy retains attribution. These license/notice files are supplemental redistribution metadata, not original experimental input files. No model logs, credentials or machine configuration are included.

@@ -9,6 +9,7 @@
 
 <p align="center">
   <a href="https://shenxiu-wu.github.io/DRDebug/"><img src="https://img.shields.io/badge/Website-DRDebug-6a50a8?style=flat-square" alt="Project website"></a>
+  <a href="#install-the-skill"><img src="https://img.shields.io/badge/Skill-Claude_Code_%C2%B7_Codex-6a50a8?style=flat-square" alt="Install the DRDebug skill"></a>
   <a href="https://arxiv.org/abs/2608.02712"><img src="https://img.shields.io/badge/arXiv-2608.02712-9b5769?style=flat-square" alt="Paper on arXiv"></a>
   <a href="papers/2026-dont-regenerate-debug/artifact/"><img src="https://img.shields.io/badge/Artifact-Frozen-586c88?style=flat-square" alt="Frozen paper artifact"></a>
   <a href="papers/2026-dont-regenerate-debug/dataset/"><img src="https://img.shields.io/badge/Dataset-27_tasks-5c7e68?style=flat-square" alt="27 paper tasks and input cases"></a>
@@ -28,7 +29,7 @@
 
 <p align="center">
   <strong>English</strong> · <a href="README.zh-CN.md">简体中文</a> &nbsp; | &nbsp;
-  <a href="#how-it-works">Method</a> · <a href="#research">Research</a> · <a href="#cannbench-results">CANNBench</a> · <a href="#reproduce">Reproduce</a>
+  <a href="#install-the-skill">Install</a> · <a href="#how-it-works">Method</a> · <a href="#research">Research</a> · <a href="#cannbench-results">CANNBench</a> · <a href="#reproduce">Reproduce</a>
 </p>
 
 DRDebug starts with a kernel that nearly works. It uses failure evidence to repair the existing implementation, with deterministic validation deciding whether a change is accepted. This repository brings together the papers, released artifacts and public results of the DRDebug research series.
@@ -36,6 +37,7 @@ DRDebug starts with a kernel that nearly works. It uses failure evidence to repa
 | Start here | What you will find |
 | --- | --- |
 | [Project website](https://shenxiu-wu.github.io/DRDebug/) | An illustrated repair example, system overview and interactive results |
+| [Install the skill](#install-the-skill) | A self-contained paper-edition repair engine for Claude Code or Codex |
 | [Paper and method](#research) | The precision-repair study, frozen source and experiment records |
 | [Reproduce and inspect](#reproduce) | CPU table reproduction and verification of the paper’s task data |
 
@@ -52,13 +54,33 @@ The **large language model proposes a targeted patch**. The **deterministic engi
 
 Acceptance requires full numerical testing and an integrity check. Explore the [released method source](papers/2026-dont-regenerate-debug/artifact/code/debug_agent_v5/README_RELEASE.md) or the [paper’s detailed architecture](website/assets/research/architecture-overview.svg).
 
+## Install the skill
+
+**One skill, the paper’s repair loop.** [`drdebug`](skills/drdebug/SKILL.md) brings the deterministic engine, diagnostic tools, full validation, checkpoint/rollback and a public precision-knowledge seed into your agent’s workflow. Installation also includes ten historical reference examples (seven with AscendC kernels).
+
+```bash
+git clone https://github.com/Shenxiu-WU/DRDebug.git
+cd DRDebug
+./install.sh --codex    # or: ./install.sh --claude
+```
+
+The installer copies a self-contained skill to `~/.agents/skills/drdebug` (Codex) or `~/.claude/skills/drdebug` (Claude Code). It bundles the public paper runtime, so the installed skill keeps working if you move the checkout. Use `--project /path/to/project` for a project install, `--dest DIR` for a custom skill parent, or `--dry-run` to inspect the destination. Existing installations are preserved; `--force` updates with a backup.
+
+Then ask your agent:
+
+> Use drdebug to check my Ascend environment, prepare a separate workspace for this failing kernel, and repair it from the failure evidence.
+
+**Installation needs Python 3.10+ and no Python packages.** Actual repairs need a user-supplied AscendC task, Linux + Ascend NPU, compatible CANN/AscendC and PyTorch/torch_npu, and an authenticated Claude Code worker. Codex can guide and launch the skill; the paper engine still uses its Claude Code backend. The installer does not install drivers or configure model access.
+
+Start with `doctor`, then `prepare → run → status`. [Installation & first repair guide](docs/skill-guide.md) · [Skill instructions](skills/drdebug/SKILL.md) · [What the public adapter changes](skills/drdebug/references/runtime.md).
+
 ## Research
 
 ### Don’t Regenerate, Debug
 
 *A Domain-Specific Agent for Repairing Near-Miss Accelerator Kernels* · 2026
 
-[Read the paper](https://arxiv.org/abs/2608.02712) · [PDF](https://arxiv.org/pdf/2608.02712) · [Code & results](papers/2026-dont-regenerate-debug/artifact/) · [Tasks & cases](papers/2026-dont-regenerate-debug/dataset/)
+[Read the paper](https://arxiv.org/abs/2608.02712) · [PDF](https://arxiv.org/pdf/2608.02712) · [Code & results](papers/2026-dont-regenerate-debug/artifact/) · [Tasks & cases](papers/2026-dont-regenerate-debug/dataset/) · [Initial kernels & wrappers](papers/2026-dont-regenerate-debug/artifact/inputs/)
 
 A controlled study on **27 frozen near-miss operators** from [NPUKernelBench](https://github.com/weich97/NPUKernelBench/tree/master), using `Qwen3.8-max-preview`:
 
@@ -90,24 +112,26 @@ The official aggregate is **Debug-Agent Claude Code Kimi K3**. Passed-case ranki
 
 ## Reproduce
 
-**Python 3.10+ · standard library only** for the two checks below. Run from the repository root:
+**Python 3.10+ · standard library only** for the checks below. Run from the repository root:
 
 ```bash
 git clone https://github.com/Shenxiu-WU/DRDebug.git
 cd DRDebug
 python3 -B tools/reproduce_paper.py
 python3 -B papers/2026-dont-regenerate-debug/dataset/verify_dataset.py
+python3 -B tools/verify_paper_inputs.py
 ```
 
 - **Paper tables:** validates the frozen artifact and recomputes statistics in a temporary copy. Outputs are saved to `reproduced/tables.md`, `summary.json` and the accompanying analysis files. For another run, choose a fresh directory with `--output PATH`.
+- **Initial candidate sources:** verifies all 289 original files across 27 tasks against historical hashes, including 181 kernel files; checks syntax and cases without importing task code.
 - **Task data:** verifies 27 reference implementations, 347 compact and 1,134 full input-case specifications against the frozen manifests. This check reads the files without executing the operators.
 
 <details>
 <summary>Release contents and execution requirements</summary>
 
-The public release supports CPU statistical reproduction, method-source inspection and task-data verification. Full numerical re-execution of the repair study requires additional candidate kernels, runtime assets and the original execution environment; see the artifact’s [known limitations](papers/2026-dont-regenerate-debug/artifact/KNOWN_LIMITATIONS.md).
+The public release supports CPU statistical reproduction, method-source inspection and task-data verification, and now includes 27 byte-verified initial candidate projects plus historical reference examples. Numerical re-execution still requires a compatible runtime and configured model worker; see the artifact’s [known limitations](papers/2026-dont-regenerate-debug/artifact/KNOWN_LIMITATIONS.md).
 
-The separate [dataset companion](papers/2026-dont-regenerate-debug/dataset/README.md) supplies reference code and input specifications. It records provenance, dependencies and the one full-case file whose normalized case set matches while its original bytes have not been recovered. Executing references may require PyTorch, `torch_npu` and compatible Ascend hardware.
+The separate [dataset companion](papers/2026-dont-regenerate-debug/dataset/README.md) supplies reference code and input specifications. All 81 reference/case files now match their historical frozen byte hashes, with provenance and dependency records. Executing references may require PyTorch, `torch_npu` and compatible Ascend hardware.
 
 </details>
 
@@ -138,10 +162,11 @@ Open <http://localhost:8000>. Website source is maintained directly in [`website
 | --- | --- |
 | [`papers/2026-dont-regenerate-debug/artifact/`](papers/2026-dont-regenerate-debug/artifact/) | Frozen method code, experiment records and analysis scripts |
 | [`papers/2026-dont-regenerate-debug/dataset/`](papers/2026-dont-regenerate-debug/dataset/) | Reference implementations, input cases, provenance and verification |
+| [`skills/drdebug/`](skills/drdebug/) | Installable skill, portable launcher and task contract |
 | [`tools/`](tools/) | CPU reproduction entry point |
 | [`website/`](website/) | The project website and dated CANNBench snapshot |
 
-Each paper has its own directory under `papers/`. Frozen artifacts retain their release tags; website and documentation updates are maintained separately.
+Each paper has its own directory under `papers/`. Published paper versions retain their release tags. Restored source materials are documented in the artifact’s public release changes; website and skill updates are maintained alongside them.
 
 ## Citation
 

@@ -42,6 +42,10 @@
     for (const item of attributes) item.node.setAttribute(item.attr,item[language]);
     for (const button of document.querySelectorAll("[data-language]")) button.setAttribute("aria-pressed",String(button.dataset.language === language));
     renderStage();
+    const skillGuide = document.querySelector(".skill-guide");
+    if (skillGuide) skillGuide.href = `https://github.com/Shenxiu-WU/DRDebug/blob/main/docs/skill-guide${language === "zh" ? ".zh-CN" : ""}.md`;
+    const copyStatus = document.getElementById("skill-copy-status");
+    if (copyStatus) copyStatus.textContent = "";
     document.dispatchEvent(new CustomEvent("site:language",{detail:{lang:language}}));
     try { localStorage.setItem("debug-agent-language",language); } catch (_) { /* Storage is optional. */ }
   }
@@ -58,6 +62,23 @@
   });
   document.getElementById("close-figure").addEventListener("click",() => dialog.close());
   dialog.addEventListener("click",event => { if(event.target === dialog) {const r = dialog.getBoundingClientRect(); if(event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close();} });
+  for (const button of document.querySelectorAll("[data-install-host]")) button.addEventListener("click", () => {
+    const host = button.dataset.installHost === "claude" ? "claude" : "codex";
+    document.getElementById("skill-install-command").textContent = `git clone https://github.com/Shenxiu-WU/DRDebug.git\ncd DRDebug\n./install.sh --${host}`;
+    document.getElementById("skill-install-destination").textContent = host === "codex" ? "~/.agents/skills/drdebug" : "~/.claude/skills/drdebug";
+    for (const target of document.querySelectorAll("[data-install-host]")) target.setAttribute("aria-pressed", String(target.dataset.installHost === host));
+    document.getElementById("skill-copy-status").textContent = "";
+  });
+  for (const button of document.querySelectorAll("[data-copy-target]")) button.addEventListener("click", async () => {
+    const command = document.getElementById(button.dataset.copyTarget);
+    const status = document.getElementById("skill-copy-status");
+    try {
+      await navigator.clipboard.writeText(command.textContent);
+      status.textContent = language === "zh" ? "安装命令已复制。" : "Installation commands copied.";
+    } catch (_) {
+      status.textContent = language === "zh" ? "可选中上方命令，手动复制。" : "Select the commands above to copy them manually.";
+    }
+  });
   let initial = "zh";
   try { if(localStorage.getItem("debug-agent-language") === "en") initial = "en"; } catch (_) { /* Chinese remains the default. */ }
   setLanguage(initial);

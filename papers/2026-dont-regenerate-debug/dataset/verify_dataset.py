@@ -11,7 +11,6 @@ import sys
 
 ROOT = Path(__file__).resolve().parent
 COHORT = ROOT.parent / "artifact/manifests/frozen_27_operators.csv"
-RAW_BYTE_EXCEPTION = "level2/020_FusedRopeWithQkNormAndKvCacheUpdate"
 SUPPORT_FILES = {"README.md", "PROVENANCE.json", "NOTICE", "LICENSE-APACHE-2.0.txt",
                  "verify_dataset.py"}
 
@@ -115,12 +114,8 @@ def verify():
                     == frozen[f"{role}_case_set_sha256"], "Frozen normalized case-set mismatch")
             raw_exact = actual_sha == entry["frozen_byte_sha256"]
             require(raw_exact == entry["byte_matches_frozen"], "Incorrect byte-identity declaration")
-            if not raw_exact:
-                require(role == "full" and identifier == RAW_BYTE_EXCEPTION,
-                        "Unexpected frozen byte-hash mismatch")
-                summary["raw_byte_exceptions"].append(identifier)
-            else:
-                summary[f"{role}_byte_exact"] += 1
+            require(raw_exact, "Case file differs from the original frozen byte hash")
+            summary[f"{role}_byte_exact"] += 1
             summary[f"{role}_case_set_exact"] += 1
             summary[f"{role}_cases"] += count
     require(set(expected) == tasks | SUPPORT_FILES, "Companion contains unapproved files")

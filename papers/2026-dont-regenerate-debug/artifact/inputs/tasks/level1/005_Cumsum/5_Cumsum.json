@@ -1,0 +1,10 @@
+{"inputs": [{"name": "x", "type": "tensor", "required": true, "dtype": "float32", "shape": [128]}, {"name": "dim", "type": "attr", "required": true, "dtype": "int", "value": 0}]}
+{"inputs": [{"name": "x", "type": "tensor", "required": true, "dtype": "float16", "shape": [128, 128]}, {"name": "dim", "type": "attr", "required": true, "dtype": "int", "value": 0}]}
+{"inputs": [{"name": "x", "type": "tensor", "required": true, "dtype": "float16", "shape": [256, 256]}, {"name": "dim", "type": "attr", "required": true, "dtype": "int", "value": -1}]}
+{"inputs": [{"name": "x", "type": "tensor", "required": true, "dtype": "bfloat16", "shape": [64, 64]}, {"name": "dim", "type": "attr", "required": true, "dtype": "int", "value": -1}]}
+{"inputs": [{"name": "x", "type": "tensor", "required": true, "dtype": "float32", "shape": [4096, 18432]}, {"name": "dim", "type": "attr", "required": true, "dtype": "int", "value": 1}]}
+{"inputs": [{"name": "x", "type": "tensor", "required": true, "dtype": "float32", "shape": [64, 64, 64]}, {"name": "dim", "type": "attr", "required": true, "dtype": "int", "value": 1}]}
+{"inputs": [{"name": "x", "type": "tensor", "required": true, "dtype": "bfloat16", "shape": [7, 15, 23]}, {"name": "dim", "type": "attr", "required": true, "dtype": "int", "value": 0}]}
+{"inputs": [{"name": "x", "type": "tensor", "required": true, "dtype": "float32", "shape": [16, 16, 16, 16]}, {"name": "dim", "type": "attr", "required": true, "dtype": "int", "value": -1}]}
+{"inputs": [{"name": "x", "type": "tensor", "required": true, "dtype": "float16", "shape": [3, 5, 7, 11]}, {"name": "dim", "type": "attr", "required": true, "dtype": "int", "value": 0}]}
+{"inputs": [{"name": "x", "type": "tensor", "required": true, "dtype": "float16", "shape": [1, 3, 224, 224]}, {"name": "dim", "type": "attr", "required": true, "dtype": "int", "value": 2}]}

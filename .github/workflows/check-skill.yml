@@ -1,0 +1,44 @@
+name: Check public skill and paper assets
+
+on:
+  push:
+    paths:
+      - "skills/**"
+      - "tools/**"
+      - "tests/**"
+      - "papers/**"
+      - "install.sh"
+      - ".github/workflows/check-skill.yml"
+  pull_request:
+    paths:
+      - "skills/**"
+      - "tools/**"
+      - "tests/**"
+      - "papers/**"
+      - "install.sh"
+      - ".github/workflows/check-skill.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cpu-checks:
+    runs-on: ubuntu-24.04
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check installer syntax and CPU behavior
+        run: |
+          sh -n install.sh
+          python3 -B -m unittest discover -s tests -q
+      - name: Verify released bytes and initial inputs
+        run: |
+          python3 -B papers/2026-dont-regenerate-debug/artifact/scripts/verify_manifest.py
+          python3 -B papers/2026-dont-regenerate-debug/dataset/verify_dataset.py
+          python3 -B tools/verify_paper_inputs.py
+      - name: Recompute paper tables in a disposable copy
+        run: python3 -B tools/reproduce_paper.py --output "$RUNNER_TEMP/paper-reproduction"
+      - name: Ensure checks kept source files intact
+        run: git diff --exit-code

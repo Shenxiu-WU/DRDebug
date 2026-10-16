@@ -1,12 +1,14 @@
 # Known Limitations of the Research Artifact
 
-This frozen artifact supports CPU recomputation from the supplied CSVs and inspection of the supplied method source. It is not the complete Debug-Agent framework or a self-contained environment for rerunning the original NPU repair study. These limits do not change the frozen result rows or method algorithms.
+This artifact supports CPU recomputation from the frozen CSVs, inspection of the paper method source, and preparation of the recovered 27 initial repair tasks. The 2026-10-17 public supplement restores task inputs and historical reference examples; it leaves the experimental result rows and engine algorithms unchanged. It does not bundle a self-contained NPU/model execution environment or the original provider journals.
 
 ## Numerical results and task assets
 
-The 27-operator manifest records operator identities, compact/full case counts, and case-set hashes. The original task projects, reference `model.py` implementations, compact/full case files, before-repair kernel sources, and complete candidate corpus are not included. The package also lacks the complete per-case numerical execution logs needed to independently revalidate the frozen outcomes.
+The 27-operator manifest records operator identities, compact/full case counts, and case-set hashes. [inputs/](inputs/README.md) now contains the 27 original initial task directories: reference `model.py`, compact/full input files, initial `model_new_ascendc.py` wrappers and 181 kernel files. Their source bytes are checked against the historical frozen input manifest. The separate task-data companion also now recovers all 81 reference/case files byte-for-byte, including the previously normalized-only full-case file.
 
-Ascend C, device/runtime binaries, and provider credentials are external requirements, but supplying them alone does not make this artifact an end-to-end rerun package. Historical `/workspace/...` and other redacted deployment paths can refer to assets that were not released.
+The complete corpus of later repair/regeneration candidates and per-case execution logs is still not included. Source identity establishes which initial files were frozen; it does not independently reproduce every numerical outcome in the recorded result CSVs.
+
+Ascend C, compatible device/runtime binaries, PyTorch/torch_npu and model access are external requirements. The installable DRDebug adapter prepares a fresh workspace and launches the released single-task engine using supplied tasks; it does not recreate the historical batch infrastructure or certify the original environment. Historical `/workspace/...` and redacted deployment paths are inspection records rather than working public defaults.
 
 ## Integrity metadata
 
@@ -24,16 +26,18 @@ Likewise, `scripts/reproduce_tables.py` counts the supplied `long_failure` label
 
 ## Final implementation examples
 
-`diffs/representative_successful_repairs/` contains three final kernel examples. In each, the before/after Python wrappers are identical and `wrapper.patch` is empty. Before-repair kernels are not included, so the directory cannot establish the actual kernel patch or reproduce the failure-to-fix transition. The examples also lack their original reference and test assets. Their `final_kernel/` layout is an inspection layout, not a ready-to-run task directory.
+`diffs/representative_successful_repairs/` contains three final kernel examples. In each, the before/after Python wrappers are identical and `wrapper.patch` is empty. This final-example directory is still an inspection layout, not a ready-to-run task. The corresponding original initial candidates and test assets are now in `inputs/tasks/`. The supplied empty wrapper patches do not by themselves document the complete kernel repair trajectory or independently certify a new failure-to-fix run.
 
 ## Historical harness dependencies
 
-The method source and launch scripts retain their historical external-asset assumptions. For example, `code/cannbot/experiment_harness/shared/setup_remote_assets.sh` reads `skills/ascendc/ascendc-debug/references/precision_knowledge_base.json`, which is not supplied. The separate initial fixture (`initial_kb_102_cleaned_20260715.json`) and `old_precision_knowledge_base.json` are retained, but are not substitutes for that missing canonical dependency. This public copy does not fabricate the missing KB or claim to have repaired the NPU rerun chain.
+The historical batch launch scripts retain external-asset assumptions. The worker’s `archive_tasks/` reference tree is now restored at [code/debug_agent_v5/archive_tasks/](code/debug_agent_v5/archive_tasks/README.md), containing ten historical examples, seven with AscendC kernels. Its Git-tree identity and per-file hashes are supplied; no fresh NPU qualification is asserted.
+
+ For example, `code/cannbot/experiment_harness/shared/setup_remote_assets.sh` reads `skills/ascendc/ascendc-debug/references/precision_knowledge_base.json`, which is not supplied. The separate initial fixture (`initial_kb_102_cleaned_20260715.json`) and `old_precision_knowledge_base.json` are retained, but are not substitutes for that missing canonical dependency. The installable adapter explicitly uses the public initial fixture as a read-only seed; it does not assert that the missing historical canonical dependency has been reconstructed. The batch harness remains a historical source snapshot.
 
 The internal master-design document is also omitted. The public configuration map is in [the ablation contract](code/ablation_protocol/README.md). The asset-path unit test checks that internal document only when it exists; the checks over all packaged control files remain active.
 
 ## Source identity and checksum scope
 
-`MANIFEST.sha256` identifies the released file contents. It does not prove which private historical branch revision was executed. `manifests/source_provenance.json` retains source descriptions and digests; the corresponding upstream source records are not bundled or independently resolved by the CPU scripts.
+`MANIFEST.sha256` identifies the current released file contents, including the documented public supplement. The previous public artifact remains available at Git tag `paper-2608.02712-v1`; its original manifest is not rewritten by changes in this working revision. It does not prove which private historical branch revision was executed. `manifests/source_provenance.json` retains source descriptions and digests; the corresponding upstream source records are not bundled or independently resolved by the CPU scripts.
 
 Run checksum verification on an untouched copy. For analysis, use a disposable working copy: `build_final_integrity_results.py` rewrites the canonical final-integrity CSV and its manifest, and the analysis scripts add `reproduced/` outputs. The optional `--refresh-canonical` analysis flag additionally rewrites canonical statistics files. A changed working copy is distinct from the frozen release.

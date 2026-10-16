@@ -1,0 +1,42 @@
+#include "moe_finalize_routing_kernel.h"
+
+extern "C" __global__ __aicore__ void moe_finalize_routing_custom_bf16(
+    GM_ADDR expanded_permuted_rows,
+    GM_ADDR scales,
+    GM_ADDR expanded_src_to_dst_row,
+    GM_ADDR export_for_source_row,
+    GM_ADDR bias,
+    GM_ADDR skip1,
+    GM_ADDR skip2,
+    GM_ADDR output,
+    GM_ADDR tiling)
+{
+    KERNEL_TASK_TYPE_DEFAULT(KERNEL_TYPE_MIX_AIC_1_2);
+    AscendC::TPipe pipe;
+    MoeFinalizeRoutingKernel<bfloat16_t> kernel;
+    kernel.Init(expanded_permuted_rows, scales,
+                expanded_src_to_dst_row, export_for_source_row,
+                bias, skip1, skip2, output, tiling, &pipe);
+    kernel.Process();
+}
+
+#ifndef ASCENDC_CPU_DEBUG
+extern "C" void moe_finalize_routing_do_bf16(
+    uint32_t blockDim,
+    void *stream,
+    uint8_t *expanded_permuted_rows,
+    uint8_t *scales,
+    uint8_t *expanded_src_to_dst_row,
+    uint8_t *export_for_source_row,
+    uint8_t *bias,
+    uint8_t *skip1,
+    uint8_t *skip2,
+    uint8_t *output,
+    uint8_t *tiling)
+{
+    moe_finalize_routing_custom_bf16<<<blockDim, nullptr, stream>>>(
+        expanded_permuted_rows, scales,
+        expanded_src_to_dst_row, export_for_source_row,
+        bias, skip1, skip2, output, tiling);
+}
+#endif

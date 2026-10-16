@@ -6,7 +6,8 @@ Domain-Specific Agent for Repairing Near-Miss Accelerator Kernels*
 ([paper](https://arxiv.org/abs/2608.02712)). It adds data beside the previously
 released `artifact/`; it does not change that frozen artifact or its results.
 
-Supplemental dataset release: 2026-10-16. Its verifier checks the released files
+Supplemental dataset release: 2026-10-16; complete byte identity restored on
+2026-10-17. Its verifier checks the released files
 without running NPU experiments, generating candidates, or calling providers.
 
 ## Scope
@@ -19,7 +20,7 @@ It contains L1: 8, L2: 9, L3: 6, L5: 2, L6: 1, and L7: 1 operators.
 | --- | ---: | --- |
 | Reference `model.py` | 27 files | 27/27 original frozen byte hashes match |
 | Compact input cases | 27 files / 347 rows | 27/27 original byte hashes and normalized case-set hashes match |
-| Full input cases | 27 files / 1134 rows | 27/27 normalized case-set hashes match; 26/27 original byte hashes match |
+| Full input cases | 27 files / 1134 rows | 27/27 original byte hashes and normalized case-set hashes match |
 
 Each `tasks/<level>/<operator>/` contains exactly its frozen `model.py`, the
 historical active case filename such as `3_Add.json`, and the full-case filename
@@ -28,13 +29,12 @@ the separate files preserve their distinct protocol roles. The files contain
 shape, dtype, and attribute descriptors, not serialized random tensors or RNG
 states. The task code constructs actual inputs in its execution environment.
 
-The single raw-byte exception is the full input file of
-`level2/020_FusedRopeWithQkNormAndKvCacheUpdate`: all 58 cases match the frozen
-normalized multiset hash, but the original file bytes have not been recovered.
-Normalization ignores JSON formatting and row order; neither the original
-formatting nor the original row order is certified by that match. Both original
-expected and released byte hashes are recorded, without rewriting the expected
-value or claiming byte identity.
+All 81 reference/case files now match their original frozen byte hashes. The full
+input file of `level2/020_FusedRopeWithQkNormAndKvCacheUpdate`, initially released
+with equivalent normalized cases, was recovered from the historical input archive
+on 2026-10-17. Its original formatting and row order are restored as well as its
+58-case multiset. The expected historical hash is unchanged; provenance records
+the previous released hash and this byte-exact recovery.
 
 ## Verify on a CPU machine
 
@@ -76,9 +76,11 @@ companion does not modify frozen sources or provide a new execution adapter.
 Only reference code and case descriptors are included. Near-miss candidates,
 optimized or repaired kernels, generated outputs, execution logs, agents,
 skills, provider configuration, and the complete experiment runtime are outside
-this companion. It is not an end-to-end rerun package. The original artifact's
-other limitations still apply; the original task-asset omission is addressed
-only by this separately identified companion.
+this companion. It is not an end-to-end rerun package. The original candidate
+kernels, wrappers, references, and cases are now restored together in
+[`artifact/inputs`](../artifact/inputs/README.md). The artifact's remaining
+execution limitations are documented in its
+[`KNOWN_LIMITATIONS.md`](../artifact/KNOWN_LIMITATIONS.md).
 
 ## Attribution and license provenance
 
@@ -93,8 +95,8 @@ exact historical upstream revision. Existing source comments remain intact;
 the private development project's MIT license is not assigned to these assets.
 
 [`PROVENANCE.json`](PROVENANCE.json) records public source URLs, historical
-relative source paths, expected hashes, released hashes, and the single raw-byte
-exception. Historical workspace paths are relative provenance identifiers, not
+relative source paths, expected hashes, released hashes, and the completed raw-byte
+recovery. Historical workspace paths are relative provenance identifiers, not
 public-repository links. Machine absolute paths, credentials, and server
 identifiers are excluded. No claim is made that current upstream HEAD has the
 same bytes as these frozen historical files.

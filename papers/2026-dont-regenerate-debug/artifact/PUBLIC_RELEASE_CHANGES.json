@@ -84,5 +84,60 @@
       "reason": "Scope a static asset check to files included in the public artifact."
     }
   ],
-  "unchanged_scope": "Experimental CSV/JSON records, knowledge snapshots, representative kernels and repair algorithms are preserved. Path/default aliases, documentation, a static asset test and license notices have publication-only changes."
+  "unchanged_scope": "Experimental CSV/JSON records, knowledge snapshots, representative kernels and repair algorithms are preserved. Path/default aliases, documentation, a static asset test and license notices have publication-only changes.",
+  "latest_public_supplement_date": "2026-10-17",
+  "public_supplements": [
+    {
+      "date": "2026-10-17",
+      "previous_public_commit": "9dfe811840e9363cd7a61018ca36312acd09e662",
+      "previous_public_manifest_sha256": "780fc5bcafd92bdadf4123e4dad8af4cd9eb7a20b808712192d78e411da20ad3",
+      "preserved_previous_release_tag": "paper-2608.02712-v1",
+      "description": "Restore historical operator reference cases and all 27 initial repair tasks into this artifact; add portable skill outside the artifact.",
+      "restored_inputs": {
+        "path": "inputs",
+        "operators": 27,
+        "original_task_files": 289,
+        "initial_wrappers": 27,
+        "initial_kernel_files": 181,
+        "reference_files": 27,
+        "case_files": 54,
+        "historical_manifest_sha256": "d905ab31d47b0074cc5bb3718eea92ebb4fc20a8ea0de76a451d55524dde1f45",
+        "manifest_sha256": "3fe4c19239962590aa5dfddcb27b14b888931b9e3903d762defa87c98c1989d0"
+      },
+      "restored_references": {
+        "path": "code/debug_agent_v5/archive_tasks",
+        "examples": 10,
+        "with_ascendc_kernel": 7,
+        "original_source_files": 117,
+        "historical_git_commit": "ec3c277672dec41d23eae33d04c187f3e8ce0fed",
+        "historical_git_tree": "f453be76a4b1685b0f434b729b3c560eb968c022",
+        "manifest_sha256": "db9f6d50688d08615e1336920e4fc9a454b7b3268bb1d7c5f6122bdca42bac1e"
+      },
+      "documentation_updates": [
+        {
+          "path": "README.md",
+          "previous_public_sha256": "b2fbe2e8d21fda141e3de5f6d7a9f7c8dd413593473822034b15ac851bf25727",
+          "supplement_sha256": "24f589472a1b259e234ffcf4a7b4c466ae3c6db04bb873b8bf6b1511e04d153f"
+        },
+        {
+          "path": "KNOWN_LIMITATIONS.md",
+          "previous_public_sha256": "439758c1a4f2edd9eba021610ee2731832019c72ac3a10d34214c9115f892463",
+          "supplement_sha256": "9960a96dc3b43679b69f9a33790a7f2d309b1c7ed6edd2863f6b272b584eac0a"
+        },
+        {
+          "path": "code/README.md",
+          "previous_public_sha256": "24a5da6f52caf084932b65c7f11e91a04bb15d191387b44a518e2f1ea208b543",
+          "supplement_sha256": "92bac78133f6384e9c2ad1ba6c1df541068e8885ecfaa71c0e94b6bc478332fb"
+        },
+        {
+          "path": "code/debug_agent_v5/README_RELEASE.md",
+          "previous_public_sha256": "c7813f60096d421d84fd1cec192bf400d71b7cc33004843be427d386017893b0",
+          "supplement_sha256": "2d4ff8b20f9d9ca4b813b4baa99bcb3646601cc8cca51b91e8f4a866571459f4"
+        }
+      ],
+      "unchanged": "All previously published engine Python/source algorithms, experiment result rows, token records and original integrity records.",
+      "execution_boundary": "Byte identity and CPU preparation verified; no new model or NPU run is claimed."
+    }
+  ],
+  "changes_scope": "The changes array records the initial 2026-10-16 publication changes. Later material restorations and documentation revisions are recorded in public_supplements."
 }

@@ -49,15 +49,11 @@
     "full_cases": 1134,
     "reference_byte_exact": 27,
     "compact_byte_exact": 27,
-    "full_byte_exact": 26,
+    "full_byte_exact": 27,
     "compact_case_set_exact": 27,
     "full_case_set_exact": 27
   },
-  "raw_byte_exception": {
-    "operator_id": "level2/020_FusedRopeWithQkNormAndKvCacheUpdate",
-    "role": "full",
-    "status": "Original frozen file bytes were not recovered; the released normalized case multiset and count match exactly. Original row order and formatting are not certified."
-  },
+  "raw_byte_exception": null,
   "operators": [
     {
       "operator_id": "level1/003_Add",
@@ -440,12 +436,12 @@
       },
       "full": {
         "path": "tasks/level2/020_FusedRopeWithQkNormAndKvCacheUpdate/20_FusedRopeWithQkNormAndKvCacheUpdate.json.bak",
-        "sha256": "6ff240b440838778a13177908c1e0c39f64c256d58cf4f5ce795b2571028f931",
+        "sha256": "0516f1a0f5def5812db0ee4eb2e7471ed77353a768cdd6341607e0d0169f848a",
         "frozen_byte_sha256": "0516f1a0f5def5812db0ee4eb2e7471ed77353a768cdd6341607e0d0169f848a",
-        "byte_matches_frozen": false,
+        "byte_matches_frozen": true,
         "cases": 58,
         "normalized_case_set_sha256": "84952accb63b933f95c308185f776eee89b07716a65429f74feb2b70fd45ef1c",
-        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level2/20_FusedRopeWithQkNormAndKvCacheUpdate.json",
+        "source_relative_path": ".local-code-archives/20260827/ignored-worktree-residue/outputs/precision_failed_clean33_compare_input_rebuilt_20260522_161422/cases/level2/020_FusedRopeWithQkNormAndKvCacheUpdate/20_FusedRopeWithQkNormAndKvCacheUpdate.json.bak",
         "historical_frozen_relative_path": "tasks/level2/020_FusedRopeWithQkNormAndKvCacheUpdate/20_FusedRopeWithQkNormAndKvCacheUpdate.json.bak"
       }
     },
@@ -869,5 +865,14 @@
         "historical_frozen_relative_path": "tasks/level7/004_NormRopeConcat/4_NormRopeConcat.json.bak"
       }
     }
-  ]
+  ],
+  "byte_identity_completed_on": "2026-10-17",
+  "raw_byte_recovery": {
+    "operator_id": "level2/020_FusedRopeWithQkNormAndKvCacheUpdate",
+    "role": "full",
+    "previous_released_sha256": "6ff240b440838778a13177908c1e0c39f64c256d58cf4f5ce795b2571028f931",
+    "recovered_sha256": "0516f1a0f5def5812db0ee4eb2e7471ed77353a768cdd6341607e0d0169f848a",
+    "source_relative_path": ".local-code-archives/20260827/ignored-worktree-residue/outputs/precision_failed_clean33_compare_input_rebuilt_20260522_161422/cases/level2/020_FusedRopeWithQkNormAndKvCacheUpdate/20_FusedRopeWithQkNormAndKvCacheUpdate.json.bak",
+    "status": "Recovered original file bytes; byte hash and normalized case multiset both match the historical frozen expectations."
+  }
 }

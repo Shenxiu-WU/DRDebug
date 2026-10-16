@@ -1,0 +1,721 @@
+{
+  "schema_version": 1,
+  "source_repository": "https://github.com/duoduoyi6/AscendOpGenAgent",
+  "historical_commit": "ec3c277672dec41d23eae33d04c187f3e8ce0fed",
+  "archive_tree": "f453be76a4b1685b0f434b729b3c560eb968c022",
+  "tree_also_matches_local_source_commit": "beef89f7f161badbe2b682a153b129e4403c478b",
+  "source_recovery": "Locally retained Git objects; remote historical revision not independently fetched for this release.",
+  "license": "Apache-2.0; retain file-level notices",
+  "scope": {
+    "examples": 10,
+    "examples_with_ascendc_kernel": 7,
+    "source_files": 117,
+    "source_bytes": 424548
+  },
+  "historical_identity": "This tree predates the paper submission and contains the reference paths named by the released translator/worker. It is not a per-session record of which files were actually read.",
+  "validation_boundary": "Source identity and structure verified; no fresh NPU execution is asserted.",
+  "files": [
+    {
+      "path": "avg_pool3_d/design/block_level/avg_pool3_d.py",
+      "sha256": "2e6eb1b907be538fcf82bba915008f70b46588d1a82c8270ca3a5f40afbeab73",
+      "git_blob": "eda328842fb5c666b4d4eaf63cd7e9f2dfcfebc6",
+      "bytes": 12808
+    },
+    {
+      "path": "avg_pool3_d/design/tile_level/avg_pool3_d.py",
+      "sha256": "839c7cff311d2882664ada3a66a02c1d932256f8464ad2b28af23600c2e45ac6",
+      "git_blob": "bd49a34ecd3a1acb8af2dbf3a28fbc08563fcbef",
+      "bytes": 20359
+    },
+    {
+      "path": "avg_pool3_d/kernel/avg_pool3_d_generic.cpp",
+      "sha256": "f1264daa2b0340f06ebfe11a874d754708f33b4d6b471b0dd4a8b9154a2e0dac",
+      "git_blob": "894e1fb46a2bdd4b311eaacd2b7ad9cc369317ff",
+      "bytes": 551
+    },
+    {
+      "path": "avg_pool3_d/kernel/avg_pool3_d_generic_kernel.h",
+      "sha256": "4b64b6045824ef64d7735a63a9654c325f8aeb2f7be1b30290f073088033c6a0",
+      "git_blob": "9f23e5b908c2bd510c0591b17ccccdd98eb3365e",
+      "bytes": 6455
+    },
+    {
+      "path": "avg_pool3_d/kernel/avg_pool3_d_multi_w.cpp",
+      "sha256": "ea25d54ad7f2bda222a2cd2f3bb94a3af53a08090750aaa74416e794aae07a53",
+      "git_blob": "e5943adcc20ac5e933dffd2af8d05cef8d3e5f53",
+      "bytes": 550
+    },
+    {
+      "path": "avg_pool3_d/kernel/avg_pool3_d_multi_w_kernel.h",
+      "sha256": "7d49c55b9e2d10058da81af6d226cc23a4eb9692c79461ff7f95928b278611d5",
+      "git_blob": "77bf23ad8bd6f1aa9e2f6fa2ebeaaa8ec42e38dd",
+      "bytes": 6454
+    },
+    {
+      "path": "avg_pool3_d/kernel/avg_pool3_d_reduce_d.cpp",
+      "sha256": "adffd1ec1e754f44f8beb1f2ad845ce0f62aa1cc9ee4c96d0de835ecc09127ea",
+      "git_blob": "094585e110ca9c20f243f5d47ff04e8c100c61a6",
+      "bytes": 555
+    },
+    {
+      "path": "avg_pool3_d/kernel/avg_pool3_d_reduce_d_kernel.h",
+      "sha256": "3be4e45949f9b8f348e16067123d3688cf7db2732ee6b417c8b0125160b225f5",
+      "git_blob": "87e5d6b057eeff6636a67e35756587f9d86ed9a0",
+      "bytes": 5687
+    },
+    {
+      "path": "avg_pool3_d/kernel/avg_pool3_d_split_c.cpp",
+      "sha256": "4480b494488b1e92cb3e9e536cb1570c42bffa79c7d8bc2678ccbba0ebeebe82",
+      "git_blob": "1ecfc14d5d6e34244287baf42756e5cc488e6d23",
+      "bytes": 550
+    },
+    {
+      "path": "avg_pool3_d/kernel/avg_pool3_d_split_c_kernel.h",
+      "sha256": "5eaf37c31458ce4f2871d6cba16674850242174a9684a8c94541036b3e051c3b",
+      "git_blob": "898d90297fde54c7dd66c44e866a441e56375223",
+      "bytes": 6349
+    },
+    {
+      "path": "avg_pool3_d/kernel/avg_pool3_d_split_w.cpp",
+      "sha256": "f2bfe3412be21298ae38b57cda070ed467031b49407764c36cfb5ad48d25d265",
+      "git_blob": "808b0d8b0c68d320ad02f4b0b10849317eb77266",
+      "bytes": 550
+    },
+    {
+      "path": "avg_pool3_d/kernel/avg_pool3_d_split_w_kernel.h",
+      "sha256": "f1b75e81b77c7d0d36ff6d9afd808fcf6ea7ff9351bcf562aa01580e84404ffa",
+      "git_blob": "86bf2a5affb0a75993ea0170278e189be7d04ea3",
+      "bytes": 6596
+    },
+    {
+      "path": "avg_pool3_d/kernel/avg_pool3_d_tiling.h",
+      "sha256": "d34b7bd8b1e1077b75868bcca22c97dc8f7e9cb8a3451175578746de01d33532",
+      "git_blob": "65e2baeebff473ff6c842d3c1121cfab2fb6a822",
+      "bytes": 929
+    },
+    {
+      "path": "avg_pool3_d/kernel/kernel_common.h",
+      "sha256": "5023975426122b14ca0dc85b64fdac2d5c452acad63cd013eaf1c298def0fb4c",
+      "git_blob": "062b1535baba14ce421ca9029f1247dcdf322f2d",
+      "bytes": 547
+    },
+    {
+      "path": "avg_pool3_d/kernel/pybind11.cpp",
+      "sha256": "be3fc90d882c1f3276f5e6936dc750408701e461fbec82ad3af25477f6a7039e",
+      "git_blob": "6fbece4996be1ba6e48ee451f288eff98e3f3805",
+      "bytes": 6792
+    },
+    {
+      "path": "avg_pool3_d/model.py",
+      "sha256": "5b7a48226d61efb6371470ba22c05349f9781832ed18ee169418c630ca711994",
+      "git_blob": "12769a2be6f8f74dbf9e7237f66d957ee219322c",
+      "bytes": 3371
+    },
+    {
+      "path": "avg_pool3_d/model_new_ascendc.py",
+      "sha256": "3248981b5ad9a153b2920d76b9e9ad3e9419e6c924e072233e3472370a68482b",
+      "git_blob": "52372db5717c219d7930b221043611ef2ca2db66",
+      "bytes": 5938
+    },
+    {
+      "path": "avg_pool3_d/model_new_tilelang.py",
+      "sha256": "08b849e82ca53a32f8ffc9052b32b00c9bac4b4791fa877e990b0f49e3bf38cf",
+      "git_blob": "e8071ea60a175ea569b489b47933af2cf5e80f9e",
+      "bytes": 4927
+    },
+    {
+      "path": "circular_pad/kernel/circular_pad.cpp",
+      "sha256": "4043f0b5f6151ada9979bbbd08568840a86269b3f8fdccaeeccc38d2cdea7f1b",
+      "git_blob": "8195b1b4a918d831d587ab51a56f900bb06bfc81",
+      "bytes": 4117
+    },
+    {
+      "path": "circular_pad/kernel/circular_pad_kernel.h",
+      "sha256": "bc5d575610e94d28acc4bab82945e684ba834fbb64df481642db717e7218b670",
+      "git_blob": "e7cee63ebaf9b5894d81ae151c0e632b013ea761",
+      "bytes": 31353
+    },
+    {
+      "path": "circular_pad/kernel/circular_pad_tiling.h",
+      "sha256": "4fbbc83b1582e5479c9ac545e1999311ddb38af74324665c6eae80e227f8489f",
+      "git_blob": "de9cf667e7ad46c5c0d77845b22d012cc3c6ccd1",
+      "bytes": 601
+    },
+    {
+      "path": "circular_pad/kernel/pybind11.cpp",
+      "sha256": "548879a8a5812dc7aba37ebc1d3e2240a2c88698bf9fde63b51026054c69284e",
+      "git_blob": "08935dfafcd756f49a65513b1f9f0013bc736d62",
+      "bytes": 10032
+    },
+    {
+      "path": "circular_pad/model.py",
+      "sha256": "68dcb34f905619fafb234e579481d79e87269918e89cd49e7e9f91de15d64a14",
+      "git_blob": "c8a768ab6bc1a21adfab3865dd62e9427fe8fdf1",
+      "bytes": 3258
+    },
+    {
+      "path": "circular_pad/model_new_ascendc.py",
+      "sha256": "f3b4b1b69b8818bf7152902b12c6a44c9e9ae1a2d1a73d7eb27a34f7b0bcb386",
+      "git_blob": "4889dc96805cd958605a177e1c89eeb638acc25e",
+      "bytes": 568
+    },
+    {
+      "path": "flash_attention/design/block_level/flash_attention.py",
+      "sha256": "2dd948d754731f09d67ecde507971d5a53a7683c06f04dc42a0234d8773d4225",
+      "git_blob": "6daddce3fcba9089811b3f4ae32b6ccc3a35d574",
+      "bytes": 5374
+    },
+    {
+      "path": "flash_attention/design/tile_level/flash_attention.py",
+      "sha256": "7f579acc217842e8b3a10087353819c2e8f2264b4b9b5b0c5bae61ffe1b970e5",
+      "git_blob": "8f74dbcbe8a00d7a6bd47c5c8a258d478fe5a54a",
+      "bytes": 8218
+    },
+    {
+      "path": "flash_attention/model.py",
+      "sha256": "b18d677f84cd680a4f8fcd54658634d6b22d25629d95d6b605cb921566018391",
+      "git_blob": "83a32e04c34ef96d2d7749bdf30cecc03a97b46f",
+      "bytes": 827
+    },
+    {
+      "path": "flash_attention/model_new_tilelang.py",
+      "sha256": "741857bb82d31099613373613ce5866a9b66ef130dca85ebbbe51b602622d1a1",
+      "git_blob": "36b0dfb7f9ae4a119e622a8799b14a00a954767e",
+      "bytes": 910
+    },
+    {
+      "path": "flash_attention_gqa/design/block_level/flash_attention_gqa.py",
+      "sha256": "45fa119f8b36b6a3fa872fd405dd67ffb18c6e54b8d5081f632b5aeabea261e7",
+      "git_blob": "f5ca2a08668e7c2a4b2ebac2aaaabf5bf9a2d7e2",
+      "bytes": 7540
+    },
+    {
+      "path": "flash_attention_gqa/design/tile_level/flash_attention_gqa.py",
+      "sha256": "196351ce850b2f9011bcbe9ebb3a701954c001fd7f201d65791c45f8c9bd2767",
+      "git_blob": "71b8c4c38587c355585f78b3c6c0f1a9e5746f19",
+      "bytes": 10479
+    },
+    {
+      "path": "flash_attention_gqa/model.py",
+      "sha256": "1d8bb62dba4ca31dbb86959fd831ab01a1829ff1e81a617656c022392d4f0da8",
+      "git_blob": "97c53f6aef4cad89e62231229efc0239ab659512",
+      "bytes": 1255
+    },
+    {
+      "path": "flash_attention_gqa/model_new_tilelang.py",
+      "sha256": "e6d219f576da5e0af2c6006a5f4c231b3fde6b2a553476b6bff1ac744e6402a5",
+      "git_blob": "7dbdaf7a58cc4e5b4001f3df7822fcf0d20f3c2c",
+      "bytes": 2408
+    },
+    {
+      "path": "gather_elements_v2/design/block_level/gather_elements_v2.py",
+      "sha256": "3dea6a81f3914c6b7521ec014335835fd2fa72a96105ff8309a5af6cf2445318",
+      "git_blob": "a0893520b6324b3b3edd20e291232ca9877b500a",
+      "bytes": 1974
+    },
+    {
+      "path": "gather_elements_v2/design/tile_level/gather_elements_v2.py",
+      "sha256": "8a5461fa7170d8166364a7646b245e9e4c74ef1445515692fdd32f932f9c9826",
+      "git_blob": "bad22b36b45142963a217e68131cc971603e55bf",
+      "bytes": 4815
+    },
+    {
+      "path": "gather_elements_v2/kernel/gather_elements_v2_common_kernel.h",
+      "sha256": "8cd799f1be474089a5141734fc0a72690fcab0e90b6e06b5b489a391b91581b5",
+      "git_blob": "5600a93fda369d2004da3818904eb4c52633579d",
+      "bytes": 6442
+    },
+    {
+      "path": "gather_elements_v2/kernel/gather_elements_v2_last_dim_fp16.cpp",
+      "sha256": "d693cac273000bb13def8278005ec012a1ea54e07a94157012c8fdce0ec9403e",
+      "git_blob": "4c5b73f69caad01aecd9ee2e90c0b27f324d12b5",
+      "bytes": 755
+    },
+    {
+      "path": "gather_elements_v2/kernel/gather_elements_v2_last_dim_fp32.cpp",
+      "sha256": "917cdd5f2155494e0038dbf82e992ecc7ef21f814d2595e28a7332582fc4f483",
+      "git_blob": "00b8f6539d05c869f1acd170f3046e210bd843be",
+      "bytes": 756
+    },
+    {
+      "path": "gather_elements_v2/kernel/gather_elements_v2_last_dim_kernel.h",
+      "sha256": "77d3f3411337e27c21b0659fdd3f0ff1088fb97af57850cf0d6a6c349766963d",
+      "git_blob": "f228efda850f7a2037543f8af0cad595fffde34d",
+      "bytes": 1122
+    },
+    {
+      "path": "gather_elements_v2/kernel/gather_elements_v2_scalar_fp16.cpp",
+      "sha256": "93accbe8639d7bd16c8a3897aa5dfeb8aed144baf51d6a7081b3bffc88b2d3c3",
+      "git_blob": "abc4c5a902c377d63f01c86ed718818455c4766e",
+      "bytes": 746
+    },
+    {
+      "path": "gather_elements_v2/kernel/gather_elements_v2_scalar_fp32.cpp",
+      "sha256": "16404239e2da98970a5b991c03a3ee2f20c10644c6294add00f2d5008927b37d",
+      "git_blob": "7399958eadea76df21eb0bbdac17ac5a0856ba64",
+      "bytes": 747
+    },
+    {
+      "path": "gather_elements_v2/kernel/gather_elements_v2_scalar_kernel.h",
+      "sha256": "705762e299a3a7651c7298efcb65b61aed7645970e68b483e41c1a1d2b2e3b9d",
+      "git_blob": "10cf13dbd64dc3cba5932f9f6e3b0a392b8a5946",
+      "bytes": 1204
+    },
+    {
+      "path": "gather_elements_v2/kernel/gather_elements_v2_tiling.h",
+      "sha256": "69890b3efe0068837d630a21b3c49522df30c6192a88d433819968005394b9e9",
+      "git_blob": "8813b1ab54821b2f7648acb4e920179dcbfc3f14",
+      "bytes": 541
+    },
+    {
+      "path": "gather_elements_v2/kernel/gather_elements_v2_transpose_fp16.cpp",
+      "sha256": "cdf87832b2e09483b22b1c90d3d9175002ed1efe58be43a3b3837e7a929d0751",
+      "git_blob": "15af0ca42378214fdb2a1f01784fb4b1680e86d1",
+      "bytes": 761
+    },
+    {
+      "path": "gather_elements_v2/kernel/gather_elements_v2_transpose_fp32.cpp",
+      "sha256": "3f03065688aceae42d60dac9217b4484a2e8b9448a5ea498f88a1358769ef0ce",
+      "git_blob": "05f9a2e8b7d900ae8f4f11367ab405c18aa10c85",
+      "bytes": 762
+    },
+    {
+      "path": "gather_elements_v2/kernel/gather_elements_v2_transpose_kernel.h",
+      "sha256": "73b9641e17ed395c43c984ba6fdbf9e2e619f7ee5e6546b991a65bc613ff4e7d",
+      "git_blob": "69496481643cf87f2a64923a1b23a3f5f9cabbeb",
+      "bytes": 1207
+    },
+    {
+      "path": "gather_elements_v2/kernel/kernel_common.h",
+      "sha256": "edd4d5752cd15c9173533825649af7626fedc8e77f9fd9d49b9734d669eb9623",
+      "git_blob": "5d82ac75ba74ee6ac051538647e15b5efd067624",
+      "bytes": 549
+    },
+    {
+      "path": "gather_elements_v2/kernel/pybind11.cpp",
+      "sha256": "6983b8406afc0c66119867434e205be197fe60af1069a9ae89cc6f2792d711a7",
+      "git_blob": "d2aa6332af4258c52e736c145058d82a6abac674",
+      "bytes": 6172
+    },
+    {
+      "path": "gather_elements_v2/model.py",
+      "sha256": "2f5bb48748f3329ec4cc845d657f5463bce1fbc4c7cd73e92adcd782dd420832",
+      "git_blob": "40fe18b27b11534a0c0d6db31ff46a24c2e29450",
+      "bytes": 4808
+    },
+    {
+      "path": "gather_elements_v2/model_new_ascendc.py",
+      "sha256": "fb6e4b11dc457e2d23ee23fb140c2c67299dbcef03377b7cf3dfc3899ee0c268",
+      "git_blob": "c944837daff9d402861fe7a82f7270f4247920f2",
+      "bytes": 4974
+    },
+    {
+      "path": "gather_elements_v2/model_new_tilelang.py",
+      "sha256": "85aa6571e103fce155aa8bbb48c9c14d84a98d9731e100a75715d77a8417c1f1",
+      "git_blob": "c12b62ad8d79c2a49ca47aa51004ab47f0e05854",
+      "bytes": 5802
+    },
+    {
+      "path": "matmul_leakyrelu/design/block_level/matmul_leakyrelu.py",
+      "sha256": "8f72328ae124058ccf2b7337e07964ae8c9c4bac3d11cf5095806520e6b3541d",
+      "git_blob": "fee06f4a53724c0208aa09e7fcca094a75d6fe34",
+      "bytes": 2905
+    },
+    {
+      "path": "matmul_leakyrelu/design/tile_level/matmul_leakyrelu.py",
+      "sha256": "461beaf3434f13c4dfce61cd24689795878ac70a703ffef67996ab2226f555dd",
+      "git_blob": "c328b9bdfabe37b3a970dc66ce2b9abbb10aac22",
+      "bytes": 4041
+    },
+    {
+      "path": "matmul_leakyrelu/kernel/kernel_common.h",
+      "sha256": "9b4e8fd5c6b7310aac4e9de6f0d7d44bf5e5b2c06974462e07be0937d43ef68e",
+      "git_blob": "b13d10667aed0312da1d9f4e9c6c815ecbdba628",
+      "bytes": 1401
+    },
+    {
+      "path": "matmul_leakyrelu/kernel/leakyrelu.h",
+      "sha256": "57e53d26b928b4e4e1effa96544ee0e16a1414316724369aa07908139ffc8eb8",
+      "git_blob": "f34fbcdf43db386603882d64919344c72ea7d5b8",
+      "bytes": 3621
+    },
+    {
+      "path": "matmul_leakyrelu/kernel/matmul.h",
+      "sha256": "6c57bd12257c96a4848230aaad0cbd741e5c4ec59a4475c1cd965a5c01168e0f",
+      "git_blob": "1f0fce64081b82223413586b4c9bfc21efd07a27",
+      "bytes": 7784
+    },
+    {
+      "path": "matmul_leakyrelu/kernel/matmul_leakyrelu.h",
+      "sha256": "18f536ba22af4b3713b3c9eb477055861e159abc4496757e06b0b283694aa35c",
+      "git_blob": "46225ba5e5195a0eb50c7150222905b3ad3b44a8",
+      "bytes": 4309
+    },
+    {
+      "path": "matmul_leakyrelu/kernel/matmul_leakyrelu_fp16.cpp",
+      "sha256": "32564bbe67433ec1b39fc8c4623f8c71eb204a86ff50e9d2c0e123bab0323c62",
+      "git_blob": "49b3c6fc90ce9f98b26fc8bade7ea41279c66fce",
+      "bytes": 1168
+    },
+    {
+      "path": "matmul_leakyrelu/kernel/matmul_leakyrelu_int8.cpp",
+      "sha256": "a8b4ba9484d5ec5204f4389b4170312af2abac1a763d2bc40c0960de40c0801c",
+      "git_blob": "e88c26f9dcf93b7e587a7056455634b8b04dd8bd",
+      "bytes": 1175
+    },
+    {
+      "path": "matmul_leakyrelu/kernel/matmul_leakyrelu_tiling.h",
+      "sha256": "7e2c798c10e1f6d2515bdb5cad7c9e3d47459de0d61d90c59d3189de64b42ff4",
+      "git_blob": "9dc64799f553d4a74d04dcc4cabb01efa9fe7148",
+      "bytes": 841
+    },
+    {
+      "path": "matmul_leakyrelu/kernel/matmul_tile.h",
+      "sha256": "c66e83182860ee50dfd9ba92bd92718695367fa479017fa4ad98100aef9b3ae5",
+      "git_blob": "96edf89260cfa5d7583819788f4ae1f2b60ff0f0",
+      "bytes": 3658
+    },
+    {
+      "path": "matmul_leakyrelu/kernel/pybind11.cpp",
+      "sha256": "bc329cd172d20d7a95abf3772d76a8aea336f7343d24249c747320a369037e1a",
+      "git_blob": "2e444890da7d7f0662abd1cf18750a1aa2c5dd6b",
+      "bytes": 3830
+    },
+    {
+      "path": "matmul_leakyrelu/kernel/workspace_queue.h",
+      "sha256": "c620a3d8b65d2ce5a5463760a6878abf09750ab9e2a36bfb2d02575bca473466",
+      "git_blob": "bb162573bd32779b3c4250a9821ec559f4e6f964",
+      "bytes": 3574
+    },
+    {
+      "path": "matmul_leakyrelu/model.py",
+      "sha256": "b3bc24620079e343a57d76c2f3a0b7c92ae764287c509df83f50c0a0da7bf6e0",
+      "git_blob": "e56258fb86b3dcb6496e2ff667c68680f7cabeb9",
+      "bytes": 1433
+    },
+    {
+      "path": "matmul_leakyrelu/model_new_ascendc.py",
+      "sha256": "2aa1e39e5fda1459fdc55961a82c1874a52e8383b04c4a5d3669e002c4a34d3f",
+      "git_blob": "557764ff0cc8343ebfb8398281b7862dfa9e4c7f",
+      "bytes": 1563
+    },
+    {
+      "path": "matmul_leakyrelu/model_new_tilelang.py",
+      "sha256": "2ad3b1c209f74068975f600b9c1fecaeb151549cd8f21183734406a3e981d235",
+      "git_blob": "6eb99b4e2adfce5104a927bb2e7d2ab5c52bd7f1",
+      "bytes": 1173
+    },
+    {
+      "path": "quant_matmul/design/block_level/int8_matmul_scale.py",
+      "sha256": "f97f0a72cf6c3189d4de01710fead49ec1d0cf9d5a0540ea36c2eeccf9b82542",
+      "git_blob": "0d832ac125adf35ce9e7fe929bec3dc6de40154b",
+      "bytes": 1863
+    },
+    {
+      "path": "quant_matmul/design/tile_level/int8_matmul_scale.py",
+      "sha256": "b3d8274a50e5c07c0bdcc10c3365fee382688a4ef16baf8451ef3542d40d473b",
+      "git_blob": "664a2ea9a074033eecb5b0f150eb6855b90da514",
+      "bytes": 3533
+    },
+    {
+      "path": "quant_matmul/kernel/int8_matmul_scale.cpp",
+      "sha256": "8a04ada2cc247b1339679f450249814f77f3d9dcebcc1a6ed74fa2177bf6867d",
+      "git_blob": "87e372db7894ab889aae977ab04a586408de2497",
+      "bytes": 807
+    },
+    {
+      "path": "quant_matmul/kernel/int8_matmul_scale.h",
+      "sha256": "c346c53b60a8bd4780be4ac343405abfbebf0f01635836b3e2cd955ce5a9a9c2",
+      "git_blob": "5b1432a08b91c178df64c8638d81ade68237a3aa",
+      "bytes": 3542
+    },
+    {
+      "path": "quant_matmul/kernel/int8_matmul_scale_tiling.h",
+      "sha256": "9be57f75159c7837ca608b0d6c02bc1395630d869c234aa52eba5fe4f6174541",
+      "git_blob": "1f2993a678d7b0c24bca38a2b358c74392f4c4d4",
+      "bytes": 465
+    },
+    {
+      "path": "quant_matmul/kernel/kernel_common.h",
+      "sha256": "9b4e8fd5c6b7310aac4e9de6f0d7d44bf5e5b2c06974462e07be0937d43ef68e",
+      "git_blob": "b13d10667aed0312da1d9f4e9c6c815ecbdba628",
+      "bytes": 1401
+    },
+    {
+      "path": "quant_matmul/kernel/matmul.h",
+      "sha256": "b1166719de4337d85ffb55f837e08f3170880084e0ccf40e1ecfa45ad3b11d78",
+      "git_blob": "4ef850aaa725e4da5e7d3d2a107fec6c824bd3a3",
+      "bytes": 6387
+    },
+    {
+      "path": "quant_matmul/kernel/matmul_tile.h",
+      "sha256": "7a9e7834d4173ce71e998b0804d229d36ca93ee4ebe148bceb8a6f17ea3da352",
+      "git_blob": "10c3ff7c88f17333e29207c8d8dde1610b49219e",
+      "bytes": 2663
+    },
+    {
+      "path": "quant_matmul/kernel/pybind11.cpp",
+      "sha256": "5b101377b333d8df98542b5a6abf3e1c8e2859932875c0354dd02d23a8fbf172",
+      "git_blob": "6882266670a77f0692e19d1f4b7cfc742e3c1532",
+      "bytes": 2869
+    },
+    {
+      "path": "quant_matmul/kernel/scale_kernel.h",
+      "sha256": "46898d05d15855869dce05aeb8ea96b484ba88c3327235fccb4d6920c95fc0fb",
+      "git_blob": "98f7a586534137894ab1f9c0918fe7087c43f929",
+      "bytes": 3966
+    },
+    {
+      "path": "quant_matmul/kernel/workspace_queue.h",
+      "sha256": "c4e9ebd05e21cef39b7bee0d36eb30d5dad7735b18a61e7d73d463c8a3a84d5b",
+      "git_blob": "f5dd0b56a3f3ff59449c181d9da82e1c2d8d9126",
+      "bytes": 2323
+    },
+    {
+      "path": "quant_matmul/model.py",
+      "sha256": "852852a74a9a30a480cba18188bea50915df48c3644f32ddcdc1c75c08cc061a",
+      "git_blob": "89575fecf04397556abbf30797e6e45ff3ace2c2",
+      "bytes": 737
+    },
+    {
+      "path": "quant_matmul/model_new_ascendc.py",
+      "sha256": "4011227a257aff45a34034303aa50a88eec3b60ff9236368856042efa4d08272",
+      "git_blob": "1ddee028994a9c152555a09d1f7d9388a8fc9a59",
+      "bytes": 931
+    },
+    {
+      "path": "quant_matmul/model_new_tilelang.py",
+      "sha256": "3f98307805eb2e1c28056bb1f649a956712b11ccef65dfe02b2700bb4176a3c1",
+      "git_blob": "7256edd2d4d94759b60b57614161072f6331abc3",
+      "bytes": 1036
+    },
+    {
+      "path": "reshape_matmul_rowwise_quant_int8/design/block_level/reshape_matmul_rowwise_quant_int8.py",
+      "sha256": "5e668b10fcd29d4f0748c21d35cbb65b6bf10ce267d894f906672ccaeccee266",
+      "git_blob": "73fdb6ef7121b9fbb50511cdf8af29a993d2a3f0",
+      "bytes": 2422
+    },
+    {
+      "path": "reshape_matmul_rowwise_quant_int8/design/tile_level/reshape_matmul_rowwise_quant_int8.py",
+      "sha256": "8e32d8e03ba6f993a053b3692588d6997246eb70ce002a1fd0b1a8bbffb8df6c",
+      "git_blob": "047e74d403577fa3945a5ca502d8897332be6300",
+      "bytes": 4914
+    },
+    {
+      "path": "reshape_matmul_rowwise_quant_int8/kernel/kernel_common.h",
+      "sha256": "055938dbafd5cc7e90d89f7e40cfc9414b2d28a8bf3e9e86a33329258d98e22f",
+      "git_blob": "442e482986d1e0e75f6536017155e754a897239d",
+      "bytes": 488
+    },
+    {
+      "path": "reshape_matmul_rowwise_quant_int8/kernel/matmul.h",
+      "sha256": "a0528dc67323c920f38d764b4bf0d9e17d515b9d0531ad0802be36d1070e8725",
+      "git_blob": "f8c861f7530ac192be36223c1d9443e228cce4fe",
+      "bytes": 6355
+    },
+    {
+      "path": "reshape_matmul_rowwise_quant_int8/kernel/matmul_tile.h",
+      "sha256": "7b901cabab5d2914c4c546599932f1ae11af62f68f588b436f229ada7ba6020a",
+      "git_blob": "3980787760a93d0d9ab69e11bd1ec8e758c32e82",
+      "bytes": 2609
+    },
+    {
+      "path": "reshape_matmul_rowwise_quant_int8/kernel/pybind11.cpp",
+      "sha256": "6bb83d96962316ff1571c06d3f31f9d874ae60fb68e103aaa015eb5f44358da4",
+      "git_blob": "e1311c524bb3f9c5c39cb646a2dc644463dbe3eb",
+      "bytes": 2990
+    },
+    {
+      "path": "reshape_matmul_rowwise_quant_int8/kernel/quant_kernel.h",
+      "sha256": "f0c14e1c326af780332e0a58207102fca43f2b495a4823fe044f70a00ca988d2",
+      "git_blob": "e0c3c8d9f894477ce49662c327e47cbef939fc10",
+      "bytes": 6895
+    },
+    {
+      "path": "reshape_matmul_rowwise_quant_int8/kernel/reshape_matmul_quant.h",
+      "sha256": "f69a429f60d6a990673a02ace77e09934a9ee17bbfcb06090394dfff054053b7",
+      "git_blob": "82fc195d9d462e0772cde917b41091b0fde02718",
+      "bytes": 4429
+    },
+    {
+      "path": "reshape_matmul_rowwise_quant_int8/kernel/reshape_matmul_quant_bf16.cpp",
+      "sha256": "010232fd6f3d054d6c23d97424623c8f853bbda73f5be9eff69da6c26ade01a0",
+      "git_blob": "48b7ead0d8e8e1baba16f6f2ef64dee340cb3f86",
+      "bytes": 765
+    },
+    {
+      "path": "reshape_matmul_rowwise_quant_int8/kernel/reshape_matmul_quant_tiling.h",
+      "sha256": "446279631eaecf9a0eb55cd300753805ab3954f0bf8a3cdfda7bf37e907f6770",
+      "git_blob": "b45cdd06793b06e4490128238b48583b1dcdf0ba",
+      "bytes": 647
+    },
+    {
+      "path": "reshape_matmul_rowwise_quant_int8/model.py",
+      "sha256": "e0356cac80153232fb9ca30b4978800d7e7c00fdb85f6d1f8ebf7bf3d62c3ad2",
+      "git_blob": "820eb1b766c1de2eb8cd33a817e08ab762fc8f42",
+      "bytes": 1449
+    },
+    {
+      "path": "reshape_matmul_rowwise_quant_int8/model_new_ascendc.py",
+      "sha256": "c0902643b0b17d06ed54cbad594b399def5b9aca7e5d1243c5fbb9d53558b4f5",
+      "git_blob": "2aedb08ee19b1c358964d8858310c8ce5fc6a9ad",
+      "bytes": 813
+    },
+    {
+      "path": "reshape_matmul_rowwise_quant_int8/model_new_tilelang.py",
+      "sha256": "f1bdfe1fdb043b9d5df9c948a08af2330502e6e7f0815b07f75efd6c7c095275",
+      "git_blob": "fa35fe50725cea00ab0f65b273fac3572a25ea69",
+      "bytes": 1209
+    },
+    {
+      "path": "rms_norm/design/block_level/rms_norm.py",
+      "sha256": "a20774279d321569608d189087585ba2e87ab065209970419d364b2486529e7c",
+      "git_blob": "19f56af5ba0ab20cc15abfff8fb8ee04e70e2120",
+      "bytes": 6629
+    },
+    {
+      "path": "rms_norm/design/tile_level/rms_norm.py",
+      "sha256": "50e00f552eaee3f758e79a7a55376d9418c668527c3e16340352c121abb312eb",
+      "git_blob": "2e67acfc663f28eb8392b6507612c0ca673b2faf",
+      "bytes": 15373
+    },
+    {
+      "path": "rms_norm/kernel/kernel_common.h",
+      "sha256": "677ad5505fc964f1e011f729eaa42cdec3cee545aaeef445cb18f1a454af3189",
+      "git_blob": "f36431af7b065b3bf2ce292a072b07cbd9039dd2",
+      "bytes": 541
+    },
+    {
+      "path": "rms_norm/kernel/pybind11.cpp",
+      "sha256": "f075504be9bef82ad87d1c6fda2bf2e1c438d987e861fd8f94511513c25471dd",
+      "git_blob": "d4c8c170745aa0d96c3efcf9e08aa827b2b507fb",
+      "bytes": 5226
+    },
+    {
+      "path": "rms_norm/kernel/rms_norm_merge_n.cpp",
+      "sha256": "5030d35229af29e2da77d1fe41c7118d0dcdf3d2e60b0ae5cd16ee6a0cd705e5",
+      "git_blob": "be5056eebaab9915052795caa126308389a743d8",
+      "bytes": 653
+    },
+    {
+      "path": "rms_norm/kernel/rms_norm_merge_n_bf16.cpp",
+      "sha256": "390937d414197a6f2c24e86035b352364d3b1379d08ebaca944516d1ca4d5640",
+      "git_blob": "79ef1377dd021b83716705359574762dad78e294",
+      "bytes": 658
+    },
+    {
+      "path": "rms_norm/kernel/rms_norm_merge_n_fp16.cpp",
+      "sha256": "a55782593eb1cbb353d2082fc76c6b4dd8bc0a492021a75c6ed15f89c79c42fd",
+      "git_blob": "04fdee3f62f99bd272b4a06bc3f15a2dd412774d",
+      "bytes": 652
+    },
+    {
+      "path": "rms_norm/kernel/rms_norm_merge_n_kernel.h",
+      "sha256": "aa9da040915d8b43d6d2e5bbb59a1a81f518c392f3e1b784976fb48968419344",
+      "git_blob": "df185c0e264200529cae010d532c555cefc088d7",
+      "bytes": 13460
+    },
+    {
+      "path": "rms_norm/kernel/rms_norm_single_row.cpp",
+      "sha256": "e2bdf2c86a2538efbcaefc7a087c118c52e73b198db91d49676fc5f36d7c009c",
+      "git_blob": "9b59e5cda33af8ce82dd88ee209d83e07d4c3107",
+      "bytes": 668
+    },
+    {
+      "path": "rms_norm/kernel/rms_norm_single_row_bf16.cpp",
+      "sha256": "7d58fe889a2eca085a0b9690c9b2e5032243d4cb00b510dc69998515d2d962ed",
+      "git_blob": "db38ef3748d51646c8433d4353a5ee222b977359",
+      "bytes": 673
+    },
+    {
+      "path": "rms_norm/kernel/rms_norm_single_row_fp16.cpp",
+      "sha256": "f61e8f19003905ad510e1f73e203f8cf639446736f71fcd4e567ac7b373c3fb7",
+      "git_blob": "a175435ee5181ae68e970f8e1a03202711194e5b",
+      "bytes": 667
+    },
+    {
+      "path": "rms_norm/kernel/rms_norm_single_row_kernel.h",
+      "sha256": "0f4dac72bbb3a7f1faeebe35b808ec8bb9aa5110e91a33143151956497b2e8d7",
+      "git_blob": "3c3779ba986d36fd5e4c3891737ca517662f194e",
+      "bytes": 8508
+    },
+    {
+      "path": "rms_norm/kernel/rms_norm_splitd.cpp",
+      "sha256": "6dbaeaf4ca85a7a5c7d2068e68381f095bd0a7fcb1e0937ac7c91c997e56092a",
+      "git_blob": "e76098f6e82ae8d9189ec397b96727edc4f12b8f",
+      "bytes": 649
+    },
+    {
+      "path": "rms_norm/kernel/rms_norm_splitd_bf16.cpp",
+      "sha256": "cd7d281b487b573e52fb45bb3d2bb85cd30279a0f0c9f09173a7893c4e1df2f1",
+      "git_blob": "e947260fa72c9d703b1a209b8914865d69b6d7fe",
+      "bytes": 654
+    },
+    {
+      "path": "rms_norm/kernel/rms_norm_splitd_fp16.cpp",
+      "sha256": "48c45f74a21f6faf1d76c805ca0bc7487fe75108416b13f3890de634fc45644b",
+      "git_blob": "0c79902c6f727b5261971627961bc75452d3c914",
+      "bytes": 648
+    },
+    {
+      "path": "rms_norm/kernel/rms_norm_splitd_kernel.h",
+      "sha256": "f9c69fda7740442a65c015c85387b04f04150015d5edc68575a996ffd1c77a70",
+      "git_blob": "6ae7fb268bb57c86ebba09fecd045468ff703fa9",
+      "bytes": 10003
+    },
+    {
+      "path": "rms_norm/kernel/rms_norm_tiling.h",
+      "sha256": "35d9bc209f314226050d9e73763257576a662500944de9b8d8fe986b5ce309fc",
+      "git_blob": "6f2e805c864fbff1feee1133c138c9a5fe337fc9",
+      "bytes": 405
+    },
+    {
+      "path": "rms_norm/kernel/vector_tile.h",
+      "sha256": "e0459ed60d1bb4cc26eb6f99c65704e92c10ee0484d424e25d3eeef648080da8",
+      "git_blob": "a2794bcd5c875cfc6b9adbe8ae8a247ae51625ba",
+      "bytes": 781
+    },
+    {
+      "path": "rms_norm/model.py",
+      "sha256": "ddb0b0f59a3542922b918e392ebcb3c8f8c1908963d92ff8495b23268697eaa9",
+      "git_blob": "0606782f09b21d211b7adf1830e0a52ce1efa5eb",
+      "bytes": 3117
+    },
+    {
+      "path": "rms_norm/model_new_ascendc.py",
+      "sha256": "cc43d6885874a3fb9af084f90e998609d336d0eb7599ec17027674d1e0fbfe7a",
+      "git_blob": "e30fa06d2ac29a4c540baaf982f0a41fffba349b",
+      "bytes": 1235
+    },
+    {
+      "path": "rms_norm/model_new_tilelang.py",
+      "sha256": "bf93af1057da16f9616824941dc1d2fddeb8c470d6004664de7b12dec10ac862",
+      "git_blob": "a4154fc817f28adb04d64bc36592571d156f6c87",
+      "bytes": 1218
+    },
+    {
+      "path": "sparse_attention/design/block_level/sparse_flash_attention.py",
+      "sha256": "7773731017e07b01c929ac0869b99da3d937080fc2cef6f01f95fde120451d68",
+      "git_blob": "be3d1b97d21c6b4004534606c9bc090f38e38f7e",
+      "bytes": 5677
+    },
+    {
+      "path": "sparse_attention/design/tile_level/sparse_flash_attention.py",
+      "sha256": "df5f7d17633e115aa2a0f8d93027a0d3d0bf0d6d59a39aaef992076a5dd7d24f",
+      "git_blob": "fb743a85f6a3a749fc2dd555ac9058761edaa763",
+      "bytes": 6303
+    },
+    {
+      "path": "sparse_attention/model.py",
+      "sha256": "54e3f48ada9859b54099ec4107aaea0850e1cd17c6d345e7163fa7158aab2661",
+      "git_blob": "c446f6993c85bcad7f204d82588fa13189647ea6",
+      "bytes": 3666
+    },
+    {
+      "path": "sparse_attention/model_new_tilelang.py",
+      "sha256": "053598e99158335f1c6f692f9ed2fddfbe184d187632a528aead79a84b381cc7",
+      "git_blob": "1bd51c0b83f20f3a630fde1364ed884915ca7e59",
+      "bytes": 4455
+    }
+  ]
+}

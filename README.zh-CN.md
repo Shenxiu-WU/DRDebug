@@ -9,6 +9,7 @@
 
 <p align="center">
   <a href="https://shenxiu-wu.github.io/DRDebug/"><img src="https://img.shields.io/badge/Website-DRDebug-6a50a8?style=flat-square" alt="Project website"></a>
+  <a href="#安装-skill"><img src="https://img.shields.io/badge/Skill-Claude_Code_%C2%B7_Codex-6a50a8?style=flat-square" alt="安装 DRDebug Skill"></a>
   <a href="https://arxiv.org/abs/2608.02712"><img src="https://img.shields.io/badge/arXiv-2608.02712-9b5769?style=flat-square" alt="Paper on arXiv"></a>
   <a href="papers/2026-dont-regenerate-debug/artifact/"><img src="https://img.shields.io/badge/Artifact-Frozen-586c88?style=flat-square" alt="Frozen paper artifact"></a>
   <a href="papers/2026-dont-regenerate-debug/dataset/"><img src="https://img.shields.io/badge/Dataset-27_tasks-5c7e68?style=flat-square" alt="27 paper tasks and input cases"></a>
@@ -28,7 +29,7 @@
 
 <p align="center">
   <a href="README.md">English</a> · <strong>简体中文</strong> &nbsp; | &nbsp;
-  <a href="#工作方式">方法</a> · <a href="#研究工作">研究</a> · <a href="#cannbench-成果">CANNBench</a> · <a href="#复现与核验">复现</a>
+  <a href="#安装-skill">安装</a> · <a href="#工作方式">方法</a> · <a href="#研究工作">研究</a> · <a href="#cannbench-成果">CANNBench</a> · <a href="#复现与核验">复现</a>
 </p>
 
 DRDebug 从一个接近正确的算子出发，依据失败证据修复已有实现，再由确定性验证决定修改能否被接纳。本仓库集中展示 DRDebug 系列研究的论文、公开代码、实验记录与评测成果。
@@ -36,6 +37,7 @@ DRDebug 从一个接近正确的算子出发，依据失败证据修复已有实
 | 从哪里开始 | 可以看到什么 |
 | --- | --- |
 | [项目主页](https://shenxiu-wu.github.io/DRDebug/) | 修复示例、系统原理与交互式成果展示 |
+| [安装 Skill](#安装-skill) | 在 Claude Code 或 Codex 中使用自包含的论文版修复引擎 |
 | [论文与方法](#研究工作) | 精度修复研究、冻结源码与实验记录 |
 | [复现与核验](#复现与核验) | 在 CPU 上复现论文表格，核对论文任务与测例 |
 
@@ -52,13 +54,33 @@ DRDebug 从一个接近正确的算子出发，依据失败证据修复已有实
 
 修复接纳要求完整数值测试和完整性核验。可以继续阅读[公开方法源码](papers/2026-dont-regenerate-debug/artifact/code/debug_agent_v5/README_RELEASE.md)或[论文详细架构图](website/assets/research/architecture-overview.svg)。
 
+## 安装 Skill
+
+**一个 Skill，带走论文版修复闭环。** [`drdebug`](skills/drdebug/SKILL.md) 将确定性引擎、诊断工具、完整验证、检查点与回滚，以及公开精度知识种子库一起带进智能体的工作流。安装同时附带 10 个历史参考案例，其中 7 个包含 AscendC 内核。
+
+```bash
+git clone https://github.com/Shenxiu-WU/DRDebug.git
+cd DRDebug
+./install.sh --codex    # Claude Code 使用：./install.sh --claude
+```
+
+安装器将自包含的 Skill 复制到 `~/.agents/skills/drdebug`（Codex）或 `~/.claude/skills/drdebug`（Claude Code），同时打包公开论文运行源码，之后移动仓库也不影响已安装的 Skill。添加 `--project /path/to/project` 可安装到指定项目，`--dest DIR` 可选择技能父目录，`--dry-run` 可先查看安装位置。已有安装默认保留；使用 `--force` 更新时会先备份。
+
+安装后，对智能体说：
+
+> 使用 drdebug 检查我的昇腾环境，为这个失败算子创建独立工作目录，再根据失败证据修复它。
+
+**安装仅需 Python 3.10+，无需额外 Python 包。** 真实修复需要用户已有的 AscendC 任务、Linux + Ascend NPU、兼容的 CANN/AscendC 与 PyTorch/torch_npu，以及已认证的 Claude Code 工作进程。Codex 可以指导并启动 Skill；论文引擎仍使用 Claude Code 后端。安装器不安装驱动，也不配置模型账号。
+
+从 `doctor` 开始，再按 `prepare → run → status` 使用。[安装与首次修复指南](docs/skill-guide.zh-CN.md) · [Skill 操作说明](skills/drdebug/SKILL.md) · [公开适配层的范围](skills/drdebug/references/runtime.md)。
+
 ## 研究工作
 
 ### Don’t Regenerate, Debug
 
 *A Domain-Specific Agent for Repairing Near-Miss Accelerator Kernels* · 2026
 
-[论文摘要](https://arxiv.org/abs/2608.02712) · [全文 PDF](https://arxiv.org/pdf/2608.02712) · [代码与结果](papers/2026-dont-regenerate-debug/artifact/) · [任务与测例](papers/2026-dont-regenerate-debug/dataset/)
+[论文摘要](https://arxiv.org/abs/2608.02712) · [全文 PDF](https://arxiv.org/pdf/2608.02712) · [代码与结果](papers/2026-dont-regenerate-debug/artifact/) · [任务与测例](papers/2026-dont-regenerate-debug/dataset/) · [初始内核与 wrapper](papers/2026-dont-regenerate-debug/artifact/inputs/)
 
 研究采用来自 [NPUKernelBench](https://github.com/weich97/NPUKernelBench/tree/master) 的 **27 个固定近成功算子**，使用 `Qwen3.8-max-preview` 进行受控比较：
 
@@ -90,24 +112,26 @@ DRDebug 从一个接近正确的算子出发，依据失败证据修复已有实
 
 ## 复现与核验
 
-以下两项检查仅需 **Python 3.10+ 与标准库**。在仓库根目录运行：
+以下检查仅需 **Python 3.10+ 与标准库**。在仓库根目录运行：
 
 ```bash
 git clone https://github.com/Shenxiu-WU/DRDebug.git
 cd DRDebug
 python3 -B tools/reproduce_paper.py
 python3 -B papers/2026-dont-regenerate-debug/dataset/verify_dataset.py
+python3 -B tools/verify_paper_inputs.py
 ```
 
 - **论文表格**：核对冻结包，在临时副本中重算统计，输出到 `reproduced/tables.md`、`summary.json` 及相关分析文件。再次运行时，使用 `--output PATH` 指定新目录。
+- **初始候选源码**：按历史哈希核对 27 个任务的 289 个原始文件，包括 181 个内核文件；只检查语法与测例，不执行任务代码。
 - **任务数据**：按照冻结清单核对 27 个参考实现、347 条精简和 1,134 条完整输入测例规格；此检查读取文件，不执行算子。
 
 <details>
 <summary>公开材料范围与执行条件</summary>
 
-公开材料支持 CPU 统计复现、方法源码阅读与任务数据核验。完整重跑精度修复研究还需要候选算子、运行资产和原始执行环境，详见论文包的[已知限制](papers/2026-dont-regenerate-debug/artifact/KNOWN_LIMITATIONS.md)。
+公开材料支持 CPU 统计复现、方法源码阅读与任务数据核验，并已补齐 27 个逐字节核验的初始候选任务与历史算子参考案例。真实数值重跑仍需兼容运行环境与已配置的模型工作进程，详见论文包的[已知限制](papers/2026-dont-regenerate-debug/artifact/KNOWN_LIMITATIONS.md)。
 
-独立的[测例补充包](papers/2026-dont-regenerate-debug/dataset/README.md)提供参考实现与输入规格，并记录来源、依赖及一份完整测例文件的原始字节例外：该文件的规范化测例集合与冻结记录一致，但原始文件字节尚未恢复。运行参考实现可能需要 PyTorch、`torch_npu` 与兼容的昇腾硬件。
+独立的[测例补充包](papers/2026-dont-regenerate-debug/dataset/README.md)提供参考实现与输入规格；81 份参考/测例文件均已恢复为与历史冻结哈希一致的原始字节，来源与依赖记录一并提供。运行参考实现可能需要 PyTorch、`torch_npu` 与兼容的昇腾硬件。
 
 </details>
 
@@ -138,10 +162,11 @@ python3 -m http.server 8000 --directory website
 | --- | --- |
 | [`papers/2026-dont-regenerate-debug/artifact/`](papers/2026-dont-regenerate-debug/artifact/) | 冻结的方法源码、实验记录与分析脚本 |
 | [`papers/2026-dont-regenerate-debug/dataset/`](papers/2026-dont-regenerate-debug/dataset/) | 参考实现、输入测例、来源记录与校验工具 |
+| [`skills/drdebug/`](skills/drdebug/) | 可安装 Skill、便携启动器与任务规范 |
 | [`tools/`](tools/) | CPU 统计复现入口 |
 | [`website/`](website/) | 项目网站与带日期的 CANNBench 快照 |
 
-每篇论文独立存放在 `papers/` 下。论文冻结包保留各自的发布标签，网站与文档单独维护更新。
+每篇论文独立存放在 `papers/` 下。论文已发布版本保留各自的标签，补充源码在归档的公开变更记录中说明；网站与 Skill 在仓库中同步维护。
 
 ## 引用
 

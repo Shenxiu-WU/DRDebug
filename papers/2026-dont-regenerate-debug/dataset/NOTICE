@@ -12,8 +12,8 @@ LICENSE-APACHE-2.0.txt is the standard license text retrieved directly from
 https://www.apache.org/licenses/LICENSE-2.0.txt, not a file retrieved from the upstream repository.
 
 These historical reference implementations and case descriptors retain their
-source bytes and existing comments. The complete reference/compact identity and
-the full-case identity exception are documented in PROVENANCE.json. The exact
+source bytes and existing comments. The complete reference/compact/full byte
+identity and the recovered full-case file are documented in PROVENANCE.json. The exact
 upstream revision corresponding to these historical snapshots has not been
 independently established. Current upstream HEAD is not claimed as their byte
 source. This attribution and provenance note does not manufacture a missing

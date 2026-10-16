@@ -1,0 +1,19 @@
+#ifndef ADAMW_KERNEL_COMMON_H
+#define ADAMW_KERNEL_COMMON_H
+
+#include <cstddef>
+#include <cstdint>
+
+#include "kernel_operator.h"
+
+template <typename T>
+__aicore__ inline void CopyTiling(T *tiling, GM_ADDR tilingGM)
+{
+    int32_t *dst = reinterpret_cast<int32_t *>(tiling);
+    auto *src = reinterpret_cast<__gm__ int32_t *>(tilingGM);
+    for (size_t i = 0; i < sizeof(T) / sizeof(int32_t); ++i) {
+        dst[i] = src[i];
+    }
+}
+
+#endif  // ADAMW_KERNEL_COMMON_H

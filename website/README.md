@@ -63,3 +63,10 @@ python3 -m http.server 8000 --directory website
 - 研究区采用当前公开论文 v2 题名、9位作者机构上标及共同第一/通讯作者标记。Token图的口径是总all tokens除以成功算子数：Regenerate为4,372,531,063/11=397.50M，Debug为511,901,478/18=28.44M，降幅92.8456%。包含失败运行和缓存token；M表示百万token。数值来自冻结artifact的token_accounting_summary.json。
 - 论文任务和测例单独放在公开 checkout 的 [dataset/](../papers/2026-dont-regenerate-debug/dataset/)，不改写已经打标签的 artifact。此处提供 27 个参考实现、compact/full 公开输入规格及哈希溯源，区别于近成功候选和 NPU 运行环境；网页通过“论文任务与测例”链接到该目录。
 - 评测演进分别说明固定公开任务与社区标准/隐藏集的用途，不声称所有27个任务直接来自生产客户，也不把两个平台的数字合并比较。
+
+
+## 可安装 Skill 展示
+
+`#skills` 在方法与研究之间提供论文公开版 `drdebug` 的安装入口：能力卡、Codex / Claude Code 命令切换、复制按钮、安装位置、首次自然语言调用和实际 NPU 运行依赖。首屏与页头均可直达。使用既有中英文和主题机制，安装区增加对应的灰绿分区。
+
+技能只封装公开的论文引擎；统一安装器在 `../install.sh`，使用指南在 `../docs/skill-guide.zh-CN.md`。网页的安装路径与命令须和安装器同步维护。安装成功、环境检查通过和真实 NPU 修复成功是三种不同结果，展示中不可混称。默认浏览只展示命令，网页不会执行安装器。

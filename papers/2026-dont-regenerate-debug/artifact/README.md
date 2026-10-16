@@ -2,14 +2,18 @@
 
 ## Purpose
 
-This is a public copy of the frozen research artifact for *Don't Regenerate, Debug: A Domain-Specific Agent for Repairing Near-Miss Accelerator Kernels*. It contains structured outcome CSVs, task-level token aggregates, integrity metadata, deterministic analysis scripts, method and protocol source snapshots for Debug-Agent, Regenerate, and CANNBot-Debug, and selected final kernel implementations.
+This is a public copy of the frozen research artifact for *Don't Regenerate, Debug: A Domain-Specific Agent for Repairing Near-Miss Accelerator Kernels*. It contains structured outcome CSVs, task-level token aggregates, integrity metadata, deterministic analysis scripts, method and protocol source snapshots for Debug-Agent, Regenerate, and CANNBot-Debug, selected final kernel implementations, and a documented supplement restoring the initial task inputs and historical reference cases.
 
-The package supports two uses:
+The package supports three uses:
 
 1. **Statistical recomputation on a standard CPU machine.** The bundled scripts recompute the RQ1--RQ4 counts, paired statistics, factorial effects, token summaries, common-success sensitivity results, and shadow summary from the supplied CSVs. Numerical outcomes, integrity verdicts, shadow labels, and long-failure labels are frozen inputs rather than newly executed measurements.
 2. **Method and protocol inspection.** The released source exposes the supplied Agent/Skill prompts, workflow state machine, adaptive scheduling, checkpoint/rollback, objective and full evaluation, integrity scanning, V5 experiment launch controls, Regenerate isolation/generation workflow, and CANNBot-Debug precision-repair workflow.
 
-This package is not a complete environment for rerunning the 27-operator repair study. The original task projects, reference implementations, compact/full case files, before-repair kernels, complete candidate corpus, and raw provider journals are not distributed here. The launch sources retain external asset and runtime assumptions, including a missing canonical precision-KB dependency. Installing an Ascend C toolchain and NPU runtime alone does not fill these gaps. See [Known limitations](KNOWN_LIMITATIONS.md) before using the source for a new experiment.
+The 2026-10-17 public supplement adds [27 original initial tasks](inputs/README.md) and [historical reference examples](code/debug_agent_v5/archive_tasks/README.md) directly to this archive. The task source and reference/case bytes are verified against historical hashes; the engine algorithms and experimental CSV/JSON results are unchanged. The earlier published archive is retained by Git tag `paper-2608.02712-v1`.
+
+Use the repository’s [DRDebug skill and installation guide](../../../docs/skill-guide.md) to prepare a fresh single-task repair workspace. Actual numerical execution still requires a compatible Ascend environment and configured model worker. The complete later candidate corpus, raw provider journals and historical batch environment remain outside this package; the public KB seed does not claim to be the missing canonical study KB. See [Known limitations](KNOWN_LIMITATIONS.md).
+
+3. **Initial-task and reference access.** `inputs/tasks/` contains the 27 initial candidate projects with reference/wrapper/cases/kernel; `code/debug_agent_v5/archive_tasks/` restores the historical reference tree used by the worker documentation. Hash verification reads the files without executing task code.
 
 ## Quick Start
 
@@ -42,9 +46,12 @@ manifests/
 results/
 integrity/
 scripts/
+inputs/
+  tasks/
 code/
   README.md
   debug_agent_v5/
+    archive_tasks/
     .claude/agents/
     agents/
     skills/ascendc/ascendc-debug/
