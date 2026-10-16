@@ -1,0 +1,873 @@
+{
+  "schema_version": 1,
+  "prepared_for_local_review_on": "2026-10-16",
+  "upstream": {
+    "repository": "https://github.com/weich97/NPUKernelBench",
+    "license_declaration_source": "https://github.com/weich97/NPUKernelBench/blob/master/README.md",
+    "license_declaration_observed_on": "2026-10-16",
+    "declared_license": "Apache-2.0",
+    "exact_historical_upstream_revision": null,
+    "current_public_head_not_claimed_as_byte_source": true,
+    "license_file_checks": [
+      {
+        "url": "https://raw.githubusercontent.com/weich97/NPUKernelBench/master/LICENSE",
+        "http_status": 404
+      },
+      {
+        "url": "https://raw.githubusercontent.com/weich97/NPUKernelBench/master/LICENSE.txt",
+        "http_status": 404
+      },
+      {
+        "url": "https://raw.githubusercontent.com/weich97/NPUKernelBench/master/LICENSE.md",
+        "http_status": 404
+      }
+    ],
+    "included_standard_license": {
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+      "path": "LICENSE-APACHE-2.0.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "retrieved_on": "2026-10-16",
+      "not_retrieved_from_upstream_repository": true
+    }
+  },
+  "frozen_cohort": {
+    "path": "../artifact/manifests/frozen_27_operators.csv",
+    "sha256": "355372f2585bca72896886e858e13d5327b5160c2ca065fd797de60da8e921df"
+  },
+  "historical_frozen_input_file_manifest": {
+    "source_relative_path": "analysis_packages/v5_ablation_preparation_20260724/remote_control_snapshot/dataset_manifest.sha256.json",
+    "sha256": "d905ab31d47b0074cc5bb3718eea92ebb4fc20a8ea0de76a451d55524dde1f45",
+    "selected_reference_and_case_hashes_only": true
+  },
+  "source_path_scope": "Source paths are relative to the historical audit workspace, not to the public repository. The private workspace and its full manifests are not bundled.",
+  "scope": {
+    "operators": 27,
+    "reference_files": 27,
+    "compact_files": 27,
+    "full_files": 27,
+    "compact_cases": 347,
+    "full_cases": 1134,
+    "reference_byte_exact": 27,
+    "compact_byte_exact": 27,
+    "full_byte_exact": 26,
+    "compact_case_set_exact": 27,
+    "full_case_set_exact": 27
+  },
+  "raw_byte_exception": {
+    "operator_id": "level2/020_FusedRopeWithQkNormAndKvCacheUpdate",
+    "role": "full",
+    "status": "Original frozen file bytes were not recovered; the released normalized case multiset and count match exactly. Original row order and formatting are not certified."
+  },
+  "operators": [
+    {
+      "operator_id": "level1/003_Add",
+      "reference": {
+        "path": "tasks/level1/003_Add/model.py",
+        "sha256": "727876a81edc6e55595e4256438884f532b18f050fdf85b2755e4ad77da0119b",
+        "frozen_byte_sha256": "727876a81edc6e55595e4256438884f532b18f050fdf85b2755e4ad77da0119b",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__003_Add/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level1/003_Add/model.py"
+      },
+      "compact": {
+        "path": "tasks/level1/003_Add/3_Add.json",
+        "sha256": "6d2864331ef82350691da9dae812aa321424cee66c2b30180bab98afb3646aed",
+        "frozen_byte_sha256": "6d2864331ef82350691da9dae812aa321424cee66c2b30180bab98afb3646aed",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "986accd80f053eb21622880ac4bcba95eb84d09d49c78a9823fe3138b8a3ee37",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__003_Add/candidate_task/3_Add.json",
+        "historical_frozen_relative_path": "tasks/level1/003_Add/3_Add.json"
+      },
+      "full": {
+        "path": "tasks/level1/003_Add/3_Add.json.bak",
+        "sha256": "e216edcb725d7601161086a513451edceaa7bc6f03c756841a74ab1a6ff932dc",
+        "frozen_byte_sha256": "e216edcb725d7601161086a513451edceaa7bc6f03c756841a74ab1a6ff932dc",
+        "byte_matches_frozen": true,
+        "cases": 50,
+        "normalized_case_set_sha256": "b8614d2cdb3401b4251144cad78816eca7a65a04f58d60d5319e969527276a28",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level1/3_Add.json",
+        "historical_frozen_relative_path": "tasks/level1/003_Add/3_Add.json.bak"
+      }
+    },
+    {
+      "operator_id": "level1/005_Cumsum",
+      "reference": {
+        "path": "tasks/level1/005_Cumsum/model.py",
+        "sha256": "dacdc89d2ea0a90510990a465cb9e6bdd42f8af1d9d0b4ecb418c3994228fe99",
+        "frozen_byte_sha256": "dacdc89d2ea0a90510990a465cb9e6bdd42f8af1d9d0b4ecb418c3994228fe99",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__005_Cumsum/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level1/005_Cumsum/model.py"
+      },
+      "compact": {
+        "path": "tasks/level1/005_Cumsum/5_Cumsum.json",
+        "sha256": "38e22d85fbf2db49e8f32318ad6ffb4653939771600c1a60fe0f4c5a674779b4",
+        "frozen_byte_sha256": "38e22d85fbf2db49e8f32318ad6ffb4653939771600c1a60fe0f4c5a674779b4",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "44602345e3a58880fdd48606b8977628cf47c58e7d50c2a116b74e3a72d641f6",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__005_Cumsum/candidate_task/5_Cumsum.json",
+        "historical_frozen_relative_path": "tasks/level1/005_Cumsum/5_Cumsum.json"
+      },
+      "full": {
+        "path": "tasks/level1/005_Cumsum/5_Cumsum.json.bak",
+        "sha256": "be6271a52716c3f892b8d58e23b59ddfa7e15fe168e48a73a12868bdbb9d1aca",
+        "frozen_byte_sha256": "be6271a52716c3f892b8d58e23b59ddfa7e15fe168e48a73a12868bdbb9d1aca",
+        "byte_matches_frozen": true,
+        "cases": 51,
+        "normalized_case_set_sha256": "0ea6383a59b9d45d2f3837f8291181f1f8fc8f2fdd94614df64159f269cbac5a",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level1/5_Cumsum.json",
+        "historical_frozen_relative_path": "tasks/level1/005_Cumsum/5_Cumsum.json.bak"
+      }
+    },
+    {
+      "operator_id": "level1/007_Sum",
+      "reference": {
+        "path": "tasks/level1/007_Sum/model.py",
+        "sha256": "9e530f7b0bc9436a69e288678b098de86496bea360f8092baa4c587d276ac5a6",
+        "frozen_byte_sha256": "9e530f7b0bc9436a69e288678b098de86496bea360f8092baa4c587d276ac5a6",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__007_Sum/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level1/007_Sum/model.py"
+      },
+      "compact": {
+        "path": "tasks/level1/007_Sum/7_Sum.json",
+        "sha256": "0fee25fbf72f842b42ee761daa249e4a4b00fa656559a065af7e0459ebd72dd9",
+        "frozen_byte_sha256": "0fee25fbf72f842b42ee761daa249e4a4b00fa656559a065af7e0459ebd72dd9",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "a7a308e5bcc86f08a074f63e8d33fcf6b3142b164c0bd092fe2aedef263d4c3c",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__007_Sum/candidate_task/7_Sum.json",
+        "historical_frozen_relative_path": "tasks/level1/007_Sum/7_Sum.json"
+      },
+      "full": {
+        "path": "tasks/level1/007_Sum/7_Sum.json.bak",
+        "sha256": "6f0f411352ca46390bc1f3068c23905100d2b1f28d6461525c6129ea88a1f449",
+        "frozen_byte_sha256": "6f0f411352ca46390bc1f3068c23905100d2b1f28d6461525c6129ea88a1f449",
+        "byte_matches_frozen": true,
+        "cases": 44,
+        "normalized_case_set_sha256": "2d0d5a4f1c3b7ccf36967daab26fae94fea128c24a610c5b851cb332791b42c5",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level1/7_Sum.json",
+        "historical_frozen_relative_path": "tasks/level1/007_Sum/7_Sum.json.bak"
+      }
+    },
+    {
+      "operator_id": "level1/010_LayerNorm",
+      "reference": {
+        "path": "tasks/level1/010_LayerNorm/model.py",
+        "sha256": "065e4f65afb893217ae0bdf57bbcfe202b3aa24ae274f533a85051225820ba62",
+        "frozen_byte_sha256": "065e4f65afb893217ae0bdf57bbcfe202b3aa24ae274f533a85051225820ba62",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__010_LayerNorm/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level1/010_LayerNorm/model.py"
+      },
+      "compact": {
+        "path": "tasks/level1/010_LayerNorm/10_LayerNorm.json",
+        "sha256": "268be5291e3ab0fe9e4b41e648a1316c91570e18169217a0f0f140986e98e0c5",
+        "frozen_byte_sha256": "268be5291e3ab0fe9e4b41e648a1316c91570e18169217a0f0f140986e98e0c5",
+        "byte_matches_frozen": true,
+        "cases": 60,
+        "normalized_case_set_sha256": "ed30650101696b948d1dfdeed55803427ea96bba0e9c0d139ac280e5242df67c",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__010_LayerNorm/candidate_task/10_LayerNorm.json",
+        "historical_frozen_relative_path": "tasks/level1/010_LayerNorm/10_LayerNorm.json"
+      },
+      "full": {
+        "path": "tasks/level1/010_LayerNorm/10_LayerNorm.json.bak",
+        "sha256": "268be5291e3ab0fe9e4b41e648a1316c91570e18169217a0f0f140986e98e0c5",
+        "frozen_byte_sha256": "268be5291e3ab0fe9e4b41e648a1316c91570e18169217a0f0f140986e98e0c5",
+        "byte_matches_frozen": true,
+        "cases": 60,
+        "normalized_case_set_sha256": "ed30650101696b948d1dfdeed55803427ea96bba0e9c0d139ac280e5242df67c",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level1/10_LayerNorm.json",
+        "historical_frozen_relative_path": "tasks/level1/010_LayerNorm/10_LayerNorm.json.bak"
+      }
+    },
+    {
+      "operator_id": "level1/017_AdamW",
+      "reference": {
+        "path": "tasks/level1/017_AdamW/model.py",
+        "sha256": "8ca90a0a75137b7088f0b2f57d2cd00ada1c4bf5c22df27cc28f3556d1b262d6",
+        "frozen_byte_sha256": "8ca90a0a75137b7088f0b2f57d2cd00ada1c4bf5c22df27cc28f3556d1b262d6",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__017_AdamW/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level1/017_AdamW/model.py"
+      },
+      "compact": {
+        "path": "tasks/level1/017_AdamW/17_AdamW.json",
+        "sha256": "0313a445fca05930b6e30a1128d988d87d868779e3ac5cc085a1ba259de54940",
+        "frozen_byte_sha256": "0313a445fca05930b6e30a1128d988d87d868779e3ac5cc085a1ba259de54940",
+        "byte_matches_frozen": true,
+        "cases": 9,
+        "normalized_case_set_sha256": "ad21c4754f8ecf73fe2a2524ae3d54c700af8b4391ae2a3ec0122fcca9c6acbc",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__017_AdamW/candidate_task/17_AdamW.json",
+        "historical_frozen_relative_path": "tasks/level1/017_AdamW/17_AdamW.json"
+      },
+      "full": {
+        "path": "tasks/level1/017_AdamW/17_AdamW.json.bak",
+        "sha256": "d5477820624684b31a834d00d361c1c209009b6646b6fd499bdcd66296c78506",
+        "frozen_byte_sha256": "d5477820624684b31a834d00d361c1c209009b6646b6fd499bdcd66296c78506",
+        "byte_matches_frozen": true,
+        "cases": 18,
+        "normalized_case_set_sha256": "d827b10d0d0aeb4196b0f0eb15d0ca694236efe8b5f11b79a2c75e446a5a99fb",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level1/17_AdamW.json",
+        "historical_frozen_relative_path": "tasks/level1/017_AdamW/17_AdamW.json.bak"
+      }
+    },
+    {
+      "operator_id": "level1/024_EmbeddingDenseBackward",
+      "reference": {
+        "path": "tasks/level1/024_EmbeddingDenseBackward/model.py",
+        "sha256": "69a84d6e4931c4e811e22fb2a2c1b95e759ee589b87c857859465f36d30dea27",
+        "frozen_byte_sha256": "69a84d6e4931c4e811e22fb2a2c1b95e759ee589b87c857859465f36d30dea27",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__024_EmbeddingDenseBackward/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level1/024_EmbeddingDenseBackward/model.py"
+      },
+      "compact": {
+        "path": "tasks/level1/024_EmbeddingDenseBackward/24_EmbeddingDenseBackward.json",
+        "sha256": "65dc355e53213389eb9d393b24f9a113bb68541cdf3953b6cc6765e63235217e",
+        "frozen_byte_sha256": "65dc355e53213389eb9d393b24f9a113bb68541cdf3953b6cc6765e63235217e",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "4a98ff4ee44f42741f1dc69b9e7c1d64ec92e6f1721187c7454978a9db78339f",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__024_EmbeddingDenseBackward/candidate_task/24_EmbeddingDenseBackward.json",
+        "historical_frozen_relative_path": "tasks/level1/024_EmbeddingDenseBackward/24_EmbeddingDenseBackward.json"
+      },
+      "full": {
+        "path": "tasks/level1/024_EmbeddingDenseBackward/24_EmbeddingDenseBackward.json.bak",
+        "sha256": "844110ffb811e9019e24bc3eb1d19d05ae0ba3edb54cebff38484d02245a6600",
+        "frozen_byte_sha256": "844110ffb811e9019e24bc3eb1d19d05ae0ba3edb54cebff38484d02245a6600",
+        "byte_matches_frozen": true,
+        "cases": 30,
+        "normalized_case_set_sha256": "32a38b32efa67cde53f572b7f6bdcd89e30abbf36d417a213c6c9bad1a294c29",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level1/24_EmbeddingDenseBackward.json",
+        "historical_frozen_relative_path": "tasks/level1/024_EmbeddingDenseBackward/24_EmbeddingDenseBackward.json.bak"
+      }
+    },
+    {
+      "operator_id": "level1/025_NLLLoss",
+      "reference": {
+        "path": "tasks/level1/025_NLLLoss/model.py",
+        "sha256": "f155db5c9c5b8e016c821988d6482ad6864839d19006c4a0b0a214a689a02054",
+        "frozen_byte_sha256": "f155db5c9c5b8e016c821988d6482ad6864839d19006c4a0b0a214a689a02054",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__025_NLLLoss/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level1/025_NLLLoss/model.py"
+      },
+      "compact": {
+        "path": "tasks/level1/025_NLLLoss/25_NLLLoss.json",
+        "sha256": "19af0844d9eab7aede718f5348ec69c35c64b88698a4a7c12df638122aa26063",
+        "frozen_byte_sha256": "19af0844d9eab7aede718f5348ec69c35c64b88698a4a7c12df638122aa26063",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "445afb7d85ca8e116d50bdde4b3f476d7b4f92c4d90605665ac78d16aa952b0d",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__025_NLLLoss/candidate_task/25_NLLLoss.json",
+        "historical_frozen_relative_path": "tasks/level1/025_NLLLoss/25_NLLLoss.json"
+      },
+      "full": {
+        "path": "tasks/level1/025_NLLLoss/25_NLLLoss.json.bak",
+        "sha256": "ee63a9e09eff30804e254f2e7ca02eb09f6bb1a546d35aece972575d1c45e1b2",
+        "frozen_byte_sha256": "ee63a9e09eff30804e254f2e7ca02eb09f6bb1a546d35aece972575d1c45e1b2",
+        "byte_matches_frozen": true,
+        "cases": 50,
+        "normalized_case_set_sha256": "5d61936769deb809a4c49ad742edfc18e32622cd1618c2d73694e5532a646e79",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level1/25_NLLLoss.json",
+        "historical_frozen_relative_path": "tasks/level1/025_NLLLoss/25_NLLLoss.json.bak"
+      }
+    },
+    {
+      "operator_id": "level1/031_IOU",
+      "reference": {
+        "path": "tasks/level1/031_IOU/model.py",
+        "sha256": "0f67890076d29505331ebdc2958596d0d8b8b21fc5a7e1d5ed17459ec75c7f92",
+        "frozen_byte_sha256": "0f67890076d29505331ebdc2958596d0d8b8b21fc5a7e1d5ed17459ec75c7f92",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__031_IOU/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level1/031_IOU/model.py"
+      },
+      "compact": {
+        "path": "tasks/level1/031_IOU/31_IOU.json",
+        "sha256": "abd7b4cc2c95dbff157cd71baa4250bf542d88be4c33a4923241eaed582710a0",
+        "frozen_byte_sha256": "abd7b4cc2c95dbff157cd71baa4250bf542d88be4c33a4923241eaed582710a0",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "5b312c705386b27720b7c979414a26ff7fde6258a66f3307acdeb7790a591ee3",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level1__031_IOU/candidate_task/31_IOU.json",
+        "historical_frozen_relative_path": "tasks/level1/031_IOU/31_IOU.json"
+      },
+      "full": {
+        "path": "tasks/level1/031_IOU/31_IOU.json.bak",
+        "sha256": "030ea1ecaeafb580466e131c4181e13d06ec4a7581c2959cdf205db4678834b7",
+        "frozen_byte_sha256": "030ea1ecaeafb580466e131c4181e13d06ec4a7581c2959cdf205db4678834b7",
+        "byte_matches_frozen": true,
+        "cases": 30,
+        "normalized_case_set_sha256": "a83b8e0e5c3386454472a8531f7760fb003f223be1ce6b371f68de250f44859e",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level1/31_IOU.json",
+        "historical_frozen_relative_path": "tasks/level1/031_IOU/31_IOU.json.bak"
+      }
+    },
+    {
+      "operator_id": "level2/002_GroupNormSwish",
+      "reference": {
+        "path": "tasks/level2/002_GroupNormSwish/model.py",
+        "sha256": "2d154db9aaffa65c1f34ec0d947d074c758049cf1afa17478c0fd6717da12401",
+        "frozen_byte_sha256": "2d154db9aaffa65c1f34ec0d947d074c758049cf1afa17478c0fd6717da12401",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__002_GroupNormSwish/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level2/002_GroupNormSwish/model.py"
+      },
+      "compact": {
+        "path": "tasks/level2/002_GroupNormSwish/2_GroupNormSwish.json",
+        "sha256": "9b21d88639da4b977a59b7c9ed55f93c827ac61144ec88e9c36f1bbb802b37ff",
+        "frozen_byte_sha256": "9b21d88639da4b977a59b7c9ed55f93c827ac61144ec88e9c36f1bbb802b37ff",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "9e81a8455d364e3ae98f2f02621afe83125c8cb3cd40c274c9feabcdc200ab01",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__002_GroupNormSwish/candidate_task/2_GroupNormSwish.json",
+        "historical_frozen_relative_path": "tasks/level2/002_GroupNormSwish/2_GroupNormSwish.json"
+      },
+      "full": {
+        "path": "tasks/level2/002_GroupNormSwish/2_GroupNormSwish.json.bak",
+        "sha256": "f126aecf8e48306f80c7cd0187b23049b4665344329bd2bed0598e6b5f7b8278",
+        "frozen_byte_sha256": "f126aecf8e48306f80c7cd0187b23049b4665344329bd2bed0598e6b5f7b8278",
+        "byte_matches_frozen": true,
+        "cases": 50,
+        "normalized_case_set_sha256": "c35429beddb540f824cbfe0d6f788bf1d7515583363cf3637dbd1a8898f19928",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level2/2_GroupNormSwish.json",
+        "historical_frozen_relative_path": "tasks/level2/002_GroupNormSwish/2_GroupNormSwish.json.bak"
+      }
+    },
+    {
+      "operator_id": "level2/005_MoeInitRouting",
+      "reference": {
+        "path": "tasks/level2/005_MoeInitRouting/model.py",
+        "sha256": "2bfd4f8f8528964bddc9edad06f44f0544980a61d5abacaffede96e3da0a2a9f",
+        "frozen_byte_sha256": "2bfd4f8f8528964bddc9edad06f44f0544980a61d5abacaffede96e3da0a2a9f",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__005_MoeInitRouting/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level2/005_MoeInitRouting/model.py"
+      },
+      "compact": {
+        "path": "tasks/level2/005_MoeInitRouting/5_MoeInitRouting.json",
+        "sha256": "a9fd67d7617f3f23092be2b23a6e52de55b56495f3f4914258998973972bedfa",
+        "frozen_byte_sha256": "a9fd67d7617f3f23092be2b23a6e52de55b56495f3f4914258998973972bedfa",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "223425995607a5587f1dff39425d77c630b7a9b0f37492f52813636d2db1fced",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__005_MoeInitRouting/candidate_task/5_MoeInitRouting.json",
+        "historical_frozen_relative_path": "tasks/level2/005_MoeInitRouting/5_MoeInitRouting.json"
+      },
+      "full": {
+        "path": "tasks/level2/005_MoeInitRouting/5_MoeInitRouting.json.bak",
+        "sha256": "d6a76dcc644c47b42eb9c08a81b884078bdba9f521ec16982382cf9787f379be",
+        "frozen_byte_sha256": "d6a76dcc644c47b42eb9c08a81b884078bdba9f521ec16982382cf9787f379be",
+        "byte_matches_frozen": true,
+        "cases": 53,
+        "normalized_case_set_sha256": "1b3095e6eee2fec28ae148952019eb6bcff3ec6aff2fee5dd866ab15a1fb8a56",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level2/5_MoeInitRouting.json",
+        "historical_frozen_relative_path": "tasks/level2/005_MoeInitRouting/5_MoeInitRouting.json.bak"
+      }
+    },
+    {
+      "operator_id": "level2/006_MoeFinalizeRouting",
+      "reference": {
+        "path": "tasks/level2/006_MoeFinalizeRouting/model.py",
+        "sha256": "f06be7a3215b37cf345c514817e19bb1f67b3d7577eea4d3c9ec29df9a5c8a06",
+        "frozen_byte_sha256": "f06be7a3215b37cf345c514817e19bb1f67b3d7577eea4d3c9ec29df9a5c8a06",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__006_MoeFinalizeRouting/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level2/006_MoeFinalizeRouting/model.py"
+      },
+      "compact": {
+        "path": "tasks/level2/006_MoeFinalizeRouting/6_MoeFinalizeRouting.json",
+        "sha256": "2152a7bac55940bba576f8f6c0b31cc8001b5ab053ebfada9494fd4e084aca3f",
+        "frozen_byte_sha256": "2152a7bac55940bba576f8f6c0b31cc8001b5ab053ebfada9494fd4e084aca3f",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "cc74c2d8a45d9520a93335f5c9a91e2b1b2aa757c97c71637197575845d4fa93",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__006_MoeFinalizeRouting/candidate_task/6_MoeFinalizeRouting.json",
+        "historical_frozen_relative_path": "tasks/level2/006_MoeFinalizeRouting/6_MoeFinalizeRouting.json"
+      },
+      "full": {
+        "path": "tasks/level2/006_MoeFinalizeRouting/6_MoeFinalizeRouting.json.bak",
+        "sha256": "2da9a6fe0fae5376a99a9505bde322a1b2d044a18c1a1dbd5a8e3e5072f74a8d",
+        "frozen_byte_sha256": "2da9a6fe0fae5376a99a9505bde322a1b2d044a18c1a1dbd5a8e3e5072f74a8d",
+        "byte_matches_frozen": true,
+        "cases": 50,
+        "normalized_case_set_sha256": "c5aa03a9736c7c3006eae0f77d390dcc4c06ebb21798709f0bc99ded5fade773",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level2/6_MoeFinalizeRouting.json",
+        "historical_frozen_relative_path": "tasks/level2/006_MoeFinalizeRouting/6_MoeFinalizeRouting.json.bak"
+      }
+    },
+    {
+      "operator_id": "level2/011_DequantSwigluQuant",
+      "reference": {
+        "path": "tasks/level2/011_DequantSwigluQuant/model.py",
+        "sha256": "036608796267d2beebae6bd5b03e856bfedc18a6673c4b11df7127c9714cc286",
+        "frozen_byte_sha256": "036608796267d2beebae6bd5b03e856bfedc18a6673c4b11df7127c9714cc286",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__011_DequantSwigluQuant/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level2/011_DequantSwigluQuant/model.py"
+      },
+      "compact": {
+        "path": "tasks/level2/011_DequantSwigluQuant/11_DequantSwigluQuant.json",
+        "sha256": "c4f5cfbbe2c1a63ab1471ff86811b3ab657bb932e2bc5e8cd67cfd9f589daec0",
+        "frozen_byte_sha256": "c4f5cfbbe2c1a63ab1471ff86811b3ab657bb932e2bc5e8cd67cfd9f589daec0",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "157c8a0885d5f6faadea989849863018535941f1b6c54f9d5126211239767062",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__011_DequantSwigluQuant/candidate_task/11_DequantSwigluQuant.json",
+        "historical_frozen_relative_path": "tasks/level2/011_DequantSwigluQuant/11_DequantSwigluQuant.json"
+      },
+      "full": {
+        "path": "tasks/level2/011_DequantSwigluQuant/11_DequantSwigluQuant.json.bak",
+        "sha256": "e1ba28408dadbd4c1475ec32c5511c22c4fd80089d65fec608b11713923f4ef1",
+        "frozen_byte_sha256": "e1ba28408dadbd4c1475ec32c5511c22c4fd80089d65fec608b11713923f4ef1",
+        "byte_matches_frozen": true,
+        "cases": 50,
+        "normalized_case_set_sha256": "7cef55c711486bbc3375194df8f7ad314b4ae06937890a4969c63aaf808fde69",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level2/11_DequantSwigluQuant.json",
+        "historical_frozen_relative_path": "tasks/level2/011_DequantSwigluQuant/11_DequantSwigluQuant.json.bak"
+      }
+    },
+    {
+      "operator_id": "level2/020_FusedRopeWithQkNormAndKvCacheUpdate",
+      "reference": {
+        "path": "tasks/level2/020_FusedRopeWithQkNormAndKvCacheUpdate/model.py",
+        "sha256": "8a305a43d6b61783a7432f109c905dc1fe4490ba5d5ce1730540cc2df1b3713a",
+        "frozen_byte_sha256": "8a305a43d6b61783a7432f109c905dc1fe4490ba5d5ce1730540cc2df1b3713a",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__020_FusedRopeWithQkNormAndKvCacheUpdate/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level2/020_FusedRopeWithQkNormAndKvCacheUpdate/model.py"
+      },
+      "compact": {
+        "path": "tasks/level2/020_FusedRopeWithQkNormAndKvCacheUpdate/20_FusedRopeWithQkNormAndKvCacheUpdate.json",
+        "sha256": "e8e2b09a52da82d6ac7cccb54edf410523046adee8d2af4ed1bad3cc2aa1344d",
+        "frozen_byte_sha256": "e8e2b09a52da82d6ac7cccb54edf410523046adee8d2af4ed1bad3cc2aa1344d",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "310bef7fc4921af952f554c7fa97dd44eb71a7e832011baf4feb419c199ff85a",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__020_FusedRopeWithQkNormAndKvCacheUpdate/candidate_task/20_FusedRopeWithQkNormAndKvCacheUpdate.json",
+        "historical_frozen_relative_path": "tasks/level2/020_FusedRopeWithQkNormAndKvCacheUpdate/20_FusedRopeWithQkNormAndKvCacheUpdate.json"
+      },
+      "full": {
+        "path": "tasks/level2/020_FusedRopeWithQkNormAndKvCacheUpdate/20_FusedRopeWithQkNormAndKvCacheUpdate.json.bak",
+        "sha256": "6ff240b440838778a13177908c1e0c39f64c256d58cf4f5ce795b2571028f931",
+        "frozen_byte_sha256": "0516f1a0f5def5812db0ee4eb2e7471ed77353a768cdd6341607e0d0169f848a",
+        "byte_matches_frozen": false,
+        "cases": 58,
+        "normalized_case_set_sha256": "84952accb63b933f95c308185f776eee89b07716a65429f74feb2b70fd45ef1c",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level2/20_FusedRopeWithQkNormAndKvCacheUpdate.json",
+        "historical_frozen_relative_path": "tasks/level2/020_FusedRopeWithQkNormAndKvCacheUpdate/20_FusedRopeWithQkNormAndKvCacheUpdate.json.bak"
+      }
+    },
+    {
+      "operator_id": "level2/023_HyenaFftSizePaddingRfft",
+      "reference": {
+        "path": "tasks/level2/023_HyenaFftSizePaddingRfft/model.py",
+        "sha256": "58c09ebb483a68f5839c47edf187626a90d36ba50d6706ce23a166e6d9203332",
+        "frozen_byte_sha256": "58c09ebb483a68f5839c47edf187626a90d36ba50d6706ce23a166e6d9203332",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__023_HyenaFftSizePaddingRfft/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level2/023_HyenaFftSizePaddingRfft/model.py"
+      },
+      "compact": {
+        "path": "tasks/level2/023_HyenaFftSizePaddingRfft/23_HyenaFftSizePaddingRfft.json",
+        "sha256": "9a9be42bcd41e2cfe04a5d90926cec6b8a57731925c2e3ee4173e5f2e0f25193",
+        "frozen_byte_sha256": "9a9be42bcd41e2cfe04a5d90926cec6b8a57731925c2e3ee4173e5f2e0f25193",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "3b5ca6908970ed586b2a842d0f5333f986c26d5ccc85ae0a944834f8bb559b52",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__023_HyenaFftSizePaddingRfft/candidate_task/23_HyenaFftSizePaddingRfft.json",
+        "historical_frozen_relative_path": "tasks/level2/023_HyenaFftSizePaddingRfft/23_HyenaFftSizePaddingRfft.json"
+      },
+      "full": {
+        "path": "tasks/level2/023_HyenaFftSizePaddingRfft/23_HyenaFftSizePaddingRfft.json.bak",
+        "sha256": "eb5c4b583117a65a1d9fe89d8c9226975c4215492f9aea6c5eaac7f0b2f93aac",
+        "frozen_byte_sha256": "eb5c4b583117a65a1d9fe89d8c9226975c4215492f9aea6c5eaac7f0b2f93aac",
+        "byte_matches_frozen": true,
+        "cases": 49,
+        "normalized_case_set_sha256": "520e8679b8bfcf2d5753860a9033fb5eab33a57e491750e60dd2e8dc41ef2ea3",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level2/23_HyenaFftSizePaddingRfft.json",
+        "historical_frozen_relative_path": "tasks/level2/023_HyenaFftSizePaddingRfft/23_HyenaFftSizePaddingRfft.json.bak"
+      }
+    },
+    {
+      "operator_id": "level2/025_MaskedSoftmaxWithAttentionDropoutBackward",
+      "reference": {
+        "path": "tasks/level2/025_MaskedSoftmaxWithAttentionDropoutBackward/model.py",
+        "sha256": "0edeafef619942fe2c2ff44def838f52d21901e970a6055333f4f6dfa96e249e",
+        "frozen_byte_sha256": "0edeafef619942fe2c2ff44def838f52d21901e970a6055333f4f6dfa96e249e",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__025_MaskedSoftmaxWithAttentionDropoutBackward/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level2/025_MaskedSoftmaxWithAttentionDropoutBackward/model.py"
+      },
+      "compact": {
+        "path": "tasks/level2/025_MaskedSoftmaxWithAttentionDropoutBackward/25_MaskedSoftmaxWithAttentionDropoutBackward.json",
+        "sha256": "0a893d02f5e1b872550adee6d72ed27fd5be5f0774b3d3525ab9a15571173780",
+        "frozen_byte_sha256": "0a893d02f5e1b872550adee6d72ed27fd5be5f0774b3d3525ab9a15571173780",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "248bb0fa5f3ba0f57f79b6d5627c2de76aa8b6b511b3cabe3bc64540768eaf09",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__025_MaskedSoftmaxWithAttentionDropoutBackward/candidate_task/25_MaskedSoftmaxWithAttentionDropoutBackward.json",
+        "historical_frozen_relative_path": "tasks/level2/025_MaskedSoftmaxWithAttentionDropoutBackward/25_MaskedSoftmaxWithAttentionDropoutBackward.json"
+      },
+      "full": {
+        "path": "tasks/level2/025_MaskedSoftmaxWithAttentionDropoutBackward/25_MaskedSoftmaxWithAttentionDropoutBackward.json.bak",
+        "sha256": "b0285c5f44dce14da8c15b079bcff23f467e439756635e0b99d38307b8a9fd30",
+        "frozen_byte_sha256": "b0285c5f44dce14da8c15b079bcff23f467e439756635e0b99d38307b8a9fd30",
+        "byte_matches_frozen": true,
+        "cases": 51,
+        "normalized_case_set_sha256": "898676f4d0ef77f8babe05e13f4378d8cb9167ce005692909f6874f380057ac3",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level2/25_MaskedSoftmaxWithAttentionDropoutBackward.json",
+        "historical_frozen_relative_path": "tasks/level2/025_MaskedSoftmaxWithAttentionDropoutBackward/25_MaskedSoftmaxWithAttentionDropoutBackward.json.bak"
+      }
+    },
+    {
+      "operator_id": "level2/029_TanhGatedResidualAddBackward",
+      "reference": {
+        "path": "tasks/level2/029_TanhGatedResidualAddBackward/model.py",
+        "sha256": "6a7b9c9a43fc5992c01fd6e32112c9dc973d6733c4b97135ab60db75dbf5f22a",
+        "frozen_byte_sha256": "6a7b9c9a43fc5992c01fd6e32112c9dc973d6733c4b97135ab60db75dbf5f22a",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__029_TanhGatedResidualAddBackward/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level2/029_TanhGatedResidualAddBackward/model.py"
+      },
+      "compact": {
+        "path": "tasks/level2/029_TanhGatedResidualAddBackward/29_TanhGatedResidualAddBackward.json",
+        "sha256": "f390eb7d1f4bb5832a1a5b8a20de4b282c42a792605de9384904ba2f5fc40e6b",
+        "frozen_byte_sha256": "f390eb7d1f4bb5832a1a5b8a20de4b282c42a792605de9384904ba2f5fc40e6b",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "8099865549b8e0a595a7ad4a95b9020294ca2935b0a40c5db881ba4faf34908f",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__029_TanhGatedResidualAddBackward/candidate_task/29_TanhGatedResidualAddBackward.json",
+        "historical_frozen_relative_path": "tasks/level2/029_TanhGatedResidualAddBackward/29_TanhGatedResidualAddBackward.json"
+      },
+      "full": {
+        "path": "tasks/level2/029_TanhGatedResidualAddBackward/29_TanhGatedResidualAddBackward.json.bak",
+        "sha256": "8c1cb167f5594422d8b1d9a62e1479ad926a04a2fc1ba5d536b20d7dc72ac430",
+        "frozen_byte_sha256": "8c1cb167f5594422d8b1d9a62e1479ad926a04a2fc1ba5d536b20d7dc72ac430",
+        "byte_matches_frozen": true,
+        "cases": 50,
+        "normalized_case_set_sha256": "ac76e7583fce03be1e8c1f1cc8c88b5695444a4a687c8d514a4b02cce7cafac3",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level2/29_TanhGatedResidualAddBackward.json",
+        "historical_frozen_relative_path": "tasks/level2/029_TanhGatedResidualAddBackward/29_TanhGatedResidualAddBackward.json.bak"
+      }
+    },
+    {
+      "operator_id": "level2/030_TimeDecayExponentialStabilization",
+      "reference": {
+        "path": "tasks/level2/030_TimeDecayExponentialStabilization/model.py",
+        "sha256": "63c858124662bdea7f3e14d0350a6f34b754915ab664d51d5f8cd141b0aa5860",
+        "frozen_byte_sha256": "63c858124662bdea7f3e14d0350a6f34b754915ab664d51d5f8cd141b0aa5860",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__030_TimeDecayExponentialStabilization/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level2/030_TimeDecayExponentialStabilization/model.py"
+      },
+      "compact": {
+        "path": "tasks/level2/030_TimeDecayExponentialStabilization/30_TimeDecayExponentialStabilization.json",
+        "sha256": "752b9b5073120e896ea939457bfaa37036dcb71ab400047c3e296b948c7542f3",
+        "frozen_byte_sha256": "752b9b5073120e896ea939457bfaa37036dcb71ab400047c3e296b948c7542f3",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "93dce68c59507638da454d8cfe84ff03938ec31f28a663689d9181701d9628b7",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level2__030_TimeDecayExponentialStabilization/candidate_task/30_TimeDecayExponentialStabilization.json",
+        "historical_frozen_relative_path": "tasks/level2/030_TimeDecayExponentialStabilization/30_TimeDecayExponentialStabilization.json"
+      },
+      "full": {
+        "path": "tasks/level2/030_TimeDecayExponentialStabilization/30_TimeDecayExponentialStabilization.json.bak",
+        "sha256": "da7b9ba402bfdcb8422d389fe4cf6f7d6c164b87ddf76ed94fb169f2bf6ecc82",
+        "frozen_byte_sha256": "da7b9ba402bfdcb8422d389fe4cf6f7d6c164b87ddf76ed94fb169f2bf6ecc82",
+        "byte_matches_frozen": true,
+        "cases": 50,
+        "normalized_case_set_sha256": "ea83d100dedf7a1c28ab229042e255a60dea0bdb88212b3a7a61351b7d55ebd2",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level2/30_TimeDecayExponentialStabilization.json",
+        "historical_frozen_relative_path": "tasks/level2/030_TimeDecayExponentialStabilization/30_TimeDecayExponentialStabilization.json.bak"
+      }
+    },
+    {
+      "operator_id": "level3/001_BatchMatmul",
+      "reference": {
+        "path": "tasks/level3/001_BatchMatmul/model.py",
+        "sha256": "e284da8248e63c7d0706757e9cb65fd0e92fe898a84c4376466f217e2a92de7e",
+        "frozen_byte_sha256": "e284da8248e63c7d0706757e9cb65fd0e92fe898a84c4376466f217e2a92de7e",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level3__001_BatchMatmul/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level3/001_BatchMatmul/model.py"
+      },
+      "compact": {
+        "path": "tasks/level3/001_BatchMatmul/1_BatchMatmul.json",
+        "sha256": "4451e2c1876821ca3d7bbac1d3bd39f3dff7ae9d1abfba009d26c226952776f4",
+        "frozen_byte_sha256": "4451e2c1876821ca3d7bbac1d3bd39f3dff7ae9d1abfba009d26c226952776f4",
+        "byte_matches_frozen": true,
+        "cases": 9,
+        "normalized_case_set_sha256": "f3f1b7020669c1a9afb66114a4f9e07042caff32249e9c47dbcffab0eb4eded0",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level3__001_BatchMatmul/candidate_task/1_BatchMatmul.json",
+        "historical_frozen_relative_path": "tasks/level3/001_BatchMatmul/1_BatchMatmul.json"
+      },
+      "full": {
+        "path": "tasks/level3/001_BatchMatmul/1_BatchMatmul.json.bak",
+        "sha256": "80c9c6268ffa4bc73cefdd271e1efeb6e05d02a7acc2e2b215e7c3a8f6cf4fc1",
+        "frozen_byte_sha256": "80c9c6268ffa4bc73cefdd271e1efeb6e05d02a7acc2e2b215e7c3a8f6cf4fc1",
+        "byte_matches_frozen": true,
+        "cases": 51,
+        "normalized_case_set_sha256": "74b32dcb4060ad411d0fabad0c5c27f075fc75bdfc75734d8f61315c7db19ba4",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level3/1_BatchMatmul.json",
+        "historical_frozen_relative_path": "tasks/level3/001_BatchMatmul/1_BatchMatmul.json.bak"
+      }
+    },
+    {
+      "operator_id": "level3/004_MatmulTransA",
+      "reference": {
+        "path": "tasks/level3/004_MatmulTransA/model.py",
+        "sha256": "3ce55bc391fdcc01a8b312dabb52e4705ebd0fb181239dc61daa02a8a5fd68ba",
+        "frozen_byte_sha256": "3ce55bc391fdcc01a8b312dabb52e4705ebd0fb181239dc61daa02a8a5fd68ba",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level3__004_MatmulTransA/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level3/004_MatmulTransA/model.py"
+      },
+      "compact": {
+        "path": "tasks/level3/004_MatmulTransA/4_MatmulTransA.json",
+        "sha256": "d1fe81fed15b4076757119157f55fdf9fe211a310a22d1a92cdc2308f587a93f",
+        "frozen_byte_sha256": "d1fe81fed15b4076757119157f55fdf9fe211a310a22d1a92cdc2308f587a93f",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "75f0caa94e781da0e5fb25283cc9e0e753f9dbc99226b7de998e5413a0485a37",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level3__004_MatmulTransA/candidate_task/4_MatmulTransA.json",
+        "historical_frozen_relative_path": "tasks/level3/004_MatmulTransA/4_MatmulTransA.json"
+      },
+      "full": {
+        "path": "tasks/level3/004_MatmulTransA/4_MatmulTransA.json.bak",
+        "sha256": "fcefbe0ab751082bf1e5afd57fd374a7350603b8d05fe30454794638704cdb01",
+        "frozen_byte_sha256": "fcefbe0ab751082bf1e5afd57fd374a7350603b8d05fe30454794638704cdb01",
+        "byte_matches_frozen": true,
+        "cases": 50,
+        "normalized_case_set_sha256": "a8e7a66221e8f02708fabe4c990acf61cd99d5b6ad893e7071bca8f18357d9f4",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level3/4_MatmulTransA.json",
+        "historical_frozen_relative_path": "tasks/level3/004_MatmulTransA/4_MatmulTransA.json.bak"
+      }
+    },
+    {
+      "operator_id": "level3/005_MatmulTransB",
+      "reference": {
+        "path": "tasks/level3/005_MatmulTransB/model.py",
+        "sha256": "f76916e52b3d2620fe5490526a5eecfd04be9fbce2123647fa2183ff0119493b",
+        "frozen_byte_sha256": "f76916e52b3d2620fe5490526a5eecfd04be9fbce2123647fa2183ff0119493b",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level3__005_MatmulTransB/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level3/005_MatmulTransB/model.py"
+      },
+      "compact": {
+        "path": "tasks/level3/005_MatmulTransB/5_MatmulTransB.json",
+        "sha256": "0edef76007ff6e1a745da2f8ffcb2c5d28c9e17bebe2566682157c65b5f264fa",
+        "frozen_byte_sha256": "0edef76007ff6e1a745da2f8ffcb2c5d28c9e17bebe2566682157c65b5f264fa",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "262005aadfcdb2903cf1f225639a3592fd7d7e19d04723ca738f829d65e5fdf7",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level3__005_MatmulTransB/candidate_task/5_MatmulTransB.json",
+        "historical_frozen_relative_path": "tasks/level3/005_MatmulTransB/5_MatmulTransB.json"
+      },
+      "full": {
+        "path": "tasks/level3/005_MatmulTransB/5_MatmulTransB.json.bak",
+        "sha256": "be6daa8f7b34e870f9a06b3c91e290d4b8153327cc0f0e1a4ee552683b3bc6bd",
+        "frozen_byte_sha256": "be6daa8f7b34e870f9a06b3c91e290d4b8153327cc0f0e1a4ee552683b3bc6bd",
+        "byte_matches_frozen": true,
+        "cases": 50,
+        "normalized_case_set_sha256": "5bb1a4f8b3fc615144e41e0d00e80f0b7022913b69991b4d9c1bf255d644a49d",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level3/5_MatmulTransB.json",
+        "historical_frozen_relative_path": "tasks/level3/005_MatmulTransB/5_MatmulTransB.json.bak"
+      }
+    },
+    {
+      "operator_id": "level3/006_ConvStandard1d",
+      "reference": {
+        "path": "tasks/level3/006_ConvStandard1d/model.py",
+        "sha256": "87cb1a47e528bd0e596d74ed79f846000061683ec977d821c2e35ec22c1f7715",
+        "frozen_byte_sha256": "87cb1a47e528bd0e596d74ed79f846000061683ec977d821c2e35ec22c1f7715",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level3__006_ConvStandard1d/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level3/006_ConvStandard1d/model.py"
+      },
+      "compact": {
+        "path": "tasks/level3/006_ConvStandard1d/6_ConvStandard1d.json",
+        "sha256": "a056927b6551635ef8157742ebad0be4d7e6b3ded7b5deaabbecf79a2f712351",
+        "frozen_byte_sha256": "a056927b6551635ef8157742ebad0be4d7e6b3ded7b5deaabbecf79a2f712351",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "9ccc5de37d46878d00610342af5d91a347356dcc5edfdf2d850d071e1665e9fc",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level3__006_ConvStandard1d/candidate_task/6_ConvStandard1d.json",
+        "historical_frozen_relative_path": "tasks/level3/006_ConvStandard1d/6_ConvStandard1d.json"
+      },
+      "full": {
+        "path": "tasks/level3/006_ConvStandard1d/6_ConvStandard1d.json.bak",
+        "sha256": "63761b2ccb1f2c06e3090e4895f06fff50b50713d7644318a74b2f2beeca6a1c",
+        "frozen_byte_sha256": "63761b2ccb1f2c06e3090e4895f06fff50b50713d7644318a74b2f2beeca6a1c",
+        "byte_matches_frozen": true,
+        "cases": 50,
+        "normalized_case_set_sha256": "814ee951f07d5904b12241f4932e657ae7ac554986b938416f7ae00aed919924",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level3/6_ConvStandard1d.json",
+        "historical_frozen_relative_path": "tasks/level3/006_ConvStandard1d/6_ConvStandard1d.json.bak"
+      }
+    },
+    {
+      "operator_id": "level3/008_ConvStandard3d",
+      "reference": {
+        "path": "tasks/level3/008_ConvStandard3d/model.py",
+        "sha256": "6fa72265e36762808f5eae90ac4ae6ed22bc9ca8ddb662bd14fdea092f2ff4df",
+        "frozen_byte_sha256": "6fa72265e36762808f5eae90ac4ae6ed22bc9ca8ddb662bd14fdea092f2ff4df",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level3__008_ConvStandard3d/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level3/008_ConvStandard3d/model.py"
+      },
+      "compact": {
+        "path": "tasks/level3/008_ConvStandard3d/8_ConvStandard3d.json",
+        "sha256": "76bc274ead58eb7c4a44e28f1cbcdfac2dec61226c6878e591cf78feb070493c",
+        "frozen_byte_sha256": "76bc274ead58eb7c4a44e28f1cbcdfac2dec61226c6878e591cf78feb070493c",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "1b14934addbba63121d492dc015b1d57feb51555f520761397b84858962e8406",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level3__008_ConvStandard3d/candidate_task/8_ConvStandard3d.json",
+        "historical_frozen_relative_path": "tasks/level3/008_ConvStandard3d/8_ConvStandard3d.json"
+      },
+      "full": {
+        "path": "tasks/level3/008_ConvStandard3d/8_ConvStandard3d.json.bak",
+        "sha256": "2e9cae461942da124734157534b3d5e1c99eeb50701d47c6cca74dc2895f2853",
+        "frozen_byte_sha256": "2e9cae461942da124734157534b3d5e1c99eeb50701d47c6cca74dc2895f2853",
+        "byte_matches_frozen": true,
+        "cases": 60,
+        "normalized_case_set_sha256": "d7f5d97d748e0c71dd065ba321e192d7f1fe39d5b1d35890efbb1b66c76ed1c6",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level3/8_ConvStandard3d.json",
+        "historical_frozen_relative_path": "tasks/level3/008_ConvStandard3d/8_ConvStandard3d.json.bak"
+      }
+    },
+    {
+      "operator_id": "level3/009_ConvDepthwise2d",
+      "reference": {
+        "path": "tasks/level3/009_ConvDepthwise2d/model.py",
+        "sha256": "cd623afdbe2bc7cc846ab1e8a2c90cf4777d05c9f465ca535f20fddcc0905e48",
+        "frozen_byte_sha256": "cd623afdbe2bc7cc846ab1e8a2c90cf4777d05c9f465ca535f20fddcc0905e48",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level3__009_ConvDepthwise2d/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level3/009_ConvDepthwise2d/model.py"
+      },
+      "compact": {
+        "path": "tasks/level3/009_ConvDepthwise2d/9_ConvDepthwise2d.json",
+        "sha256": "c16dc33296705d7e2296029ac11f899a631c364076b8f6fe4d550b78d2cb5c09",
+        "frozen_byte_sha256": "c16dc33296705d7e2296029ac11f899a631c364076b8f6fe4d550b78d2cb5c09",
+        "byte_matches_frozen": true,
+        "cases": 50,
+        "normalized_case_set_sha256": "92470c4f2bb4549ea7ec13fcc36366422cdab472519fc6b0f1e2ecead947728a",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level3__009_ConvDepthwise2d/candidate_task/9_ConvDepthwise2d.json",
+        "historical_frozen_relative_path": "tasks/level3/009_ConvDepthwise2d/9_ConvDepthwise2d.json"
+      },
+      "full": {
+        "path": "tasks/level3/009_ConvDepthwise2d/9_ConvDepthwise2d.json.bak",
+        "sha256": "c16dc33296705d7e2296029ac11f899a631c364076b8f6fe4d550b78d2cb5c09",
+        "frozen_byte_sha256": "c16dc33296705d7e2296029ac11f899a631c364076b8f6fe4d550b78d2cb5c09",
+        "byte_matches_frozen": true,
+        "cases": 50,
+        "normalized_case_set_sha256": "92470c4f2bb4549ea7ec13fcc36366422cdab472519fc6b0f1e2ecead947728a",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level3/9_ConvDepthwise2d.json",
+        "historical_frozen_relative_path": "tasks/level3/009_ConvDepthwise2d/9_ConvDepthwise2d.json.bak"
+      }
+    },
+    {
+      "operator_id": "level5/005_inplace_index_add_with_sorted",
+      "reference": {
+        "path": "tasks/level5/005_inplace_index_add_with_sorted/model.py",
+        "sha256": "6b5e1739bd2563f46876ba133b3aa709cc4b350a6c1583a935b9ca0a3d240995",
+        "frozen_byte_sha256": "6b5e1739bd2563f46876ba133b3aa709cc4b350a6c1583a935b9ca0a3d240995",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level5__005_inplace_index_add_with_sorted/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level5/005_inplace_index_add_with_sorted/model.py"
+      },
+      "compact": {
+        "path": "tasks/level5/005_inplace_index_add_with_sorted/5_inplace_index_add_with_sorted.json",
+        "sha256": "be1a86f965ae1d0191b577cec1a42a0f37511c97a276964c02f6c7a43b3e9c29",
+        "frozen_byte_sha256": "be1a86f965ae1d0191b577cec1a42a0f37511c97a276964c02f6c7a43b3e9c29",
+        "byte_matches_frozen": true,
+        "cases": 5,
+        "normalized_case_set_sha256": "8aa8d05211344c440d326b7db6b0a5879c820d3e0d676855b5f91f73f0eb03f9",
+        "source_relative_path": "analysis_packages/v5_ablation_preparation_20260724/dataset_amendments/5_inplace_index_add_with_sorted.json",
+        "historical_frozen_relative_path": "tasks/level5/005_inplace_index_add_with_sorted/5_inplace_index_add_with_sorted.json"
+      },
+      "full": {
+        "path": "tasks/level5/005_inplace_index_add_with_sorted/5_inplace_index_add_with_sorted.json.bak",
+        "sha256": "be1a86f965ae1d0191b577cec1a42a0f37511c97a276964c02f6c7a43b3e9c29",
+        "frozen_byte_sha256": "be1a86f965ae1d0191b577cec1a42a0f37511c97a276964c02f6c7a43b3e9c29",
+        "byte_matches_frozen": true,
+        "cases": 5,
+        "normalized_case_set_sha256": "8aa8d05211344c440d326b7db6b0a5879c820d3e0d676855b5f91f73f0eb03f9",
+        "source_relative_path": "analysis_packages/v5_ablation_preparation_20260724/dataset_amendments/5_inplace_index_add_with_sorted.json.bak",
+        "historical_frozen_relative_path": "tasks/level5/005_inplace_index_add_with_sorted/5_inplace_index_add_with_sorted.json.bak"
+      }
+    },
+    {
+      "operator_id": "level5/010_scatter_elements_v2",
+      "reference": {
+        "path": "tasks/level5/010_scatter_elements_v2/model.py",
+        "sha256": "34e9858e8bdff115c80c08b7fcb0664c683ba398597d71ed93ffd8c7049e87e7",
+        "frozen_byte_sha256": "34e9858e8bdff115c80c08b7fcb0664c683ba398597d71ed93ffd8c7049e87e7",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level5__010_scatter_elements_v2/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level5/010_scatter_elements_v2/model.py"
+      },
+      "compact": {
+        "path": "tasks/level5/010_scatter_elements_v2/10_scatter_elements_v2.json",
+        "sha256": "523238688065a2eb282d166c9f502149729c060f9c9f148479b0f021791931b7",
+        "frozen_byte_sha256": "523238688065a2eb282d166c9f502149729c060f9c9f148479b0f021791931b7",
+        "byte_matches_frozen": true,
+        "cases": 6,
+        "normalized_case_set_sha256": "91ff3566b7543f45a9d4f492ef667591b5aaa5c045909b5e4633a0c8ecf86b4a",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level5__010_scatter_elements_v2/candidate_task/10_scatter_elements_v2.json",
+        "historical_frozen_relative_path": "tasks/level5/010_scatter_elements_v2/10_scatter_elements_v2.json"
+      },
+      "full": {
+        "path": "tasks/level5/010_scatter_elements_v2/10_scatter_elements_v2.json.bak",
+        "sha256": "523238688065a2eb282d166c9f502149729c060f9c9f148479b0f021791931b7",
+        "frozen_byte_sha256": "523238688065a2eb282d166c9f502149729c060f9c9f148479b0f021791931b7",
+        "byte_matches_frozen": true,
+        "cases": 6,
+        "normalized_case_set_sha256": "91ff3566b7543f45a9d4f492ef667591b5aaa5c045909b5e4633a0c8ecf86b4a",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level5__010_scatter_elements_v2/candidate_task/10_scatter_elements_v2.json",
+        "historical_frozen_relative_path": "tasks/level5/010_scatter_elements_v2/10_scatter_elements_v2.json.bak"
+      }
+    },
+    {
+      "operator_id": "level6/021_UnfoldGrad",
+      "reference": {
+        "path": "tasks/level6/021_UnfoldGrad/model.py",
+        "sha256": "564dd74fe6e43ed996a28fd4278d422e6e66eb886f825ecd5649789fc3ec1b62",
+        "frozen_byte_sha256": "564dd74fe6e43ed996a28fd4278d422e6e66eb886f825ecd5649789fc3ec1b62",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level6__021_UnfoldGrad/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level6/021_UnfoldGrad/model.py"
+      },
+      "compact": {
+        "path": "tasks/level6/021_UnfoldGrad/21_UnfoldGrad.json",
+        "sha256": "f2cb325e9a73b07bcb6e4a8148dc2f203f4ee240fdc2cebced4bc9af4aedc5de",
+        "frozen_byte_sha256": "f2cb325e9a73b07bcb6e4a8148dc2f203f4ee240fdc2cebced4bc9af4aedc5de",
+        "byte_matches_frozen": true,
+        "cases": 8,
+        "normalized_case_set_sha256": "a528aa2698fe6004f14efada61f82afcff7190c11f3fddb9a0f6ef65349f374d",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level6__021_UnfoldGrad/candidate_task/21_UnfoldGrad.json",
+        "historical_frozen_relative_path": "tasks/level6/021_UnfoldGrad/21_UnfoldGrad.json"
+      },
+      "full": {
+        "path": "tasks/level6/021_UnfoldGrad/21_UnfoldGrad.json.bak",
+        "sha256": "f2cb325e9a73b07bcb6e4a8148dc2f203f4ee240fdc2cebced4bc9af4aedc5de",
+        "frozen_byte_sha256": "f2cb325e9a73b07bcb6e4a8148dc2f203f4ee240fdc2cebced4bc9af4aedc5de",
+        "byte_matches_frozen": true,
+        "cases": 8,
+        "normalized_case_set_sha256": "a528aa2698fe6004f14efada61f82afcff7190c11f3fddb9a0f6ef65349f374d",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level6__021_UnfoldGrad/candidate_task/21_UnfoldGrad.json",
+        "historical_frozen_relative_path": "tasks/level6/021_UnfoldGrad/21_UnfoldGrad.json.bak"
+      }
+    },
+    {
+      "operator_id": "level7/004_NormRopeConcat",
+      "reference": {
+        "path": "tasks/level7/004_NormRopeConcat/model.py",
+        "sha256": "60361848e1f2d7844f2bad8e069b2a2579bb0ba738b1036b0206d179a40e76fb",
+        "frozen_byte_sha256": "60361848e1f2d7844f2bad8e069b2a2579bb0ba738b1036b0206d179a40e76fb",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level7__004_NormRopeConcat/candidate_task/model.py",
+        "historical_frozen_relative_path": "tasks/level7/004_NormRopeConcat/model.py"
+      },
+      "compact": {
+        "path": "tasks/level7/004_NormRopeConcat/4_NormRopeConcat.json",
+        "sha256": "0cc250af1daf886225e980a54f88481f5c1c8f1ce9773099ee394a2071ed549f",
+        "frozen_byte_sha256": "0cc250af1daf886225e980a54f88481f5c1c8f1ce9773099ee394a2071ed549f",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "b17c7cb8748bc0705bac11fa5c0775ab39462c826a444c29900fd256db6ffc73",
+        "source_relative_path": "../cannbot/analysis_packages/cannbot_debug_kimi_manual_audit_20260729/cannbot_debug_kimi_manual_audit/level7__004_NormRopeConcat/candidate_task/4_NormRopeConcat.json",
+        "historical_frozen_relative_path": "tasks/level7/004_NormRopeConcat/4_NormRopeConcat.json"
+      },
+      "full": {
+        "path": "tasks/level7/004_NormRopeConcat/4_NormRopeConcat.json.bak",
+        "sha256": "0cc250af1daf886225e980a54f88481f5c1c8f1ce9773099ee394a2071ed549f",
+        "frozen_byte_sha256": "0cc250af1daf886225e980a54f88481f5c1c8f1ce9773099ee394a2071ed549f",
+        "byte_matches_frozen": true,
+        "cases": 10,
+        "normalized_case_set_sha256": "b17c7cb8748bc0705bac11fa5c0775ab39462c826a444c29900fd256db6ffc73",
+        "source_relative_path": "cannbench/benchmarks/NPUKernelBench/level7/4_NormRopeConcat.json",
+        "historical_frozen_relative_path": "tasks/level7/004_NormRopeConcat/4_NormRopeConcat.json.bak"
+      }
+    }
+  ]
+}

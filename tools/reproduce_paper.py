@@ -37,7 +37,8 @@ def main() -> None:
     env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
     with tempfile.TemporaryDirectory(prefix="debug-agent-paper-") as directory:
         work = Path(directory) / "artifact"
-        shutil.copytree(ARTIFACT, work)
+        shutil.copytree(ARTIFACT, work,
+                        ignore=shutil.ignore_patterns(".DS_Store", "__pycache__", "*.pyc", "*.pyo"))
         for step in STEPS:
             subprocess.run([sys.executable, str(work / "scripts" / step)],
                            cwd=work, env=env, check=True)

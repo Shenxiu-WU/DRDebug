@@ -14,6 +14,93 @@
     failed: false
   };
 
+  // Public task definitions: https://cannbench.com/api/benchmarks/official-tasks
+  // Official-Tasks 1.1.2, checked on 2026-10-16. The challenges below are
+  // engineering summaries of the public computation graphs, not diagnoses of
+  // hidden cases or descriptions of private repair mechanisms.
+  const operatorProfiles = {
+    GQA: {
+      zh: {
+        purpose: "多个 Query 头共享较少的 KV 头，对已分头的 Q/K/V 计算缩放点积注意力。",
+        challenge: "需要协调 Query 与 KV 头的分组映射、两次矩阵乘、Softmax 归约及可选因果掩码。"
+      },
+      en: {
+        purpose: "Computes scaled dot-product attention with multiple query heads sharing fewer key/value heads.",
+        challenge: "Combines grouped head mapping, two matrix multiplications, softmax reductions and optional causal masking."
+      }
+    },
+    GroupedMatmulSwigluQuant: {
+      zh: {
+        purpose: "按专家分组执行矩阵乘，随后完成反量化、SwiGLU 激活和逐 Token 再量化。",
+        challenge: "分组边界、矩阵累加、双侧缩放、激活、逐行归约和量化舍入形成连续的数据流。"
+      },
+      en: {
+        purpose: "Performs grouped expert matmul followed by dequantization, SwiGLU activation and per-token requantization.",
+        challenge: "Couples group boundaries, matrix accumulation, scaling, activation, row reductions and quantization rounding."
+      }
+    },
+    GRU: {
+      zh: {
+        purpose: "通过重置门和更新门，沿序列逐步更新隐藏状态。",
+        challenge: "矩阵投影与 Sigmoid/Tanh 门控相互衔接，同时存在跨时间步的状态依赖。"
+      },
+      en: {
+        purpose: "Updates a recurrent hidden state across a sequence using reset and update gates.",
+        challenge: "Connects matrix projections and sigmoid/tanh gating with dependencies between successive time steps."
+      }
+    },
+    LSTM: {
+      zh: {
+        purpose: "通过输入门、遗忘门和输出门维护细胞状态与隐藏状态，处理序列依赖。",
+        challenge: "四路门控与候选计算、多种非线性及两类状态的跨步传递构成复杂计算链。"
+      },
+      en: {
+        purpose: "Maintains cell and hidden states through input, forget and output gates to process sequential dependencies.",
+        challenge: "Combines four gate/candidate branches, nonlinear activations and coupled cell/hidden-state transitions across time."
+      }
+    },
+    MHA: {
+      zh: {
+        purpose: "对已分头的 Q/K/V 执行多头缩放点积注意力，支持可选因果掩码。",
+        challenge: "两次矩阵乘之间需要完成缩放、掩码及 Softmax 归约，多个阶段共同决定输出。"
+      },
+      en: {
+        purpose: "Computes multi-head scaled dot-product attention from already split Q/K/V tensors, with optional causal masking.",
+        challenge: "Links two matrix multiplications through scaling, masking and softmax reductions."
+      }
+    },
+    MLA: {
+      zh: {
+        purpose: "组合 Q/K 的内容与位置编码分量，执行 MLA 注意力核心及 Value 聚合。",
+        challenge: "内容与位置分量、共享 KV 头、不同的 QK 与 Value 维度及 Softmax 归约需要协同处理。"
+      },
+      en: {
+        purpose: "Combines content and positional Q/K components to compute the MLA attention core and value aggregation.",
+        challenge: "Coordinates split components, shared KV heads, different QK/value dimensions and softmax reductions."
+      }
+    },
+    MlaProlog: {
+      zh: {
+        purpose: "完成 MLA 的 Query/Key 投影、归一化与旋转位置编码前处理。",
+        challenge: "串联四次矩阵乘、两次 RMSNorm 和两次 RoPE，衔接矩阵运算、归约与位置编码。"
+      },
+      en: {
+        purpose: "Prepares MLA queries and keys through projections, normalization and rotary positional encoding.",
+        challenge: "Connects four matrix multiplications, two RMSNorm operations and two RoPE operations in one computation pipeline."
+      }
+    },
+    SparseFlashAttention: {
+      zh: {
+        purpose: "仅对输入索引指定的 KV 位置子集计算注意力，支持共享 KV 头及可选因果掩码。",
+        challenge: "不规则索引访问、按头分组、掩码和 Softmax 归约需要共同遵守稀疏注意力语义。"
+      },
+      en: {
+        purpose: "Computes attention over KV positions supplied by sparse indices, with shared KV heads and optional causal masking.",
+        challenge: "Combines irregular indexed access, grouped heads, masking and softmax reductions under sparse attention semantics."
+      }
+    }
+  };
+
   const copy = {
     zh: {
       standard: "标准测试",
@@ -22,8 +109,7 @@
       remaining: "剩余未通过",
       allPassed: "全部通过",
       oneRemaining: "剩余 1 例",
-      aggregateNote: "每项汇总标准与隐藏测试。这里展示聚合结果，不披露或推测隐藏用例内容。",
-      partialNote: "MlaProlog 的标准测试 20/20、隐藏测试 79/80；剩余 1 个隐藏用例未通过。",
+      challenge: "实现难点",
       error: "互动数据暂时无法读取，已保留页面中的静态快照。可通过公开榜单与数据链接核验。",
       comparison: (view, total, max) => `${view === "level4" ? "Level 4" : "全部 53 个算子"} · 标准 + 隐藏测试 · 每个方案完整覆盖 ${total} 例。横条表示剩余未通过用例，越少越好；坐标从 0 到 ${max}。展示精选的完整覆盖方案。`,
       operatorLabel: (name, passed, total) => `${name}：${passed}/${total} 例通过，查看标准与隐藏测试明细`,
@@ -36,8 +122,7 @@
       remaining: "remaining failures",
       allPassed: "All passed",
       oneRemaining: "1 remaining",
-      aggregateNote: "Each result combines standard and hidden tests. These are aggregate counts; hidden case contents are neither disclosed nor inferred.",
-      partialNote: "MlaProlog passes 20/20 standard tests and 79/80 hidden tests, with 1 hidden case remaining.",
+      challenge: "Why it is challenging",
       error: "Interactive data could not be loaded. The static snapshot has been preserved. Use the public leaderboard and data links to verify the results.",
       comparison: (view, total, max) => `${view === "level4" ? "Level 4" : "All 53 operators"} · standard + hidden tests · ${total} cases fully covered per solution. Bars show remaining failures: fewer is better, on an axis from 0 to ${max}. Selected solutions with complete coverage are shown.`,
       operatorLabel: (name, passed, total) => `${name}: ${passed}/${total} cases passed. Show standard and hidden test details`,
@@ -170,6 +255,16 @@
     }
   }
 
+  function renderProfile(name, lang) {
+    if (!Object.prototype.hasOwnProperty.call(operatorProfiles, name)) return null;
+    const profile = operatorProfiles[name][lang];
+    if (!profile) return null;
+    const purpose = element("p", "operator-detail-purpose", profile.purpose);
+    const challenge = element("div", "operator-detail-challenge");
+    challenge.append(element("h5", "", copy[lang].challenge), element("p", "", profile.challenge));
+    return { purpose, challenge };
+  }
+
   function renderOperatorDetail() {
     const detail = document.getElementById("operator-detail");
     if (!detail) return;
@@ -177,15 +272,19 @@
     if (!operator) return;
     const text = copy[state.lang];
     const heading = element("h4", "operator-detail-name", operator.name);
-    const total = element("p", "operator-detail-count", `${countPair(operator)} · ${formatRate(operator.pass_rate)}`);
+    const total = element("p", "operator-detail-count", countPair(operator));
+    const profile = renderProfile(operator.name, state.lang);
     const metrics = element("dl", "operator-detail-metrics");
     for (const [key, label] of [["standard", text.standard], ["hidden", text.hidden]]) {
       const group = element("div", "operator-detail-metric");
       group.append(element("dt", "", label), element("dd", "", countPair(operator[key])));
       metrics.append(group);
     }
-    const note = element("p", "operator-detail-note", operator.name === "MlaProlog" && operator.failed === 1 ? text.partialNote : text.aggregateNote);
-    detail.replaceChildren(heading, total, metrics, note);
+    const children = [heading, total];
+    if (profile) children.push(profile.purpose);
+    children.push(metrics);
+    if (profile) children.push(profile.challenge);
+    detail.replaceChildren(...children);
     detail.setAttribute("aria-live", "polite");
     detail.setAttribute("aria-atomic", "true");
   }

@@ -8,3 +8,5 @@ The root MIT license applies to project-authored software and website code, exce
 - **CANNBench snapshot:** the website contains dated aggregate counts with links to the official source and scope definitions. Benchmark task implementations and hidden test inputs are not distributed by this repository.
 
 Publication changes to the paper artifact are listed in `papers/2026-dont-regenerate-debug/artifact/PUBLIC_RELEASE_CHANGES.json`. The experimental CSV records and method algorithms are retained from the frozen paper package.
+
+- **NPUKernelBench companion dataset:** the recovered paper reference implementations and public input-case specifications are separately attributed to [NPUKernelBench](https://github.com/weich97/NPUKernelBench). The upstream README declares Apache-2.0; the dataset includes the official Apache standard text and a [NOTICE](papers/2026-dont-regenerate-debug/dataset/NOTICE) documenting the source declaration and the missing upstream license-file link. The root MIT license does not replace that declaration.

@@ -24,7 +24,7 @@ authors:
     given-names: Qingfu
 preferred-citation:
   type: article
-  title: "Don't Regenerate, Debug: A Domain-Specific Agent for Repairing Near-Miss Hardware Operators"
+  title: "Don't Regenerate, Debug: A Domain-Specific Agent for Repairing Near-Miss Accelerator Kernels"
   authors:
     - family-names: Sun
       given-names: Yansong

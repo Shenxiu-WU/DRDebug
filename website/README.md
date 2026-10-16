@@ -1,10 +1,10 @@
 # 项目展示网站
 
-网站以中文为默认语言，可在页面内切换 English。HTML、CSS、JavaScript 和精选公开资产都在 `website/` 中。页面在私有开发项目内编辑，经文件清单审查后按字节同步到公开展示仓库的 `main`；公开仓库以独立历史保存论文冻结 artifact，GitHub Pages 只发布 `website/`，无需维护 `gh-pages` 分支副本。
+网站以中文为默认语言，可在页面内切换 English。HTML、CSS、JavaScript 和精选公开资产都在本仓库的 `website/` 中，直接在此维护。公开仓库以独立历史保存论文冻结 artifact，GitHub Pages 只发布 `website/`。
 
 ## 本地预览
 
-在包含 `website/` 的仓库根目录运行：
+在本公开仓库（本地 checkout 为 `public-showcase/`）的根目录运行：
 
 ```bash
 python3 -m http.server 8000 --directory website
@@ -16,7 +16,7 @@ python3 -m http.server 8000 --directory website
 
 - 所有排行榜或评测 snapshot 必须标注采集日期、硬件、指标口径及分母；更新数字时同步检查图表、正文和中英文文案。
 - 区分 CANNBench 官方结果与论文中早期生成流程（NPUKernelBench 任务）的实验结果，不将不同基准的数字混为同一排名或结论。正式成果链接到原始公开来源。
-- 论文中的 PDF 图资产用于说明研究动机、机制和实验，不代表论文全文。论文标题及 arXiv 编号链接到[公开摘要页](https://arxiv.org/abs/2608.02712)，另提供[全文 PDF](https://arxiv.org/pdf/2608.02712) 入口；展示题名以 arXiv 公开版本的 Hardware Operators 为准。
+- 论文中的 PDF 图资产用于说明研究动机、机制和实验，不代表论文全文。论文标题及 arXiv 编号链接到[公开摘要页](https://arxiv.org/abs/2608.02712)，另提供[全文 PDF](https://arxiv.org/pdf/2608.02712) 入口；展示题名和作者机构标号以 arXiv 公开 PDF v2（2026-10-15）的 Accelerator Kernels 为准。
 - 仅把用于公开展示的精选资产放入 `website/`，运行回执、原始会话和机器本地配置继续由原有目录维护。
 
 ## GitHub Pages 发布
@@ -52,6 +52,14 @@ python3 -m http.server 8000 --directory website
 
 ## 公开发布维护
 
-公开仓库为 [DRDebug](https://github.com/Shenxiu-WU/DRDebug)，其持久本地 checkout 在开发仓库之外的 `public-showcase/`。网页源码入口仅承诺提供论文冻结代码与数据，CANNBench 快照与论文实验分别呈现。
+公开仓库为 [DRDebug](https://github.com/Shenxiu-WU/DRDebug)，本地独立 checkout 为 `public-showcase/`。其中的 `website/` 是唯一维护的网页源码目录。网页源码入口提供论文冻结代码与数据，CANNBench 快照与论文实验分别呈现。
 
-在私有开发仓库根运行 `python3 -B scripts/export_public_website.py --destination ../public-showcase` 可先预览差异；添加 `--apply` 才会按 `configs/public_website_files.json` 的精确清单同步网站及 Pages 工作流。该命令只修改本地文件，不提交或推送。论文 artifact 不在网站同步范围内。完成审查并得到发布指示后，再在公开 checkout 提交、推送；不从私仓复制 Git 历史。
+日常直接编辑本目录，在公开仓库根目录启动本地预览，并检查中英文、主题、响应式布局与链接。收到发布指示后，在本公开仓库提交并推送 `main`，由现有 Pages 工作流部署。网站更新与论文 artifact 分开组织；旧的私仓网站副本、导出工具和导出哈希清单已退役。
+
+## 研究内容与任务说明
+
+- 首屏以“算子精度修复智能体 / ASCEND NPU”概括定位；结果正文明确排名对象为测试用例通过数。
+- 8个 Level4 算子的功能依据 [Official-Tasks 公开任务定义](https://cannbench.com/api/benchmarks/official-tasks)，实现难点为对其公开计算图的工程概括。详情只显示通过计数、标准/隐藏明细及各任务的功能和难点，不推测隐藏输入。
+- 研究区采用当前公开论文 v2 题名、9位作者机构上标及共同第一/通讯作者标记。Token图的口径是总all tokens除以成功算子数：Regenerate为4,372,531,063/11=397.50M，Debug为511,901,478/18=28.44M，降幅92.8456%。包含失败运行和缓存token；M表示百万token。数值来自冻结artifact的token_accounting_summary.json。
+- 论文任务和测例单独放在公开 checkout 的 [dataset/](../papers/2026-dont-regenerate-debug/dataset/)，不改写已经打标签的 artifact。此处提供 27 个参考实现、compact/full 公开输入规格及哈希溯源，区别于近成功候选和 NPU 运行环境；网页通过“论文任务与测例”链接到该目录。
+- 评测演进分别说明固定公开任务与社区标准/隐藏集的用途，不声称所有27个任务直接来自生产客户，也不把两个平台的数字合并比较。

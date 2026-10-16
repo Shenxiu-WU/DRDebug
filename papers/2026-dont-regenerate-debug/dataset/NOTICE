@@ -1,0 +1,24 @@
+NPUKernelBench task-data companion for Don't Regenerate, Debug
+
+Upstream project: https://github.com/weich97/NPUKernelBench
+Upstream README: https://github.com/weich97/NPUKernelBench/blob/master/README.md
+Declaration observed on: 2026-10-16
+Declared upstream license: Apache License, Version 2.0
+
+The public upstream README explicitly declares Apache 2.0. Its linked root
+LICENSE file returned HTTP 404 on the observation date; targeted checks of
+LICENSE.txt and LICENSE.md also returned HTTP 404. The accompanying
+LICENSE-APACHE-2.0.txt is the standard license text retrieved directly from
+https://www.apache.org/licenses/LICENSE-2.0.txt, not a file retrieved from the upstream repository.
+
+These historical reference implementations and case descriptors retain their
+source bytes and existing comments. The complete reference/compact identity and
+the full-case identity exception are documented in PROVENANCE.json. The exact
+upstream revision corresponding to these historical snapshots has not been
+independently established. Current upstream HEAD is not claimed as their byte
+source. This attribution and provenance note does not manufacture a missing
+upstream copyright notice or a new licensing grant. No private-project MIT
+license is applied to these third-party task assets.
+
+Released as a separate supplemental companion; it does not alter the frozen
+research artifact, original task snapshots, or reported result rows.
