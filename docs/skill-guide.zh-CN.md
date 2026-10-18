@@ -1,12 +1,10 @@
-# 安装 DRDebug，完成第一次算子修复
+# 安装 DRDebug，由当前宿主智能体修复算子
 
 [English](skill-guide.md) · [简体中文](skill-guide.zh-CN.md)
 
-DRDebug Skill 将公开论文中的确定性引擎与操作指引一起安装。安装包携带实际运行源码，可以接收一个接近正确的 AscendC 算子任务，完成基于失败证据的修复。
+DRDebug 将公开论文的确定性修复引擎封装成 Agent Skill。**当前宿主智能体用自己的模型、工具和对话提出补丁并编辑候选。** CLI 不再启动嵌套编码智能体，也不调用模型 API。当前流程为 `prepare → next → 宿主编辑 → submit`，循环到终态，再独立 `verify`。
 
-## 1. 安装
-
-在使用智能体的机器上执行：
+## 1. 安装到你的宿主
 
 ```bash
 git clone https://github.com/Shenxiu-WU/DRDebug.git
@@ -14,174 +12,148 @@ cd DRDebug
 ./install.sh --codex
 ```
 
-按使用的智能体选择一个安装目标：
+选择现有宿主能够发现的目录；上例的 Codex 只是其中一种：
 
-| 目标 | 命令 | 安装后的 Skill |
+| 可选宿主／安装目标 | 命令 | Skill 安装位置 |
 | --- | --- | --- |
-| Codex 用户级 | `./install.sh --codex` | `~/.agents/skills/drdebug` |
-| Claude Code 用户级 | `./install.sh --claude` | `~/.claude/skills/drdebug` |
-| Codex 项目级 | `./install.sh --codex --project /path/to/project` | `/path/to/project/.agents/skills/drdebug` |
-| Claude Code 项目级 | `./install.sh --claude --project /path/to/project` | `/path/to/project/.claude/skills/drdebug` |
-| 其他兼容 Agent / 自定义父目录 | `./install.sh --dest /path/to/your-agent/skills` | `/path/to/your-agent/skills/drdebug` |
+| Codex，用户级 | `./install.sh --codex` | `~/.agents/skills/drdebug` |
+| Claude Code，用户级 | `./install.sh --claude` | `~/.claude/skills/drdebug` |
+| Codex，项目级 | `./install.sh --codex --project /path/to/project` | `/path/to/project/.agents/skills/drdebug` |
+| Claude Code，项目级 | `./install.sh --claude --project /path/to/project` | `/path/to/project/.claude/skills/drdebug` |
+| 其他兼容宿主，包括使用 Kimi 的 Agent | `./install.sh --dest /path/to/your-agent/skills` | `/path/to/your-agent/skills/drdebug` |
 
-通用入口中的路径应替换为该 Agent 识别的 skills 父目录，安装器会追加 `drdebug/`。按你的 Agent 的配置方式注册或加载其中的 `SKILL.md`；Agent 需要能读取配套资源并执行文档中的命令。它随后可编排公开 CLI，论文版实时修复仍需已认证的 Claude Code worker 后端。
+自定义安装时，将路径替换为实际 skills 父目录，再通过宿主机制加载或注册 `drdebug/SKILL.md`。模型名称本身不等于宿主：它还需要读取证据、编辑文件、执行或传递 CLI 命令的工具。Codex、Kimi 和通用宿主均不依赖内部 Claude Code 后端。认证、模型选择、权限与 SSH 由所选宿主配置，密钥不要写入任务、提示词、结果或日志。
 
-`--project` 不带路径时使用当前目录。`--dry-run` 只预览位置，不写文件。相同内容重复安装不会改动已有安装；内容不同则默认保留，使用 `--force` 更新时会先备份。安装仅需 Python 3.10+ 与标准库，不下载依赖、不修改驱动或配置模型账号。
+`--project` 不带路径时使用当前目录；`--dry-run` 只查看安装位置。相同安装不重复写入；`--force` 更新不同时会先备份。安装器复制运行源码和来源记录，安装后不依赖原 checkout。它不安装宿主程序、NPU 驱动或 Python 运行包，也不修改模型账号配置。
 
-安装目录包含 `SKILL.md`、启动器、参考说明，以及 `runtime/source/debug_agent_v5/` 和源码哈希、来源记录。之后移动或删除克隆的仓库，不影响已安装的 Skill；需要更新时重新执行安装器即可。
+采用上传方式时，先运行 `./install.sh --dest /path/to/staging-skills` 组装，再传输**生成的完整 `drdebug/` 目录**，包括 `runtime/`、`runtime/manifest.json` 和 Skill 脚本。在目标宿主中加载／注册其 `SKILL.md`，并在数值执行机器上运行 `doctor`。待修复任务单独提供。
 
-Codex 中可用 `$drdebug`，Claude Code 中可用 `/drdebug`。如果列表中尚未出现，开启一个新的智能体会话。安装路径依据 [Codex 官方说明](https://learn.chatgpt.com/docs/build-skills)与 [Claude Code 官方说明](https://code.claude.com/docs/en/skills)。
+## 环境要求
 
-## 2. 检查实际运行机器
+这些要求不能混成一个通用的 pip `requirements.txt`：
 
-实际执行需要可访问 NPU 的 Linux 昇腾机器或兼容容器、已安装的 CANN/AscendC、CMake 3.16+、C++ 编译器及 Python 开发头文件，还需要 NumPy、匹配的 Torch/torch_npu 和 pybind 头文件。实时修复另需已认证的 Claude Code 命令与模型服务；重放已修复候选不调用模型。
+| 操作 | 所需环境 |
+| --- | --- |
+| 安装／查看公开 CLI | Python 3.10+ 与标准库；不要求 provider SDK 或编码智能体 CLI。 |
+| 构建／数值验证算子 | Linux + 可访问的昇腾 NPU 与驱动、兼容 CANN/AscendC、CMake 3.16+、C++ 编译器／Python 头文件、匹配的 Torch/torch_npu、NumPy 与 pybind 头文件。 |
+| 提出修复 | 一个宿主已有的模型与工具能力；Claude Code、Codex、使用 Kimi 的 Agent 或其他兼容宿主均可。 |
+
+独立的[执行环境说明](skill-guide-requirements.md)区分系统／运行要求与 pip 包输入。
+
+### 使用匹配的隔离 Python 环境
+
+依照[昇腾兼容表](https://github.com/Ascend/pytorch/blob/master/COMPATIBILITY.en.md)选择 Python、包、CANN 与驱动组合。数值命令在 NPU 机器或其兼容容器中执行；远程宿主可使用自己已获授权的 SSH 工具。命令中的 `<skill-dir>` 和工作区路径指执行机器上的文件。
+
+所有命令使用同一个已激活的隔离环境。冻结构建还会从 `PATH` 调用 `python3`，并固定扩展的 `_GLIBCXX_USE_CXX11_ABI=1`；仅包名相同不能证明 ABI 兼容。`doctor` 核对实际 ABI、解释器身份、NumPy/Torch 往返、头文件与工具链文件。优先使用 Torch 自带的 pybind 头文件，独立 pybind11 包作为后备。按供应商组合安装，不改全局启动钩子，也不把历史版本组合强行套到另一台机器。
+
+## 2. 检查执行机器
 
 以 Codex 用户级安装为例：
 
 ```bash
 DRDEBUG_SKILL="$HOME/.agents/skills/drdebug"
-python3 "$DRDEBUG_SKILL/scripts/drdebug.py" doctor
-```
-
-Claude Code 改为 `DRDEBUG_SKILL="$HOME/.claude/skills/drdebug"`；项目级或自定义安装使用实际绝对路径。`doctor --json` 输出结构化报告，`--strict` 在必要检查失败时返回非零状态。默认检查会在子进程中导入运行库，但不导入用户任务、不执行其内核、不调用付费模型。
-
-### 使用匹配且隔离的 Python 环境
-
-按照[昇腾官方兼容表](https://github.com/Ascend/pytorch/blob/master/COMPATIBILITY.en.md)选择 Python、Torch、torch_npu、CANN 和驱动组合，不能仅凭 Torch/torch_npu 主次版本相同就认定兼容。冻结扩展构建固定 `_GLIBCXX_USE_CXX11_ABI=1`，`doctor` 现在检查实际 Torch ABI、解释器/PATH 身份、NumPy 与 Torch 的数组往返、头文件及编译器/工具链文件，不再仅凭导入和版本串判断。优先采用 Torch 自带 pybind 头文件，独立 `pybind11` 包为备选。
-
-Cumsum 的已验组合为 **Ascend910B4 + CANN 9.1.0 + Torch 2.9.0+cpu + torch_npu 2.9.0.post6 + 确定性模式开启**。该版本组合在厂商兼容表中有对应关系，只作为实例，不代表通用最低要求，也不外推 A3/910C。候选重放与引导修复的实际结果、各自运行版本见[验证记录](../examples/cumsum/validation.zh-CN.md)。
-
-下列独立 Python 3.11 配方创建了已测依赖环境；后续引导修复和新 guard 检查另装 Skill、另建工作区，复用同一依赖。保留 venv 自带 pip、不升级 pip，并固定构建辅助包版本以便复验；这些是已测配方，不是对所有支持系统的通用要求。`set_env.sh` 使用本机已装工具链的实际路径；这些命令不更改驱动、CANN 安装或全局 Python 包。其他架构和版本应选择厂商对应 wheel，不要强行套用此组版本。
-
-```bash
-source /path/to/installed/cann/set_env.sh
-python3.11 -m venv /path/to/drdebug-venv
-source /path/to/drdebug-venv/bin/activate
-python3 -m pip install 'torch==2.9.0' --index-url https://download.pytorch.org/whl/cpu
-python3 -m pip install 'torch-npu==2.9.0.post6' 'numpy==1.26.4'
-python3 -m pip install 'setuptools==80.9.0' 'wheel==0.45.1' 'PyYAML==6.0.3'
-```
-
-下载缓慢或停滞时，可以使用可信镜像，或预先下载与运行机器 Python ABI、架构匹配的 wheel。镜像文件安装到同一个新 venv 前，应将其 SHA-256 与该文件在 PyPI 的官方元数据逐一核对，例如 [torch-npu 发布文件](https://pypi.org/project/torch-npu/2.9.0.post6/#files)或 [PyYAML 发布文件](https://pypi.org/project/PyYAML/6.0.3/#files)，不能只看包名和版本。保留下载、中断及哈希检查收据。这属于下载传输恢复，不是借用旧环境中已安装的包，也不代表数值链路已验收通过。安装方法见 [pip 的本地 wheel 指南](https://pip.pypa.io/en/stable/user_guide/#installing-from-wheels)。
-
-后续每条命令均激活同一 venv，并确保其 `python3` 位于 `PATH` 最前，因为冻结 CMake 构建也会调用 `python3`。Torch 版本串中的 `+cpu` 可与 `torch_npu` 提供的 NPU 后端共存，应以真实设备检查为准。避免继承无关 `sitecustomize` 启动钩子；适配器会报告冲突，不静默覆盖全局启动配置。
-
-### 修复前检查所选设备
-
-选择执行环境可见的空闲物理设备 ID，以及本机工具链接受的真实 SoC 标识。`--npu ID` 通过 `ASCEND_RT_VISIBLE_DEVICES` 选择该物理 ID，适配层内部随后统一使用逻辑 `npu:0`。本次验证配置为 `--npu 1`、内部逻辑 `0`，SoC 为 `Ascend910B4`。以下命令中的物理 `0` 仅为示例，应替换为你选定的空闲 ID；不要仅凭排行榜硬件名称猜测 SoC 标识。
-
-```bash
 python3 "$DRDEBUG_SKILL/scripts/drdebug.py" doctor \
   --npu 0 --soc YOUR_SOC_VERSION --runtime-probe --strict
 ```
 
-`--runtime-probe` 执行内置的小规模 NPU 加法与固定 FP16 输入的重复 cumsum，不构建或执行用户内核，也不代表完整任务验收。`run` 和 `verify` 同样要求此探针。只重放已修复候选、不安装 Claude Code 时，可附加 `--no-worker`，它只跳过 worker/CLI 检查，仍检查构建与 NPU 依赖。
+Claude Code、项目级和自定义安装使用各自实际路径。选择执行环境可见的空闲设备 ID 和已安装编译器接受的 SoC 标识，不根据排行榜硬件标签猜测。`--npu` 通过 `ASCEND_RT_VISIBLE_DEVICES` 选择该环境暴露的设备，适配器内部使用逻辑 `npu:0`。容器可能重映射宿主机编号；请在实际执行环境中核对枚举结果，并单独记录宿主机物理编号。
 
-实时修复需要先按 Claude Code [官方安装指南](https://code.claude.com/docs/en/setup)安装，并完成[快速入门](https://code.claude.com/docs/en/quickstart)，确认命令位于 `PATH`：
+`doctor --json` 输出机器可读清单，`--strict` 在缺少执行依赖时失败。可选的 runtime probe 执行内置 NPU add 和固定输入 FP16 cumsum 重复测试，不运行用户内核、不认证宿主，也不调用模型。探针通过不等于任务接纳。预检不要求 Claude 可执行文件，也不再检查内部 worker 认证。
 
-```bash
-claude --version
-```
+若包和工具链检查通过，但设备枚举失败，应单独核对设备占用。本次验证中，前一项实验已完成的容器仍在运行，后续容器报 `aclInit 507899 / EL0005 Resource_Busy`，而 NPU 进程表为空。停止这个已核实空闲的前驱容器后，最小张量测试与原版 `doctor` 均恢复。保留日志和文件，只释放自己持有且已完成的容器，再重试。DRDebug 不自动停止容器或重置硬件。
 
-`claude_cli_contract` 使用无 prompt 参数探针检查部分 CLI 帮助中省略的选项，不调用模型。已有 provider 还需完成最小授权文本/工具往返：真实成功的 `tool_use`/`tool_result`，以及回传后模型的正常回复。版本检查或纯文本回答不能单独证明这条链路可用。
-
-工作进程使用 `--setting-sources project`。仅存放在 `~/.claude/settings.json` 中的自定义 provider 环境变量不会自动继承，应通过启动进程的环境或已有密钥管理方式提供授权配置，不把 key 复制到任务、prompt、仓库或日志。OAuth 是独立认证路径。Provider/API 故障须与内核失败区分，可能令历史引擎进入终态；保留记录，不修改事件来重新打开旧 session。
-
-## 3. 提供已有算子任务
+## 3. 提供一个已有任务
 
 ```text
 my-task/
-├── model.py                   # torch.nn.Module 参考实现
-├── model_new_ascendc.py        # 调用已有扩展的 Python wrapper
-├── MyOperator.json            # 输入 JSONL，每个对象含 inputs
-├── MyOperator.json.bak         # 显式提供的完整测试集
+├── model.py                   # 受保护的参考 torch.nn.Module
+├── model_new_ascendc.py        # 受保护的原生扩展 wrapper
+├── MyOperator.json            # 紧凑输入测例 JSONL
+├── MyOperator.json.bak         # 明确提供的完整测例集
 └── kernel/
     ├── pybind11.cpp
-    └── ... .cpp / .h / .hpp   # 待修复的 AscendC 源码
+    └── ... .cpp / .h / .hpp   # 已有候选实现
 ```
 
-至少显式提供一份 `.json.bak` / `.json.full` 完整集合，保留参考语义与原有容差。完整集合可以与精简集合相同，启动器不会代为生成覆盖；两组测例不要求包含关系。等价的完整备份可以共存，互相冲突的完整集合会被拒绝。`--op-name` 使用 JSON 文件 stem，例如目录名为 `003_Add` 时，`3_Add.json` 对应 `3_Add`。
+至少提供一个与活动 JSON 同名的完整 `.json.bak` / `.json.full` 集合。紧凑／完整集可相同，也不要求嵌套；冲突的完整集合会被拒绝。保留原始参考、测例与容差。`--op-name` 使用 JSON 文件名主体，例如 `003_Add/` 内的 `3_Add.json` 对应 `3_Add`。
 
-[论文测例补充包](../papers/2026-dont-regenerate-debug/dataset/)提供参考实现与输入规格；独立的 [27 个初始候选](../papers/2026-dont-regenerate-debug/artifact/inputs/)补充逐字节核验的原始 wrapper 与内核。[历史参考案例包](../papers/2026-dont-regenerate-debug/artifact/code/debug_agent_v5/archive_tasks/)恢复工作智能体使用的 archive 参考目录。
+仓库分别提供[参考与测例补充包](../papers/2026-dont-regenerate-debug/dataset/)和 [27 个初始候选任务](../papers/2026-dont-regenerate-debug/artifact/inputs/)，它们不复制到安装后的 Skill；安装包含 10 个用于方法参考的历史案例。只有 dataset 条目还没有候选内核。
 
-测例补充包与 27 个初始任务属于仓库材料，不随 Skill 安装复制；请从仓库选择任务，或提供自己的任务。10 个历史参考案例则随安装提供。
-
-## 4. 创建独立修复目录
+## 4. 准备新工作区
 
 ```bash
 python3 "$DRDEBUG_SKILL/scripts/drdebug.py" prepare /path/to/my-task \
   --output /path/to/my-repair --op-name MyOperator --determinism on
 ```
 
-准备过程复制任务和运行代码，原任务保留在原处。新建 schema-3 工作区默认记录 `--determinism on`，上例显式传参便于读者看到数值合同。若有意关闭，可在准备时选择 `--determinism off`。启动配置会在托管 Python 的任务入口执行前应用 `torch.use_deterministic_algorithms(..., warn_only=False)` 并写入每进程收据；配置失败会停止该解释器，不带未知设置继续执行。
+新工作区使用 schema 4 和原生宿主交接。准备过程复制任务与 runtime 到新目录，保留原件并记录哈希。确定性默认开启且在工作区内固定；需要关闭时须在 prepare 前明确选择。运行副本还会先检查 NaN／正无穷／负无穷输出位置一致，再使用原有限值比较器和不变容差，详见[运行规范](../skills/drdebug/references/runtime.md#nonfinite-output-contract)。
 
-新建工作区还会在运行副本中加入非有限输出检查：先核对候选与参考输出中 NaN、正无穷、负无穷的类别和位置，参考中对应的非有限值允许保留；有限值继续使用原比较器及原容差。这是公开适配层新增的规则，论文冻结源码保持不变；`drdebug-workspace.json` 的 `nonfinite_guard` 记录比较器与辅助文件的哈希来源。没有该字段的旧工作区（包括此前的 schema-3）保留原运行副本；应保留其证据，另建工作区采用新检查。详见[输出合同](../skills/drdebug/references/runtime.md#nonfinite-output-contract)。
+若有独立参考案例，可加 `--reference-root /path/to/reference-cases`，单独复制为只读指导。保留 Phase A → B → C，遵循[公开资源表](../skills/drdebug/references/runtime.md#public-resource-map)，不构造缺失的历史 API 或 canonical KB 文件。
 
-模式对该工作区保持固定。旧 schema-1/2 工作区继续保留 legacy off 行为，不静默迁移；保留旧目录，另建新工作区使用新配置。不要用改参考或放宽阈值抵消非确定性。确定性模式遇到不支持的操作可能报错，也不保证跨版本或硬件一致，详见 [PyTorch 确定性 API](https://docs.pytorch.org/docs/2.9/generated/torch.use_deterministic_algorithms.html)及[复现说明](https://docs.pytorch.org/docs/2.9/notes/randomness.html)。输出选择新目录；已有目录应通过续跑继续使用。若有独立 AscendC 参考案例，可添加 `--reference-root /path/to/reference-cases`，材料独立保存在 `WORKSPACE/runtime/archive_tasks/user_references/`。未提供该选项时，此目录可以不存在，应直接跳过。
+旧工作区不会热修改成新协议。保留其事件、检查点与 runtime，使用 `status` 或受支持的独立 `verify`；当前修复须另建 schema-4 工作区。旧 `run` 命令已经退役并提供迁移说明。
 
-首次使用时，Claude Code 可能提示生成的 runtime 尚未受信任，并忽略项目的 `permissions.allow` 或 `additionalDirectories`。遇到此提示，应由用户审查生成目录及其配置，再从 `/path/to/my-repair/runtime` 交互启动 Claude Code，明确确认信任该目录后续跑同一 workspace。安装器和 Skill 不会自动修改全局信任；项目配置文件存在，不等于其权限已经生效。不要用权限 bypass 消除警告。
-
-工作副本注册论文 worker 和方法资源；有相关的用户参考案例时先使用它们，再选用历史案例或受保护的任务参考与公开文档。[公开资源表](../skills/drdebug/references/runtime.md#public-resource-map)列出只读 KB 种子与未打包的历史 API/KB 路径，按表使用，不构造替代文件。
-
-也可从项目根目录直接选择归档中的原始候选，例如 Add：
+## 5. 由宿主完成每次修复请求
 
 ```bash
-python3 "$DRDEBUG_SKILL/scripts/drdebug.py" prepare \
-  papers/2026-dont-regenerate-debug/artifact/inputs/tasks/level1/003_Add \
-  --output /path/to/add-repair --op-name 3_Add
+python3 "$DRDEBUG_SKILL/scripts/drdebug.py" next /path/to/my-repair \
+  --npu 0 --soc YOUR_SOC_VERSION --json
 ```
 
-## 5. 在明确预算内运行
+`next` 运行确定性步骤，直到返回待处理的宿主请求或终态。待处理响应为 `state: "awaiting_host"`、`terminal: false`。完整读取 `instructions` 路径指向的文件，并查看 `request_id`、`candidate_dir`、证据和允许路径；引擎拥有的 `request` 文件保持只读。宿主用**自己的模型和工具**遵循提示，编辑隔离候选并记录真实诊断；不能直接改活动任务、参考、wrapper、测例、runtime、请求或历史。
 
-使用当前 CANN 工具链接受的实际 SoC 标识，替换下例的 `YOUR_SOC_VERSION`；不要仅根据排行榜的硬件名称猜测。全新任务的默认 profile 为最多 5 轮尝试、每次完整 worker 调用最多 240 turns、单次最多 6 小时、总计最多 1 天：
+审计文件相对于 `candidate_dir` 的完整路径为 `precision_tuning/precision_audit_<attempt>.md` 和 `precision_tuning/candidate_kb_entry.json`。按返回指令中的完整路径写入或移动文件，保留 `precision_tuning/` 目录。
+
+覆盖已有审计文件前先读取它。部分宿主编辑工具（包括本次测试的 Claude Code 版本）要求先读后写，即使完整路径正确也如此。
+
+构建和验证可能超过宿主工具的前台等待上限。需要时使用宿主支持的后台／会话机制，保留 stdout/stderr 与最终退出状态，轮询同一个进程直到完成。不要在同一工作区启动重叠命令，也不要把进度文件当成最终结果。若命令被中断，先检查 `status` 和日志；结果不明的确定性操作需要排查，不能直接盲目重试。
+
+方法保留规范优先的 Phase A、实现全量阅读与探针策略的 Phase B，以及结构化对照的 Phase C。引擎注入 KB 检索摘要；宿主只列实际采用的 ID，不重复检索或修改种子库。必要审计字段与完整数值／完整性检查仍有效。
+
+请求中的 `diagnostics.task` 是独立的可写诊断副本，可执行修复所需的编译、局部测试和 L5 探针。先从当前候选刷新内核，再使用 `diagnostics.execution` 中固定的 Python、环境与命令参数，并遵循原探针策略。诊断输出仅作为分析证据，不会被提交导入，也不替代正式验收。
+
+向返回的 `result_file` 路径写 JSON，放在候选源码之外。格式为：
+
+```json
+{
+  "outcome": "completed",
+  "final_response": "实际诊断和补丁总结，末尾附完整提示要求的 ENGINE_ATTEMPT_METADATA"
+}
+```
+
+宿主工作失败时使用 `"outcome": "failed"`，且必须附非空 `"error"`。上面的说明文字须替换为真实回复和元数据。`completed` 只表示宿主已完成这一轮工作，不表示内核通过。不要伪造 success、精度或 turns。随后提交同一请求：
 
 ```bash
-python3 "$DRDEBUG_SKILL/scripts/drdebug.py" run /path/to/my-repair \
-  --npu 0 --soc YOUR_SOC_VERSION \
-  --max-attempts 5 --max-turns 240 \
-  --worker-timeout-sec 21600 --deadline-sec 86400
+python3 "$DRDEBUG_SKILL/scripts/drdebug.py" submit /path/to/my-repair \
+  --request-id REQUEST_ID --result /path/to/request/host-result.json \
+  --npu 0 --soc YOUR_SOC_VERSION --json
 python3 "$DRDEBUG_SKILL/scripts/drdebug.py" status /path/to/my-repair
 ```
 
-`--worker-timeout-sec` 限制单次 worker 调用；总 `--deadline-sec` 独立限制整个任务，启动器会将单次超时压到剩余总预算以内。这些宽裕默认值是上限，不是最低消耗：验收通过即可提前结束，尝试次数与 turn 闸仍有效。6 小时提供宽裕兜底，并非实验证明的最优值；可按用户任务需要配置，但不改变测例与验收条件。
+引擎检查请求和源码身份，验证补丁，再推进任务。查看返回结果，仅在非终态时继续 `next → 宿主编辑 → submit`，直到终态接纳或其他终止结果。过期 ID、意外修改或完整性失败不构成手工更改引擎文件以续跑的理由。
 
-首次执行保存预算，续跑保留原值。旧版本限制、预算记录缺失、中断及终态处理详见[预算与恢复规则](../skills/drdebug/references/runtime.md#first-failure-or-resume)。
+新任务上限为 **5 次尝试、86,400 秒总墙钟时间**，包括等待宿主处理的时间与确定性命令执行。已保存预算跨命令保留。若授权使用不同上限，在首个原生命令设置 `--max-attempts` / `--deadline-sec`，后续命令保留原值。没有嵌套 worker、适配器选择的模型、单 worker turns 或伪造的宿主 turn 记账。宿主自己的模型调用可能收费，由该宿主管理。
 
-可用 `--model MODEL` 指定已配置的工作模型。`run --dry-run --json` 只展示计划命令，不调用模型或执行 NPU 验证；命令可审阅不表示运行环境已经验收。检查指定任务可用 `doctor --workspace /path/to/my-repair --npu 0 --soc YOUR_SOC_VERSION --strict`。
+引擎在推进工作区时检查截止时间，不控制或终止宿主的模型会话。请在宿主自身设置轮次、费用或时间上限；达到宿主上限后，保留会话、待处理请求与工作区证据，再按原状态续跑。
 
-默认工作进程修改内核源码与指定诊断报告，构建与评测由确定性引擎执行。若某个诊断探针需要额外 shell 执行能力，请先核对用途，仅在可信、隔离的运行目录中显式选择 `--allow-worker-shell`。它不绕过智能体权限系统，完整数值与完整性验收依然由引擎裁决。
+恢复前读取 `status`，保留请求 ID、事件与已消耗预算，不删台账／锁、不重置尝试次数或重开终态。授权继承一个新试验时，另建工作区并记录父任务／检查点与此前预算，详见[首次失败与恢复](../skills/drdebug/references/runtime.md#first-failure-or-resume)。
 
-续跑前查看 `status`，保留事件、尝试次数和已保存预算，不重置状态或重新打开终态 session。若授权另开试验，从已审阅源码准备新工作区，保留原参考与测例，记录父任务/checkpoint 和此前预算消耗。环境、provider、权限问题须与内核失败区分，详细情形见[恢复规则](../skills/drdebug/references/runtime.md#first-failure-or-resume)。
+可以直接对宿主说：
 
-也可以直接对智能体说：
+> 使用 drdebug 和你当前的模型与工具，检查我的昇腾环境，创建独立工作区，按 next/submit 请求修复这个失败算子，再独立验证实际被接纳的源码。
 
-> 使用 drdebug 检查我的昇腾环境，为这个失败算子创建独立工作目录，再根据失败证据修复它。使用 0 号设备，沿用全新任务默认上限，引擎验收通过即停止。
-
-## 6. 独立验收实际候选
-
-修复后，或不使用模型、仅测试已有候选时，执行：
+## 6. 独立验证
 
 ```bash
 python3 "$DRDEBUG_SKILL/scripts/drdebug.py" verify /path/to/my-repair \
-  --npu 0 --soc YOUR_SOC_VERSION --determinism on --casewise
+  --npu 0 --soc YOUR_SOC_VERSION --casewise --json
 ```
 
-`verify` 要求新建的 schema-3 工作区。它将**当前实际内核源码**复制到新的 `WORKSPACE/verification/<id>/`，清洁重建原生扩展，以新解释器分别运行原紧凑集、完整集和新增非有限输出检查，再检查原生 wrapper 绑定、原始 C++ 完整性、wrapper AST、保护材料、源码和历史完整性。`--casewise` 另为每个原完整集 case 启动独立进程。此命令不调用模型、不提升检查点、不改写引擎历史，每次验证独立保留汇总及阶段日志。
+此操作将实际活动内核复制到新的验证目录，清洁重建并运行原紧凑／完整集比较，以及非有限值、原生绑定和完整性检查。`--casewise` 为每个原完整集 case 增加独立新进程。它不调用模型、不提升检查点，也不修改引擎历史。不要与待处理宿主编辑或其他工作区操作并发运行。
 
-以最终 `verification/<id>/summary.json` 和 `verify` 命令退出状态共同判定结果，并核对非有限输出检查覆盖。`progress.json` 仅记录过程快照，完成后仍可能保留初始的 `passed: false` 或返回码，不能据此判定最终失败。
+以最终 `verification/<id>/summary.json`、命令退出状态和 guard 覆盖共同判定。`progress.json` 只是过程快照。验证默认每阶段／总计 1,800／10,800 秒，可用 `--stage-timeout-sec` / `--overall-timeout-sec` 设置，与宿主循环预算独立。
 
-默认每阶段 1,800 秒，总计 10,800 秒；较大任务可显式设置 `--stage-timeout-sec` 和 `--overall-timeout-sec`，二者与实时 worker 预算分开。确定性模式须与 prepare 一致。如果别的 worker 持有工作区锁，应停止，不删除锁来并发验收。
+## 什么才算修复成功
 
-### 从 Cumsum 示例开始
+需要 `state: "terminal"`、`terminal: true`、`engine_status.session_outcome: "success"`、`returncode: 0` 和 `accepted_checkpoint.ready: true`，并有完整数值／完整性闸作为依据。宿主 `completed`、部分通过的最佳检查点或编译成功均不够。已有基线全部正确时可无需宿主补丁直接接纳，不要伪造尝试。独立验证须单独报告，并包含紧凑／完整计数、源码身份、模式、完整性与剩余失败。
 
-[Cumsum 操作示例](../examples/cumsum/README.zh-CN.md)提供两条路径：无需模型，重放八份固定哈希的已修复源码；或者用 Kimi 从论文原始输入开始有参考的修复，添加 `--reference-root "$PWD/examples/cumsum/repaired"`，将公开修复实现单独作为只读案例。后者用于验证安装、模型、补丁与验收整条链路，不声称无提示独立再发现；如研究不提供该参考时的能力，可删去参数，另开可能更耗时的研究运行。两者均保留原 10 例紧凑集和 51 例完整集。带新增非有限值检查的候选重放通过 10 例紧凑集、51 例完整集及 51 个逐例新进程；引导修复另在 1 次尝试后通过相同计数。实时修复使用较早运行版本，相同产出随后完成新 guard 检查，详见[版本化验证记录](../examples/cumsum/validation.zh-CN.md)。实时 LLM 修复具有随机性，不能保证每次轨迹和结果完全相同。
-
-运行副本还会在 baseline 验证前检查并创建常规 `precision_tuning/` 目录，使尚未调用 worker 的首次完整结果也能保存。论文冻结源码保持不变。
-
-## 修复成功的依据
-
-智能体自述成功或进程成功启动都不足以证明修复完成。适配层现在将客观结果绑定到精确的内核和保护输入哈希，并在最佳检查点排序中优先比较完整执行的全量结果，因此当紧凑集同为 10/10 时，完整集 50/51 → 51/51 的改善不会再丢失。完整执行但部分通过的候选也可能是当前 best；“best”本身不等于接纳，接纳仍需原始数值与完整性闸、新增非有限输出检查全部通过，并核对最终源码与检查点一致。查看引擎生成的任务状态、轨迹、汇总，以及完整数值测试和完整性结果。修复后的内核须在参考实现、wrapper、测例和容差保持原样的条件下通过全部必要测试。失败和停止的运行同样保留，便于后续定位。
-
-若已有 baseline 全部正确，引擎精度接纳依据为 `run` 退出 0、`accepted_checkpoint.ready: true` 和已解锁的成功终态，无需一次修复尝试。旧 `engine_status.objective_success` / `reportable_success` 描述修复末轮验证，零尝试时可能仍为 false；独立 `verify` 仍提供单独的数值结论。
-
-Skill 封装公开论文版精度修复流程。CPU 适配测试验证安装、任务准备、命令转发和失败处理，不代表完成了真实 NPU 修复，也不代表复跑了论文的 27 个历史任务。论文归档及其[已知限制](../papers/2026-dont-regenerate-debug/artifact/KNOWN_LIMITATIONS.md)与新增的移植层分别维护。
+[原生宿主 Cumsum 记录](../examples/cumsum/native-host-validation.zh-CN.md)包含全新安装、真实 `next`/`submit` 修复与单独的独立验收，并注明使用的公开参考和精确宿主配置。此前的[重放／引导修复记录](../examples/cumsum/validation.zh-CN.md)单独保留。安装、环境预检、CPU 适配器测试和真实 NPU 修复是不同结果。环境／权限、宿主／模型、超时、运行与数值失败应分别记录。

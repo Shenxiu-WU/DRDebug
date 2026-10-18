@@ -135,7 +135,7 @@ class IndependentVerificationTests(unittest.TestCase):
         self.assertEqual([row[1] for row in self.case_observations], [compact, full, full, full])
         self.assertEqual(api.tree_hashes(self.workspace / "task"), before)
         self.assertFalse((self.workspace / ".drdebug.lock").exists())
-        self.assertIs(self.preflight_mock.call_args.kwargs["require_worker"], False)
+        self.assertNotIn("claude_bin", self.preflight_mock.call_args.kwargs)
         self.assertTrue(self.preflight_mock.call_args.kwargs["runtime_probe"])
         for child in self.spawned:
             self.assertNotIn("claude", child.command)

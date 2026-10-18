@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="https://shenxiu-wu.github.io/DRDebug/"><img src="https://img.shields.io/badge/Website-DRDebug-6a50a8?style=flat-square" alt="Project website"></a>
-  <a href="#install-the-skill"><img src="https://img.shields.io/badge/Skill-Claude_Code_%C2%B7_Codex-6a50a8?style=flat-square" alt="Install the DRDebug skill"></a>
+  <a href="#install-the-skill"><img src="https://img.shields.io/badge/Skill-Native_Host-6a50a8?style=flat-square" alt="Install the DRDebug skill"></a>
   <a href="https://arxiv.org/abs/2608.02712"><img src="https://img.shields.io/badge/arXiv-2608.02712-9b5769?style=flat-square" alt="Paper on arXiv"></a>
   <a href="papers/2026-dont-regenerate-debug/artifact/"><img src="https://img.shields.io/badge/Artifact-Frozen-586c88?style=flat-square" alt="Frozen paper artifact"></a>
   <a href="papers/2026-dont-regenerate-debug/dataset/"><img src="https://img.shields.io/badge/Dataset-27_tasks-5c7e68?style=flat-square" alt="27 paper tasks and input cases"></a>
@@ -37,9 +37,9 @@ DRDebug starts with a kernel that nearly works. It uses failure evidence to repa
 | Start here | What you will find |
 | --- | --- |
 | [Project website](https://shenxiu-wu.github.io/DRDebug/) | An illustrated repair example, system overview and interactive results |
-| [Install the skill](#install-the-skill) | A self-contained paper-edition repair engine for Claude Code or Codex |
+| [Install the skill](#install-the-skill) | A deterministic repair loop driven by your existing host agent |
 | [Paper and method](#research) | The precision-repair study, frozen source and experiment records |
-| [Try the Cumsum example](examples/cumsum/README.md) | Verify a saved repaired kernel, or run guided Kimi repair with its public reference |
+| [Try Cumsum](examples/cumsum/README.md) | Saved replay or native-host guided repair; historical receipts are separate |
 | [Reproduce and inspect](#reproduce) | CPU table reproduction and verification of the paper’s task data |
 
 ## How it works
@@ -57,45 +57,41 @@ Acceptance requires full numerical testing and an integrity check. Explore the [
 
 ## Install the skill
 
-**One skill, the paper’s repair loop.** [`drdebug`](skills/drdebug/SKILL.md) brings the deterministic engine, diagnostic tools, full validation, checkpoint/rollback and a public precision-knowledge seed into your agent’s workflow. Installation also includes ten historical reference examples (seven with AscendC kernels).
+**One deterministic engine, your host's model and tools.** [`drdebug`](skills/drdebug/SKILL.md) brings evidence collection, full validation, checkpoints/rollback and a public precision-knowledge seed into an existing agent workflow. It includes ten historical reference examples (seven with AscendC kernels).
 
 ```bash
 git clone https://github.com/Shenxiu-WU/DRDebug.git
 cd DRDebug
-./install.sh --codex    # or: ./install.sh --claude
+./install.sh --codex    # optional host; alternatively: ./install.sh --claude
 ```
 
-For another compatible agent, use its recognized skills parent directory:
+For another compatible host, including a Kimi-backed agent, choose its actual skills parent:
 
 ```bash
 ./install.sh --dest /path/to/your-agent/skills
 ```
 
-Replace that path with your agent's actual skills directory; the installer creates its `drdebug/` child. The agent needs to load `drdebug/SKILL.md` and the bundled resources, and be able to execute the documented commands.
+The installer appends `drdebug/`; the host loads that directory's `SKILL.md`, reads requests and edits files with its own tools. Codex and Claude Code shortcuts select `~/.agents/skills/drdebug` and `~/.claude/skills/drdebug`. `--project /path/to/project` selects a project install, `--dry-run` previews the destination, and `--force` updates with a backup. The installed runtime is independent of the checkout.
 
-The installer copies a self-contained skill to `~/.agents/skills/drdebug` (Codex) or `~/.claude/skills/drdebug` (Claude Code). It bundles the public paper runtime, so the installed skill keeps working if you move the checkout. Use `--project /path/to/project` for a project install, `--dest DIR` for a custom skill parent, or `--dry-run` to inspect the destination. Existing installations are preserved; `--force` updates with a backup.
+**Installation needs Python 3.10+ and its standard library.** Numerical execution additionally needs an existing task, Linux + Ascend NPU, compatible CANN/AscendC, Torch/torch_npu, NumPy and build tools. Choose one optional host—Claude Code, Codex, Kimi-backed or another compatible agent. No coding-agent CLI is an internal dependency; the Skill does not launch a nested model worker. Model credentials, permissions and any SSH access stay with the host.
 
-Then ask your agent:
+Current workflow: **`doctor → prepare → next → host edit → submit → … → verify`**. `next` returns deterministic evidence, a `request_id`, isolated `candidate_dir` and an `instructions` file to read in full. The host edits only the allowed candidate files, then writes the returned `result_file` outside them with `outcome` (`completed` or `failed`) and its actual `final_response`, including the required metadata footer. `submit --request-id ID --result RESULT_JSON` validates and advances the task. The engine decides acceptance; host completion is not a numerical pass.
 
-> Use drdebug to check my Ascend environment, prepare a separate workspace for this failing kernel, and repair it from the failure evidence.
+Fresh schema-4 workspaces allow **5 attempts and 86,400 seconds total wall time**, including pending host time and deterministic commands. They do not fabricate model turns. Legacy workspaces keep historical evidence; the old `run` command is retired. Use the [installation & first repair guide](docs/skill-guide.md) for complete commands and migration boundaries.
 
-**Installation needs Python 3.10+ and no Python packages.** Actual repairs need a user-supplied AscendC task, Linux + Ascend NPU, compatible CANN/AscendC and PyTorch/torch_npu, and an authenticated Claude Code worker. Codex and other compatible host agents can guide and invoke the public CLI; live paper-edition repair still uses the authenticated Claude Code worker backend. The installer does not install drivers or configure model access.
+Then ask your host:
 
-Start with `doctor`, then `prepare → run → status → verify`. New workspaces explicitly record their deterministic mode; preflight checks ABI/NumPy/device compatibility, and completed full-case evidence participates in best-checkpoint selection without changing the frozen paper archive. [Installation & first repair guide](docs/skill-guide.md) · [Skill instructions](skills/drdebug/SKILL.md) · [What the public adapter changes](skills/drdebug/references/runtime.md).
+> Use drdebug with your current model and tools. Check my Ascend environment, prepare a separate workspace, follow next/submit requests to repair this kernel, and independently verify the actual accepted source.
 
-### Try Cumsum
+[Skill instructions](skills/drdebug/SKILL.md) · [Runtime and task contract](skills/drdebug/references/runtime.md)
 
-The [Cumsum example](examples/cumsum/README.md) contains hash-pinned repaired native sources and the original paper input. Choose **saved-candidate replay** without a model, or **guided live repair** with your configured Kimi worker and the published repaired implementation supplied separately as a read-only reference. Both retain the original **10 compact + 51 full cases** and precision thresholds.
+### Cumsum: native-host validation
 
-Verified on **Ascend910B4 / CANN 9.1.0 / Torch 2.9.0+cpu / torch_npu 2.9.0.post6**, with determinism on:
+The [fresh-install validation record](examples/cumsum/native-host-validation.md) covers **Claude Code, Codex and Kimi Code**. Each starts at the original **6/10** baseline, completes a real host request and submission, reaches engine acceptance at **10/10 compact + 51/51 full**, and passes independent verification of **51 fresh full-case processes**. The record includes actual CLI versions, K3 / 1M configuration, source hashes and separate verification receipts on Ascend910B4 with determinism on.
 
-| Check | Compact | Full | Fresh full-case processes |
-| --- | ---: | ---: | ---: |
-| Saved candidate with the added nonfinite guard | **10/10** | **51/51** | **51/51** |
-| Guided Kimi repair from the original **6/10** baseline | **10/10** | **51/51** | **51/51** |
-| Latest adapter: default baseline acceptance, zero worker calls | **10/10** | **51/51** | Covered separately above |
+These are **reference-guided** runs using the published repaired implementation as a separate read-only example. They validate installation and the native protocol; they do not measure unaided rediscovery. Exact captured source is retained alongside the [machine-readable record](examples/cumsum/native-host-validation.json).
 
-Guided repair used one attempt and **38 turns**: **6 min 25 sec** of worker execution, **15 min 5 sec** including baseline and engine checks. It ran before the added guard; that guard was then independently verified on the identical repaired source. The initial replay used freshly installed isolated dependencies; guided repair and guard checks reused that environment with new installations/workspaces. See the [validation record](examples/cumsum/validation.md) for exact version and source identities. Live repair uses the separately supplied public reference, may incur model charges and does not guarantee the same outcome every time.
+The earlier [saved-replay and guided-repair records](examples/cumsum/validation.md) remain unchanged and are reported separately.
 
 ## Research
 
@@ -152,7 +148,7 @@ python3 -B tools/verify_paper_inputs.py
 <details>
 <summary>Release contents and execution requirements</summary>
 
-The public release supports CPU statistical reproduction, method-source inspection and task-data verification, and now includes 27 byte-verified initial candidate projects plus historical reference examples. Numerical re-execution still requires a compatible runtime and configured model worker; see the artifact’s [known limitations](papers/2026-dont-regenerate-debug/artifact/KNOWN_LIMITATIONS.md).
+The public release supports CPU statistical reproduction, method-source inspection and task-data verification, and now includes 27 byte-verified initial candidate projects plus historical reference examples. Numerical re-execution still requires a compatible runtime. New repairs use the selected host's model and tools; see the artifact’s [known limitations](papers/2026-dont-regenerate-debug/artifact/KNOWN_LIMITATIONS.md).
 
 The separate [dataset companion](papers/2026-dont-regenerate-debug/dataset/README.md) supplies reference code and input specifications. All 81 reference/case files now match their historical frozen byte hashes, with provenance and dependency records. Executing references may require PyTorch, `torch_npu` and compatible Ascend hardware.
 

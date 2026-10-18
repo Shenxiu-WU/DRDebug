@@ -1,77 +1,92 @@
-# Cumsum: reproduce a repair, or repair it yourself
+# Cumsum: replay a candidate or repair with your host
 
 [English](README.md) · [简体中文](README.zh-CN.md)
 
-This example keeps two tasks distinct: **verify the saved repaired kernel** without calling a model, or **start a guided live repair** with Kimi, the original paper's failing kernel and the published repaired source as a read-only example. Both use the original reference, Python wrapper, 10 compact cases, 51 full cases and dtype-specific comparison thresholds. The paper archive under `papers/` stays unchanged.
+Use either **model-free independent verification of the saved candidate**, or **guided native-host repair from the original failing task**. Both retain the original reference, wrapper, 10 compact cases, 51 full cases and dtype-specific tolerances. The paper archive and historical validation receipts remain unchanged.
 
-| Path | Starting kernel | Model needed? | What it establishes |
+| Route | Starting kernel | Model / host | What to check |
 | --- | --- | --- | --- |
-| Saved-candidate replay | Eight saved repaired native sources | No | Whether this candidate passes the original tests in your environment |
-| Guided live repair | Original paper near-miss input; published repaired source provided separately | Yes, configured Claude Code with Kimi | A fresh installation → diagnosis/patch → full acceptance workflow with a public reference |
+| Saved-candidate replay | Eight hash-pinned repaired native sources | No model | Independent clean build and original numerical/integrity checks |
+| Native-host guided repair | Original paper input, with repaired source separately supplied as a read-only example | Your existing host's model and tools | Real request → host patch → engine acceptance → independent verification |
 
 ## Before running
 
-Use a Linux Ascend execution environment. Complete the [installation and dependency guide](../../docs/skill-guide.md) first, and activate the same Python environment for the launcher and `python3` on `PATH`. Actual execution requires an NPU, compatible driver/CANN, CMake, a C++ compiler and ABI-compatible Torch/torch_npu. The copy installer itself needs only Python 3.10+.
+Follow the [current installation guide](../../docs/skill-guide.md) and [execution requirements](../../docs/skill-guide-requirements.md). Numerical commands run on a Linux Ascend machine/container with the compatible driver/CANN, ABI-compatible Torch/torch_npu, NumPy and build tools. Use one isolated Python environment for the launcher and `python3` on `PATH`. The installer itself needs only Python 3.10+ and its standard library.
 
-The saved candidate was independently verified on **Ascend910B4, CANN 9.1.0, Torch 2.9.0 and torch_npu 2.9.0.post6**, with deterministic algorithms enabled and `warn_only=False`. The [installation guide](../../docs/skill-guide.md#use-a-matching-isolated-python-environment) covers the matching environment and Torch's `+cpu` version string. Other hardware and versions remain unqualified. The [validation record](validation.md) reports saved replay with the added guard and a separate fresh guided Kimi repair; it distinguishes their runtime versions and reused dependency environment. Deterministic mode is part of the tested contract: without it, the original reference may vary enough to affect its own numerical comparison.
+Claude Code, Codex, Kimi-backed and other compatible hosts are optional alternatives. The host uses its own model/tools and manages credentials, permissions and remote SSH. DRDebug neither launches a nested coding agent nor chooses a provider. Saved replay calls no model.
 
-Run the following commands from the repository root. Use new paths below; neither preparation command overwrites an existing task or workspace. Replace `YOUR_SOC_VERSION` with the identifier accepted by your installed toolkit and choose a free physical device ID exposed by your execution environment. `--npu ID` selects that ID through `ASCEND_RT_VISIBLE_DEVICES`; the adapter uses logical `npu:0` internally. The validation setup is `--npu 1`, internal logical `0`, with `Ascend910B4`. Replace the example `--npu 0` below with your selected free physical ID.
-
-From a source checkout, install a separate copy of the skill if you have not already done so:
+Run commands from the repository root, choosing new input/workspace paths, a free device ID exposed to the execution environment and the installed compiler's real SoC identifier. `--npu ID` selects an exposed device through `ASCEND_RT_VISIBLE_DEVICES`; the adapter uses logical `npu:0`. Containers may remap host physical IDs, so check enumeration inside the execution environment and record the host ID separately. Replace the illustrative `0` and `YOUR_SOC_VERSION` below.
 
 ```bash
 ./install.sh --dest "$HOME/.local/share/drdebug-example-skills"
 DRDEBUG_SKILL="$HOME/.local/share/drdebug-example-skills/drdebug"
-python3 "$DRDEBUG_SKILL/scripts/drdebug.py" doctor --no-worker --runtime-probe \
+python3 "$DRDEBUG_SKILL/scripts/drdebug.py" doctor --runtime-probe \
   --npu 0 --soc YOUR_SOC_VERSION --strict
 python3 examples/cumsum/prepare.py --check
 ```
 
-If you used a Codex or Claude user installation instead, set `DRDEBUG_SKILL` to that installed `drdebug` directory. This example's source assets come from the checkout; installation does not copy all paper tasks or examples into the skill.
+For an existing Codex/Claude/custom installation, use its actual installed Skill path instead. Source assets come from this checkout; the installer does not copy the entire example or all paper tasks.
 
-## 1. Replay the saved repaired candidate
+## 1. Independently replay the saved candidate
 
-This route performs an independent clean build and numerical validation. It does not ask Kimi to repair anything and does not import a prior success status.
+This does not ask the host to repair anything or inherit an old success status:
 
 ```bash
 python3 examples/cumsum/prepare.py --mode replay --output /path/to/cumsum-replay-input
 python3 "$DRDEBUG_SKILL/scripts/drdebug.py" prepare /path/to/cumsum-replay-input \
   --output /path/to/cumsum-replay --op-name 5_Cumsum --determinism on
 python3 "$DRDEBUG_SKILL/scripts/drdebug.py" verify /path/to/cumsum-replay \
-  --npu 0 --soc YOUR_SOC_VERSION --determinism on --casewise
+  --npu 0 --soc YOUR_SOC_VERSION --casewise --json
 ```
 
-Require **10/10 compact, 51/51 full, all integrity/AST checks passing**, and, with `--casewise`, 51 completed and matched fresh-process cases. Do not count a staged source tree, clean compile or process exit alone as a numerical pass. Use final `verification/<id>/summary.json` together with the CLI exit status; `progress.json` is a process snapshot and may retain its initial status after completion. Inspect stage logs if verification fails.
+Judge the actual final `verification/<id>/summary.json` and CLI exit status. A full pass requires **10/10 compact, 51/51 full, all integrity/native-binding/AST checks and complete nonfinite-guard coverage**, plus 51 completed matching fresh-case processes with `--casewise`. These are acceptance targets, not a claim that the commands above were run in your environment. `progress.json` is a process snapshot, not the final verdict.
 
-The fresh-process check regenerates the original seed-0 input collection in each child and selects the corresponding original case index; it does not change the reference or tolerances. The full-suite replay and fresh-process results are separate measurements. Keep both reports.
+Each fresh-case process regenerates the original seed-0 full input collection and selects its original index. Full-suite and fresh-process outcomes are separate measurements; neither changes reference or tolerance.
 
-## 2. Run a guided live repair with Kimi
+## 2. Guided repair with the native host protocol
 
-Use an authenticated Claude Code CLI and your Kimi provider configuration. Follow the [installation guide](../../docs/skill-guide.md#exercise-the-selected-device-before-repair) for official Claude Code setup and a provider/tool check. The example includes no credentials or provider settings. Your provider must support the selected model; the demonstrated identifier is `k3[1m]`.
-
-This first-run route keeps the original failing kernel as the task and supplies `examples/cumsum/repaired` separately through `--reference-root`. The worker can read the published implementation as an AscendC example while diagnosing and patching the original. This is **guided repair with a public reference**, not an unaided rediscovery of the repair. It exercises fresh installation, live model/tool execution, patching and the original acceptance chain, without inheriting old events or checkpoints. Live Kimi calls can incur provider charges, and the model must still produce a candidate that passes the unmodified tests.
+The original failing task remains the repair target. `--reference-root` supplies `examples/cumsum/repaired` separately as a read-only AscendC example. Disclose that reference: this is **guided repair**, not unaided rediscovery. A separate study without the reference may omit that option in another new workspace and consume more budget.
 
 ```bash
 python3 examples/cumsum/prepare.py --mode live --output /path/to/cumsum-live-input
 python3 "$DRDEBUG_SKILL/scripts/drdebug.py" prepare /path/to/cumsum-live-input \
   --output /path/to/cumsum-live --op-name 5_Cumsum --determinism on \
   --reference-root "$PWD/examples/cumsum/repaired"
-python3 "$DRDEBUG_SKILL/scripts/drdebug.py" doctor --workspace /path/to/cumsum-live \
-  --npu 0 --soc YOUR_SOC_VERSION --strict
-python3 "$DRDEBUG_SKILL/scripts/drdebug.py" run /path/to/cumsum-live \
-  --npu 0 --soc YOUR_SOC_VERSION --model 'k3[1m]' \
-  --max-attempts 5 --max-turns 240 --worker-timeout-sec 21600 --deadline-sec 86400 \
-  --allow-worker-shell
-python3 "$DRDEBUG_SKILL/scripts/drdebug.py" status /path/to/cumsum-live
-python3 "$DRDEBUG_SKILL/scripts/drdebug.py" verify /path/to/cumsum-live \
-  --npu 0 --soc YOUR_SOC_VERSION --determinism on --casewise
+python3 "$DRDEBUG_SKILL/scripts/drdebug.py" next /path/to/cumsum-live \
+  --npu 0 --soc YOUR_SOC_VERSION --max-attempts 5 --deadline-sec 86400 --json
 ```
 
-`--allow-worker-shell` allows diagnostic commands in a trusted, isolated execution workspace; it does not bypass Claude Code's permissions or directory trust. Review the prepared runtime and trust it interactively if your CLI requires this, following the installation guide. Keep other jobs and important data outside the workspace. The final verification remains independent of model text.
+For `state: "awaiting_host"`, read the complete file at `instructions`, its evidence, `request_id` and `candidate_dir`. The current host follows the full diagnostic method with its own tools, edits only allowlisted isolated candidate/audit files and writes the actual response to `result_file`, outside candidate sources. Do not edit the active task, protected inputs, request metadata, engine reports or history.
 
-These budgets are ceilings, not expected consumption or a success guarantee. Preserve interrupted or failed workspaces and follow the [resume/new-trial policy](../../skills/drdebug/references/runtime.md#first-failure-or-resume).
+The result JSON must contain `outcome` (`completed` or `failed`) and the actual `final_response` ending in the full prompt's factual `[ENGINE_ATTEMPT_METADATA]` footer; `error` must be nonempty for `failed` and is optional for `completed`. No success/precision values or fabricated turns are needed. `completed` means the host finished its work, not that tests passed.
 
-The measured fresh guided run began at **6/10**, used **one attempt / 38 turns**, and reached **10/10 compact + 51/51 full**, followed by **51/51** fresh-case checks. Worker time was **6 min 25 sec**; the launcher including baseline and engine checks took **15 min 5 sec**. It used the public reference and an earlier adapter; the same output was then independently checked with the added nonfinite guard. A stochastic LLM run is not guaranteed to follow the same sequence or succeed. To study repair without that reference, omit `--reference-root` in a separate new workspace; that is an independent, potentially more costly research run. The saved-candidate replay is the reproducible acceptance route for the published repaired source.
+```bash
+python3 "$DRDEBUG_SKILL/scripts/drdebug.py" submit /path/to/cumsum-live \
+  --request-id REQUEST_ID --result /path/from/result_file/host-result.json \
+  --npu 0 --soc YOUR_SOC_VERSION --json
+python3 "$DRDEBUG_SKILL/scripts/drdebug.py" status /path/to/cumsum-live
+```
+
+Replace both placeholders with that packet's actual values. Read engine validation and repeat `next → host edit → submit` while nonterminal. The saved ceilings are five attempts and 86,400 seconds total wall time, **including pending host time and deterministic commands**; resume retains them. Do not delete history, change budgets, reopen terminal state or invent model-turn counts. See [recovery rules](../../skills/drdebug/references/runtime.md#first-failure-or-resume).
+
+Acceptance requires `state: "terminal"`, `terminal: true`, `engine_status.session_outcome: "success"`, `returncode: 0` and `accepted_checkpoint.ready: true`. Independently verify the actual accepted source:
+
+```bash
+python3 "$DRDEBUG_SKILL/scripts/drdebug.py" verify /path/to/cumsum-live \
+  --npu 0 --soc YOUR_SOC_VERSION --casewise --json
+```
+
+A host reply or best-but-partial checkpoint is not a pass. A baseline already passing all gates may be accepted without any host patch; do not manufacture an attempt. Legacy workspaces preserve their evidence for `status` and supported independent `verify`; current repair uses a new schema-4 workspace. The old `run` command is retired.
+
+## Native-host measurements
+
+The [fresh-install native-host record](native-host-validation.md) follows the original 6/10 compact baseline through a real repair submission, 10/10 compact + 51/51 full acceptance, and a separate clean-workspace verification with 51 fresh-case processes. It lists actual tested hosts, K3 / 1M configuration, source identities and the supplied public reference. See the [machine-readable record](native-host-validation.json) and [captured source fixtures](validation-sources/README.md).
+
+## Historical results, kept separately
+
+The [versioned validation record](validation.md) and [machine-readable receipts](validation.json) predate native `next`/`submit`. They retain the measured saved replay and reference-guided Kimi repair on **Ascend910B4 / CANN 9.1.0 / Torch 2.9.0 / torch_npu 2.9.0.post6**, determinism on. The historical guided run went from **6/10** to **10/10 compact + 51/51 full** in one attempt / 38 actual turns, followed by **51/51** fresh-case checks. It used an earlier adapter; the identical output was later verified with the added nonfinite guard.
+
+Those receipts and model-specific timings remain historical evidence, **not a fresh pass claim for the new host protocol**. No new NPU acceptance is implied by installation, a pending request or adapter CPU tests. Establish and retain your own source-bound numerical results.
 
 ## What changed in the saved candidate
 

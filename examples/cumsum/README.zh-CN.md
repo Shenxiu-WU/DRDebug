@@ -1,77 +1,92 @@
-# Cumsum：重放已修复内核，或亲自完成一次修复
+# Cumsum：重放候选，或由当前宿主修复
 
 [English](README.md) · [简体中文](README.zh-CN.md)
 
-本例提供两个明确区分的入口：**不调用模型，验收保存的已修复内核**；或者**用 Kimi 从论文原始失败内核发起有参考的实时修复**，另外提供公开修复源码作为只读案例。两者均使用原始参考实现、Python wrapper、10 例紧凑集、51 例完整集及按输出 dtype 区分的精度阈值，`papers/` 中的论文归档保持不变。
+可选择**不调用模型，独立验证保存的候选**，或**从原始失败任务出发，由当前宿主进行有参考修复**。两条路径都保留原始参考、wrapper、10 例紧凑集、51 例完整集与按 dtype 区分的容差；论文归档与历史验证回执保持不变。
 
-| 入口 | 起始内核 | 是否需要模型 | 可以验证什么 |
+| 路径 | 起始内核 | 模型／宿主 | 核验内容 |
 | --- | --- | --- | --- |
-| 已修复候选重放 | 保存的八份修复后原生源码 | 不需要 | 该候选在你的环境中能否通过原始测例 |
-| 有参考的实时修复 | 论文原始近成功内核；单独提供已公开修复源码 | 需要配置好 Kimi 的 Claude Code | 在公开参考辅助下验证全新安装、诊断/补丁与完整验收链路 |
+| 已修复候选重放 | 固定哈希的八份修复后原生源码 | 不需要模型 | 独立清洁构建及原数值／完整性检查 |
+| 原生宿主引导修复 | 论文原始输入，修复源码单独作为只读参考 | 现有宿主的模型与工具 | 真实请求 → 宿主补丁 → 引擎接纳 → 独立验证 |
 
 ## 运行准备
 
-实际执行需要 Linux 昇腾环境。请先完成[安装与依赖指南](../../docs/skill-guide.zh-CN.md)，并确保启动器和 `PATH` 中的 `python3` 使用同一 Python 环境。运行需要可用 NPU、兼容的驱动与 CANN、CMake、C++ 编译器以及 ABI 兼容的 Torch/torch_npu；单纯复制安装 Skill 只需要 Python 3.10+。
+先阅读[当前安装指南](../../docs/skill-guide.zh-CN.md)和[执行环境说明](../../docs/skill-guide-requirements.md)。数值命令在 Linux 昇腾机器／容器中运行，需要兼容的驱动／CANN、ABI 匹配的 Torch/torch_npu、NumPy 与构建工具。启动器和 `PATH` 上的 `python3` 使用同一隔离环境；安装器自身仅需 Python 3.10+ 与标准库。
 
-保存的候选已在 **Ascend910B4、CANN 9.1.0、Torch 2.9.0、torch_npu 2.9.0.post6** 上独立验收，并显式启用确定性算法、设置 `warn_only=False`。[安装指南](../../docs/skill-guide.zh-CN.md#使用匹配且隔离的-python-环境)说明匹配环境及 Torch 的 `+cpu` 版本串，其他硬件和版本仍未完成资格验证。[验证记录](validation.zh-CN.md)给出带新增 guard 的候选重放及另行全新引导修复结果，并区分运行版本和依赖复用。确定性模式是已测合同的一部分：关闭时，原始参考本身可能产生影响精度比较的运行间差异。
+Claude Code、Codex、使用 Kimi 的 Agent 及其他兼容宿主任选其一。宿主使用自己的模型与工具，管理密钥、权限和远程 SSH；DRDebug 不启动嵌套编码智能体，也不选择 provider。候选重放不调用模型。
 
-以下命令均在仓库根目录执行，示例路径必须选择新目录，两类 prepare 都不会覆盖已有任务或工作区。将 `YOUR_SOC_VERSION` 替换为本机工具链接受的 SoC 标识，并选用执行环境可见的空闲物理设备 ID。`--npu ID` 通过 `ASCEND_RT_VISIBLE_DEVICES` 选择该 ID，适配层内部统一使用逻辑 `npu:0`。本次验证配置为 `--npu 1`、内部逻辑 `0`，SoC 为 `Ascend910B4`。请将下方示例中的 `--npu 0` 替换为你选定的空闲物理 ID。
-
-如尚未安装，可在源码仓根目录安装一份独立 Skill：
+以下命令从仓库根执行，输入与工作区都选新目录，并使用执行环境可见的空闲设备 ID 和本机编译器接受的实际 SoC 标识。`--npu ID` 通过 `ASCEND_RT_VISIBLE_DEVICES` 选择该环境暴露的设备，适配器内部使用逻辑 `npu:0`。容器可能重映射宿主机的物理 ID；请在实际执行环境中核对枚举结果，单独记录宿主机物理 ID，并替换示例中的 `0` 和 `YOUR_SOC_VERSION`。
 
 ```bash
 ./install.sh --dest "$HOME/.local/share/drdebug-example-skills"
 DRDEBUG_SKILL="$HOME/.local/share/drdebug-example-skills/drdebug"
-python3 "$DRDEBUG_SKILL/scripts/drdebug.py" doctor --no-worker --runtime-probe \
+python3 "$DRDEBUG_SKILL/scripts/drdebug.py" doctor --runtime-probe \
   --npu 0 --soc YOUR_SOC_VERSION --strict
 python3 examples/cumsum/prepare.py --check
 ```
 
-如果已经采用 Codex 或 Claude 的用户安装方式，将 `DRDEBUG_SKILL` 改为对应的 `drdebug` 安装目录即可。示例源码来自仓库 checkout；安装 Skill 不会将全部论文任务和示例一起复制进去。
+如果已安装 Codex／Claude／自定义 Skill，改用实际安装路径。示例源码来自 checkout，安装器不会复制完整示例或全部论文任务。
 
-## 1. 重放已修复候选
+## 1. 独立重放保存的候选
 
-此入口独立清洁构建并进行精度验证，不让 Kimi 再次修复，也不导入历史成功状态。
+此入口不要求宿主修复，也不继承历史成功状态：
 
 ```bash
 python3 examples/cumsum/prepare.py --mode replay --output /path/to/cumsum-replay-input
 python3 "$DRDEBUG_SKILL/scripts/drdebug.py" prepare /path/to/cumsum-replay-input \
   --output /path/to/cumsum-replay --op-name 5_Cumsum --determinism on
 python3 "$DRDEBUG_SKILL/scripts/drdebug.py" verify /path/to/cumsum-replay \
-  --npu 0 --soc YOUR_SOC_VERSION --determinism on --casewise
+  --npu 0 --soc YOUR_SOC_VERSION --casewise --json
 ```
 
-应同时满足 **紧凑集 10/10、完整集 51/51、全部完整性及 AST 检查通过**；加上 `--casewise` 时，还应有 51 个独立进程完成且全部匹配。准备好源码、成功编译或进程退出，均不能单独视为精度通过；以最终 `verification/<id>/summary.json` 和 CLI 退出状态为准；`progress.json` 是过程快照，结束后仍可能保留初始状态。失败时再读取阶段日志。
+以实际最终 `verification/<id>/summary.json` 和 CLI 退出状态判定。完整通过要求**紧凑集 10/10、完整集 51/51、全部完整性／原生绑定／AST 检查与非有限值 guard 完整覆盖**；使用 `--casewise` 时，还需 51 个逐例新进程完成且匹配。这些是验收目标，不表示上面的命令已经在你的环境执行。`progress.json` 是过程快照，不是最终结论。
 
-逐例验证会在每个新进程中按原 seed 0 重建整套输入，再选择对应原始 case 下标，不修改参考或精度阈值。一次运行完整 51 例和逐例新进程是两种不同测量，请保留两份结果。
+每个逐例进程按原 seed 0 重建完整输入集，再选择原始下标。整套完整集与逐例新进程是两种测量，均不更改参考或容差。
 
-## 2. 用 Kimi 完成有参考的实时修复
+## 2. 使用原生宿主协议进行引导修复
 
-请先配置已认证的 Claude Code CLI 和有权使用的 Kimi 服务；官方 Claude Code 安装入口与 provider/工具检查见[安装指南](../../docs/skill-guide.zh-CN.md#修复前检查所选设备)。本例不附带凭据或服务设置。所选模型须由你的服务支持，此前使用的标识为 `k3[1m]`。
-
-首次使用推荐此路径：任务保持论文原始失败内核，通过 `--reference-root` 将 `examples/cumsum/repaired` 另行提供给 worker，作为诊断和修改时可读取的 AscendC 实现案例。这属于**有公开参考的引导修复（guided repair）**，不声称无提示独立再发现修复方法。它验证全新安装、真实模型与工具调用、补丁以及原始验收整条链路，不继承旧 events 或 checkpoint。实时 Kimi 调用可能产生服务费用，最终候选仍须通过未修改的原测例。
+修复目标保持原始失败任务。`--reference-root` 将 `examples/cumsum/repaired` 单独作为只读 AscendC 参考；需明确披露：这是**有参考的引导修复**，不是无提示独立再发现。若另行研究不提供参考的能力，可在另一个新工作区省略该参数，预算可能更高。
 
 ```bash
 python3 examples/cumsum/prepare.py --mode live --output /path/to/cumsum-live-input
 python3 "$DRDEBUG_SKILL/scripts/drdebug.py" prepare /path/to/cumsum-live-input \
   --output /path/to/cumsum-live --op-name 5_Cumsum --determinism on \
   --reference-root "$PWD/examples/cumsum/repaired"
-python3 "$DRDEBUG_SKILL/scripts/drdebug.py" doctor --workspace /path/to/cumsum-live \
-  --npu 0 --soc YOUR_SOC_VERSION --strict
-python3 "$DRDEBUG_SKILL/scripts/drdebug.py" run /path/to/cumsum-live \
-  --npu 0 --soc YOUR_SOC_VERSION --model 'k3[1m]' \
-  --max-attempts 5 --max-turns 240 --worker-timeout-sec 21600 --deadline-sec 86400 \
-  --allow-worker-shell
-python3 "$DRDEBUG_SKILL/scripts/drdebug.py" status /path/to/cumsum-live
-python3 "$DRDEBUG_SKILL/scripts/drdebug.py" verify /path/to/cumsum-live \
-  --npu 0 --soc YOUR_SOC_VERSION --determinism on --casewise
+python3 "$DRDEBUG_SKILL/scripts/drdebug.py" next /path/to/cumsum-live \
+  --npu 0 --soc YOUR_SOC_VERSION --max-attempts 5 --deadline-sec 86400 --json
 ```
 
-`--allow-worker-shell` 允许在可信、隔离的执行工作区内运行诊断命令，不绕过 Claude Code 的权限或目录信任机制。若 CLI 要求信任目录，请按安装指南审阅生成的 runtime，并交互式确认；将其他任务和重要数据放在工作区之外。最终验收仍独立于模型的文字结论。
+返回 `state: "awaiting_host"` 时，完整读取 `instructions` 指向的文件、证据、`request_id` 和 `candidate_dir`。当前宿主用自己的工具遵循完整诊断方法，只修改允许的隔离候选／审计文件，将真实回复写入候选源码之外的 `result_file`。不能改活动任务、受保护输入、请求元数据、引擎报告或历史。
 
-这些预算是上限，不代表预期消耗或成功保证。保留中断或失败的工作区，按[续跑与新试验规则](../../skills/drdebug/references/runtime.md#first-failure-or-resume)处理。
+结果 JSON 必须包含 `outcome`（`completed` 或 `failed`）和真实 `final_response`，并以完整提示要求的真实 `[ENGINE_ATTEMPT_METADATA]` 结尾；`failed` 必须附非空 `error`，`completed` 时可选。不需要自行给出 success／精度，也不伪造 turns。`completed` 仅表示宿主完成工作，不表示测试通过。
 
-实测全新引导修复从 **6/10** 基线出发，使用 **1 次尝试 / 38 turns**，达到**紧凑集 10/10、完整集 51/51**，随后 **51/51** 个逐例新进程通过。worker 耗时 **6 分 25 秒**，含基线和引擎验收共 **15 分 5 秒**。它使用公开参考和较早适配器，随后对相同产出独立完成新增非有限值 guard 检查。LLM 不保证每次轨迹相同或成功。若研究不提供该参考时的修复能力，可在另一个新工作区中删去 `--reference-root`；这属于独立、可能消耗更多预算的研究运行。要复核公开的修复结果，请使用上面的已修复候选重放入口。
+```bash
+python3 "$DRDEBUG_SKILL/scripts/drdebug.py" submit /path/to/cumsum-live \
+  --request-id REQUEST_ID --result /path/from/result_file/host-result.json \
+  --npu 0 --soc YOUR_SOC_VERSION --json
+python3 "$DRDEBUG_SKILL/scripts/drdebug.py" status /path/to/cumsum-live
+```
+
+两个占位符须替换为本请求的实际值。查看引擎验证结果，仅在非终态时重复 `next → 宿主编辑 → submit`。已保存上限为 5 次尝试、86,400 秒总墙钟，**包含等待宿主与确定性命令时间**，续跑保留原值。不删除历史、不改预算、不重开终态，也不编造模型 turn 记账，详见[恢复规则](../../skills/drdebug/references/runtime.md#first-failure-or-resume)。
+
+接纳要求 `state: "terminal"`、`terminal: true`、`engine_status.session_outcome: "success"`、`returncode: 0` 与 `accepted_checkpoint.ready: true`。随后独立验证实际被接纳的源码：
+
+```bash
+python3 "$DRDEBUG_SKILL/scripts/drdebug.py" verify /path/to/cumsum-live \
+  --npu 0 --soc YOUR_SOC_VERSION --casewise --json
+```
+
+宿主回复或部分通过的最佳检查点不是成功。基线已通过全部闸时可无需宿主补丁接纳，不要伪造尝试。旧工作区只保留原证据，供 `status` 与受支持的独立 `verify`；当前修复使用新的 schema-4 工作区。原 `run` 命令已经退役。
+
+## 原生宿主实测
+
+[全新安装的原生宿主记录](native-host-validation.zh-CN.md)从原始紧凑集 6/10 出发，实际提交修复，取得紧凑集 10/10 + 完整集 51/51 接纳，再在另一份清洁工作区完成 51 个逐例新进程验证。记录列出实际测试宿主、K3／1M 配置、源码身份与提供的公开参考；另见[机器记录](native-host-validation.json)和[接纳源码快照](validation-sources/README.md)。
+
+## 历史结果单独保留
+
+[版本化验证记录](validation.zh-CN.md)与[机器可读回执](validation.json)早于原生 `next`/`submit`，保留了 **Ascend910B4 / CANN 9.1.0 / Torch 2.9.0 / torch_npu 2.9.0.post6**、确定性开启环境下的候选重放与 Kimi 引导修复。历史引导运行从 **6/10** 达到**紧凑集 10/10 + 完整集 51/51**，使用 1 次尝试／38 个真实 turns，随后 **51/51** 个逐例新进程通过。它采用较早适配器，相同产出随后通过新增非有限值 guard 的独立检查。
+
+这些回执和模型专属耗时是历史证据，**不是新宿主协议的首次通过声明**。安装、待处理请求或适配器 CPU 测试都不代表新的 NPU 验收通过；应自行建立并保留绑定源码的数值结果。
 
 ## 已修复候选改变了什么
 

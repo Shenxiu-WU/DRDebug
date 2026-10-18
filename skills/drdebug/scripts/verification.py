@@ -141,11 +141,14 @@ def verify(args, api):
     mode = manifest["execution"]["determinism"]
     if getattr(args, "determinism", None) not in (None, mode):
         raise api.ContractError("Verification retains the workspace deterministic mode")
+    host_state = workspace / "host-session/state.json"
+    if host_state.exists() and api.read_json(host_state).get("operation"):
+        raise api.ContractError("A host request or interrupted engine operation is pending; complete it before independent verification")
     lock = workspace / ".drdebug.lock"
     try:
         fd = os.open(lock, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     except FileExistsError as exc:
-        raise api.ContractError("Workspace is locked; do not audit while a worker can write it") from exc
+        raise api.ContractError("Workspace is locked; do not audit during an engine transaction") from exc
     output = workspace / "verification" / (time.strftime("%Y%m%dT%H%M%SZ", time.gmtime()) + "-" + uuid4().hex[:8])
     summary = {"passed": False, "returncode": 2, "source": "active_task", "engine_history_modified": False,
                "checkpoint_promoted": False, "started_at": api.stamp(), "stages": {}, "casewise_requested": args.casewise}
@@ -153,7 +156,7 @@ def verify(args, api):
         with os.fdopen(fd, "w") as f:
             json.dump({"pid": os.getpid(), "purpose": "independent_verify", "started_at": api.stamp()}, f)
         report = api.environment_report(workspace=workspace, npu=args.npu, soc=args.soc,
-                                        require_worker=False, runtime_probe=True, determinism=mode)
+                                        runtime_probe=True, determinism=mode)
         if not report["ready"]:
             return {"returncode": 2, "outcome": "preflight_failed", "preflight": report}
         api.load_workspace(workspace)
@@ -181,8 +184,7 @@ def verify(args, api):
             "helper_sha256": (manifest.get("nonfinite_guard") or {}).get("helper_sha256"),
             "suites": {}, "requires_new_workspace": "nonfinite_guard" not in manifest}
         api.write_json(output / "config.json", config)
-        _, env, _ = api.engine_command(workspace, manifest, args,
-            {"max_attempts": 1, "max_turns": 1, "worker_timeout_sec": 1}, 1)
+        env = api.base_execution_environment(workspace, manifest, npu=args.npu, soc=args.soc)
         # Verification never needs provider credentials, even when the launching shell has them.
         env = {k: v for k, v in env.items() if not k.startswith(("ANTHROPIC_", "CLAUDE_CODE_"))}
         deadline = time.monotonic() + args.overall_timeout_sec

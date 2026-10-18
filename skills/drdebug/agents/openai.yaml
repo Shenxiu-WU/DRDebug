@@ -1,4 +1,4 @@
 interface:
   display_name: "DRDebug"
-  short_description: "Repair near-miss AscendC kernels with evidence"
-  default_prompt: "Use $drdebug to check my Ascend environment and repair this near-miss kernel in a separate workspace."
+  short_description: "Repair AscendC kernels through native host handoffs"
+  default_prompt: "Use $drdebug with this host's model and tools to prepare a separate workspace, follow next/submit handoffs, and independently verify this failing AscendC kernel."

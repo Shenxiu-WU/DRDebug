@@ -13,6 +13,12 @@ implementation. These candidate sources and the example preparation script
 are distributed under the repository's MIT license, subject to existing
 file-level notices.
 
+`validation-sources/` retains exact accepted native-source snapshots from the
+native-host validation runs. These are immutable verification fixtures; the
+maintained saved example remains in `repaired/kernel/`. The validation record
+identifies each snapshot, supplied reference and measured outcome. These
+candidate sources use the same MIT and existing file-level notice terms.
+
 The original `model.py` and input specifications are NPUKernelBench assets;
 their Apache-2.0 attribution and standard license text are retained in the
 original task. The exact historical upstream revision is not asserted.

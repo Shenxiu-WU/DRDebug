@@ -8,14 +8,14 @@
     zh: [
       ["01 / 先让失败可复现", "从一个真实的失败开始。", "保留已有候选，先建立可复现的失败。引擎记录构建、运行与精度证据，再交由工作智能体提出修改。", "已有内核 + 失败测例", "可复现的基线"],
       ["02 / 用证据缩小问题", "定位偏差，而非猜测答案。", "按需启用取证与插桩，结合编译、运行和精度反馈定位问题。结构化领域知识帮助工作智能体判断错误类型与可行的修复方向。", "错误反馈 + 按需取证", "有依据的修复假设"],
-      ["03 / 保留已有进展", "围绕问题，做定向修改。", "工作智能体在同一任务中保留上下文，对已有候选提出补丁。修改围绕当前失败与已收集的证据展开，并受任务预算和约束控制。", "修复假设 + 领域知识", "待验证的内核补丁"],
+      ["03 / 保留已有进展", "围绕问题，做定向修改。", "宿主智能体在同一任务中保留上下文，对隔离候选提出补丁。修改围绕当前失败与已收集的证据展开，并受任务预算和约束控制。", "修复假设 + 领域知识", "待验证的内核补丁"],
       ["04 / 让验证决定接纳", "过关的标准，由引擎掌握。", "引擎检查内核完整性，并执行完整测试集验证。正确性与性能分别记录；验证未通过的修改不能仅凭大语言模型的自述被视为成功。", "候选补丁 + 完整测试集", "独立验证的接纳决定"],
       ["05 / 累积可复用的经验", "保留状态，继续下一轮。", "记录证据、修复轨迹与验证结果，通过检查点和回滚保留当前最优状态。经过核验的经验可进入结构化知识，供后续任务复用。", "验证记录 + 修复轨迹", "检查点与可复用经验"]
     ],
     en: [
       ["01 / REPRODUCE THE FAILURE", "Start with a real failing case.", "Keep the existing candidate and establish a reproducible failure. The engine records build, execution and precision evidence before asking the worker for a patch.", "Candidate + failing case", "A reproducible baseline"],
       ["02 / NARROW THE PROBLEM", "Locate the discrepancy.", "Use on-demand forensics and instrumentation alongside build, runtime and precision feedback. Structured domain knowledge helps the worker identify failure types and plausible repair directions.", "Failure feedback + forensics", "An evidence-based hypothesis"],
-      ["03 / KEEP THE PROGRESS", "Make a targeted edit.", "The worker retains context within one repair task and proposes a patch to the existing candidate. Edits follow the observed failure and collected evidence, within task constraints and budgets.", "Hypothesis + domain knowledge", "A kernel patch to validate"],
+      ["03 / KEEP THE PROGRESS", "Make a targeted edit.", "The host agent retains context within one repair task and proposes a patch to the isolated candidate. Edits follow the observed failure and collected evidence, within task constraints and budgets.", "Hypothesis + domain knowledge", "A kernel patch to validate"],
       ["04 / VALIDATION DECIDES", "The engine owns acceptance.", "The engine checks kernel integrity and validates the complete test suite. Correctness and performance are recorded separately; the large language model’s own report cannot turn an unvalidated patch into a success.", "Patch + complete test suite", "An independently checked decision"],
       ["05 / RETAIN WHAT WAS LEARNED", "Keep state for the next round.", "Record evidence, repair traces and validation results. Checkpoints and rollback preserve the best-known state; verified experience can become structured knowledge for later tasks.", "Validation record + repair trace", "Checkpoints + reusable knowledge"]
     ]
@@ -46,6 +46,8 @@
     if (skillGuide) skillGuide.href = `https://github.com/Shenxiu-WU/DRDebug/blob/main/docs/skill-guide${language === "zh" ? ".zh-CN" : ""}.md`;
     const skillExample = document.querySelector(".skill-example");
     if (skillExample) skillExample.href = `https://github.com/Shenxiu-WU/DRDebug/blob/main/examples/cumsum/README${language === "zh" ? ".zh-CN" : ""}.md`;
+    const skillValidation = document.querySelector(".skill-validation");
+    if (skillValidation) skillValidation.href = `https://github.com/Shenxiu-WU/DRDebug/blob/main/examples/cumsum/native-host-validation${language === "zh" ? ".zh-CN" : ""}.md`;
     const copyStatus = document.getElementById("skill-copy-status");
     if (copyStatus) copyStatus.textContent = "";
     document.dispatchEvent(new CustomEvent("site:language",{detail:{lang:language}}));

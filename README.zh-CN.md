@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="https://shenxiu-wu.github.io/DRDebug/"><img src="https://img.shields.io/badge/Website-DRDebug-6a50a8?style=flat-square" alt="Project website"></a>
-  <a href="#安装-skill"><img src="https://img.shields.io/badge/Skill-Claude_Code_%C2%B7_Codex-6a50a8?style=flat-square" alt="安装 DRDebug Skill"></a>
+  <a href="#安装-skill"><img src="https://img.shields.io/badge/Skill-Native_Host-6a50a8?style=flat-square" alt="安装 DRDebug Skill"></a>
   <a href="https://arxiv.org/abs/2608.02712"><img src="https://img.shields.io/badge/arXiv-2608.02712-9b5769?style=flat-square" alt="Paper on arXiv"></a>
   <a href="papers/2026-dont-regenerate-debug/artifact/"><img src="https://img.shields.io/badge/Artifact-Frozen-586c88?style=flat-square" alt="Frozen paper artifact"></a>
   <a href="papers/2026-dont-regenerate-debug/dataset/"><img src="https://img.shields.io/badge/Dataset-27_tasks-5c7e68?style=flat-square" alt="27 paper tasks and input cases"></a>
@@ -37,9 +37,9 @@ DRDebug 从一个接近正确的算子出发，依据失败证据修复已有实
 | 从哪里开始 | 可以看到什么 |
 | --- | --- |
 | [项目主页](https://shenxiu-wu.github.io/DRDebug/) | 修复示例、系统原理与交互式成果展示 |
-| [安装 Skill](#安装-skill) | 在 Claude Code 或 Codex 中使用自包含的论文版修复引擎 |
+| [安装 Skill](#安装-skill) | 由已有宿主智能体驱动的确定性修复闭环 |
 | [论文与方法](#研究工作) | 精度修复研究、冻结源码与实验记录 |
-| [运行 Cumsum 示例](examples/cumsum/README.zh-CN.md) | 重放已修复内核，或借助公开参考进行 Kimi 实时修复 |
+| [Cumsum 操作示例](examples/cumsum/README.zh-CN.md) | 重放候选，或按原生宿主协议进行有参考修复 |
 | [复现与核验](#复现与核验) | 在 CPU 上复现论文表格，核对论文任务与测例 |
 
 ## 工作方式
@@ -57,45 +57,41 @@ DRDebug 从一个接近正确的算子出发，依据失败证据修复已有实
 
 ## 安装 Skill
 
-**一个 Skill，带走论文版修复闭环。** [`drdebug`](skills/drdebug/SKILL.md) 将确定性引擎、诊断工具、完整验证、检查点与回滚，以及公开精度知识种子库一起带进智能体的工作流。安装同时附带 10 个历史参考案例，其中 7 个包含 AscendC 内核。
+**同一个确定性引擎，使用当前宿主的模型和工具。** [`drdebug`](skills/drdebug/SKILL.md) 将取证、完整验证、检查点／回滚与公开精度知识种子库带入已有 Agent 工作流，并附带 10 个历史参考案例，其中 7 个包含 AscendC 内核。
 
 ```bash
 git clone https://github.com/Shenxiu-WU/DRDebug.git
 cd DRDebug
-./install.sh --codex    # Claude Code 使用：./install.sh --claude
+./install.sh --codex    # 可选宿主；也可使用 ./install.sh --claude
 ```
 
-其他兼容 Agent 可使用其识别的 skills 父目录：
+其他兼容宿主，包括使用 Kimi 的 Agent，可选择其实际 skills 父目录：
 
 ```bash
 ./install.sh --dest /path/to/your-agent/skills
 ```
 
-将该路径替换为你的 Agent 实际使用的技能目录；安装器会在其中创建 `drdebug/` 子目录。Agent 需要能加载 `drdebug/SKILL.md` 及配套资源，并执行文档中的命令。
+安装器追加 `drdebug/` 子目录，由宿主加载其中的 `SKILL.md`，用自己的工具读取请求、编辑文件。Codex 与 Claude Code 快捷入口分别选择 `~/.agents/skills/drdebug` 和 `~/.claude/skills/drdebug`。`--project /path/to/project` 选择项目级安装，`--dry-run` 预览位置，`--force` 更新时先备份。安装后的 runtime 不依赖原 checkout。
 
-安装器将自包含的 Skill 复制到 `~/.agents/skills/drdebug`（Codex）或 `~/.claude/skills/drdebug`（Claude Code），同时打包公开论文运行源码，之后移动仓库也不影响已安装的 Skill。添加 `--project /path/to/project` 可安装到指定项目，`--dest DIR` 可选择技能父目录，`--dry-run` 可先查看安装位置。已有安装默认保留；使用 `--force` 更新时会先备份。
+**安装仅需 Python 3.10+ 与标准库。** 数值执行还需要已有任务、Linux + 昇腾 NPU、兼容的 CANN/AscendC、Torch/torch_npu、NumPy 与构建工具。Claude Code、Codex、使用 Kimi 的 Agent 或其他兼容宿主任选其一；编码智能体 CLI 不是内部依赖，Skill 不启动嵌套模型 worker。模型密钥、权限与 SSH 由宿主管理。
 
-安装后，对智能体说：
+当前流程：**`doctor → prepare → next → 宿主编辑 → submit → … → verify`**。`next` 返回确定性证据、`request_id`、隔离的 `candidate_dir` 和需要完整读取的 `instructions` 文件。宿主只编辑允许的候选文件，向其外部的 `result_file` 写结果 JSON，包含 `outcome`（`completed` 或 `failed`）、真实 `final_response` 和要求的元数据尾部。`submit --request-id ID --result RESULT_JSON` 验证并推进任务。接纳由引擎决定，宿主完成不等于数值通过。
 
-> 使用 drdebug 检查我的昇腾环境，为这个失败算子创建独立工作目录，再根据失败证据修复它。
+新 schema-4 工作区上限为 **5 次尝试、86,400 秒总墙钟时间**，包括等待宿主与确定性命令执行；不伪造模型 turns。旧工作区保留历史证据，原 `run` 命令已退役。完整命令和迁移边界见[安装与首次修复指南](docs/skill-guide.zh-CN.md)。
 
-**安装仅需 Python 3.10+，无需额外 Python 包。** 真实修复需要用户已有的 AscendC 任务、Linux + Ascend NPU、兼容的 CANN/AscendC 与 PyTorch/torch_npu，以及已认证的 Claude Code 工作进程。Codex 和其他兼容的宿主 Agent 可指导并调用公开 CLI；论文版实时修复仍使用已认证的 Claude Code worker 后端。安装器不安装驱动，也不配置模型账号。
+可以对宿主说：
 
-从 `doctor` 开始，再按 `prepare → run → status → verify` 使用。新工作区明确记录确定性模式，预检核对 ABI、NumPy 与实际设备；完整执行的全量结果参与最佳检查点选择，论文冻结归档保持不变。[安装与首次修复指南](docs/skill-guide.zh-CN.md) · [Skill 操作说明](skills/drdebug/SKILL.md) · [公开适配层的范围](skills/drdebug/references/runtime.md)。
+> 使用 drdebug 和你当前的模型与工具，检查我的昇腾环境，创建独立工作区，按 next/submit 请求修复这个算子，再独立验证实际被接纳的源码。
 
-### 运行 Cumsum 示例
+[Skill 操作说明](skills/drdebug/SKILL.md) · [运行与任务规范](skills/drdebug/references/runtime.md)
 
-[Cumsum 示例](examples/cumsum/README.zh-CN.md)提供固定哈希的已修复原生源码和论文原始输入，可选择**无需模型的候选重放**，或**使用已配置 Kimi 的有参考实时修复**，将公开的已修复实现单独作为只读案例。两者均保留原 **10 例紧凑集 + 51 例完整集**和精度阈值。
+### Cumsum：原生宿主验证
 
-实测环境为 **Ascend910B4 / CANN 9.1.0 / Torch 2.9.0+cpu / torch_npu 2.9.0.post6**，确定性模式开启：
+[全新安装验证记录](examples/cumsum/native-host-validation.zh-CN.md)覆盖 **Claude Code、Codex 与 Kimi Code**。三者均从原始 **6/10** 基线出发，实际完成宿主请求与提交、引擎接纳 **10/10 紧凑集 + 51/51 完整集**，并通过 **51 个完整集用例的逐例新进程独立验证**。记录包含实际 CLI 版本、K3／1M 配置、源码哈希和分开的验收收据；运行在 Ascend910B4，确定性开启。
 
-| 验证入口 | 紧凑集 | 完整集 | 原完整集逐例新进程 |
-| --- | ---: | ---: | ---: |
-| 已修复候选，包含新增非有限值检查 | **10/10** | **51/51** | **51/51** |
-| Kimi 从原始 **6/10** 基线引导修复 | **10/10** | **51/51** | **51/51** |
-| 最新适配器：默认 baseline 接纳，零 worker 调用 | **10/10** | **51/51** | 由上方独立验收覆盖 |
+这些运行使用单独提供的公开修复实现作为只读参考，属于**参考引导验证**，用于核对安装与原生协议，不衡量无参考的独立发现能力。精确接纳源码与[机器记录](examples/cumsum/native-host-validation.json)一并保留。
 
-引导修复使用 1 次尝试、**38 turns**：worker **6 分 25 秒**，含基线和引擎验收共 **15 分 5 秒**。它运行于新增 guard 之前，随后对相同修复源码单独完成新 guard 验收。最初的候选重放使用全新安装的隔离依赖，引导修复和新 guard 检查另装 Skill、另建工作区并复用该依赖。具体版本与源码身份见[验证记录](examples/cumsum/validation.zh-CN.md)。实时修复单独提供公开参考，可能产生模型费用，也不保证每次结果相同。
+此前的[固定候选重放与引导修复记录](examples/cumsum/validation.zh-CN.md)保持不变，分别呈现。
 
 ## 研究工作
 
@@ -152,7 +148,7 @@ python3 -B tools/verify_paper_inputs.py
 <details>
 <summary>公开材料范围与执行条件</summary>
 
-公开材料支持 CPU 统计复现、方法源码阅读与任务数据核验，并已补齐 27 个逐字节核验的初始候选任务与历史算子参考案例。真实数值重跑仍需兼容运行环境与已配置的模型工作进程，详见论文包的[已知限制](papers/2026-dont-regenerate-debug/artifact/KNOWN_LIMITATIONS.md)。
+公开材料支持 CPU 统计复现、方法源码阅读与任务数据核验，并已补齐 27 个逐字节核验的初始候选任务与历史算子参考案例。真实数值重跑仍需兼容运行环境，提出新补丁使用所选宿主的模型与工具，详见论文包的[已知限制](papers/2026-dont-regenerate-debug/artifact/KNOWN_LIMITATIONS.md)。
 
 独立的[测例补充包](papers/2026-dont-regenerate-debug/dataset/README.md)提供参考实现与输入规格；81 份参考/测例文件均已恢复为与历史冻结哈希一致的原始字节，来源与依赖记录一并提供。运行参考实现可能需要 PyTorch、`torch_npu` 与兼容的昇腾硬件。
 

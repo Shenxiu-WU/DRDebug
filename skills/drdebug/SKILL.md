@@ -1,57 +1,74 @@
 ---
 name: drdebug
-description: Repair existing AscendC accelerator kernels from build, runtime or numerical failure evidence with the public DRDebug engine. Use for near-miss kernel repair and its environment setup, with full validation deciding acceptance.
+description: Repair existing AscendC accelerator kernels from build, runtime or numerical failure evidence. Use the host agent to propose patches through the public DRDebug engine's native next/submit protocol, with deterministic full validation deciding acceptance.
 ---
 
 # DRDebug
 
-Repair an existing AscendC kernel in a separate workspace using the public paper engine and its portable adapter. The model proposes patches; the engine owns reproduction, forensics, validation and rollback. The frozen paper source stays unchanged. Only newly prepared runtime copies receive the documented checkpoint correction, explicit startup configuration and nonfinite-output guard.
+Use this host agent's own model, tools and conversation to repair an existing kernel. The public CLI runs deterministic preparation, evidence collection and validation; it never launches another coding agent or configures a model provider. Resolve `<skill-dir>` from this file's directory.
 
-## Check and prepare
+## Prepare
 
-Resolve `<skill-dir>` from this file's directory, not from the current working directory. Read [the runtime and task contract](references/runtime.md) for dependencies, resource paths and recovery rules.
+Read [runtime and task requirements](references/runtime.md). Use the actual execution machine's device and installed CANN SoC identifier, with an authorized free NPU:
 
 ```bash
 python3 <skill-dir>/scripts/drdebug.py doctor \
   --npu 0 --soc YOUR_SOC_VERSION --runtime-probe --strict
 python3 <skill-dir>/scripts/drdebug.py prepare /path/to/task \
-  --output /path/to/new-repair-workspace --op-name MyOperator --determinism on
+  --output /path/to/new-workspace --op-name MyOperator --determinism on
 ```
 
-Choose the actual device and installed CANN SoC identifier; the example values do not reserve a device. Numerical work requires Linux, an Ascend NPU, matching CANN/Torch/torch_npu, NumPy, ABI-compatible build tools and one active Python environment. The preflight checks the real ABI/NumPy bridge and can execute a tiny built-in NPU probe; it is not full task validation. Append `--no-worker` for saved-candidate checks without Claude Code. Live repair still requires an authenticated Claude Code worker even when Codex orchestrates this skill.
+Installation needs Python 3.10+ and the standard library. Numerical work additionally needs Linux, Ascend NPU access, matching CANN/Torch/torch_npu, NumPy and ABI-compatible build tools. `doctor` checks execution prerequisites, not host authentication or model availability. Model credentials, host permissions and any SSH connection belong to the host's existing configuration.
 
-The task must contain `model.py`, `model_new_ascendc.py`, native `kernel/` sources including pybind, compact `<op>.json` and an explicitly identified full `.json.bak` / `.json.full` collection. Use the JSON stem as `--op-name`. Preparation never overwrites an existing output. New schema-3 workspaces default to determinism on and fix the mode before managed Python entrypoints, with `warn_only=False` and process receipts. Legacy schema-1/2 stays off; use a new workspace to change mode or adopt this adapter, keeping old evidence intact.
+The input must supply `model.py`, `model_new_ascendc.py`, native `kernel/` sources including pybind, compact `<op>.json` and an explicit full `.json.bak` / `.json.full` collection. Use the JSON stem as `--op-name`. Preparation never overwrites an output. New schema-4 workspaces bind deterministic mode, the nonfinite guard and native-host protocol; legacy workspaces retain historical evidence and are available for `status` / supported independent `verify`, not live migration. Prepare a new workspace rather than hot-patching one.
 
-New preparation records `nonfinite_guard` provenance in the workspace manifest. This public-adapter rule first requires reference/candidate NaN, positive-infinity and negative-infinity masks to match, then applies the original finite-value comparator and unchanged tolerances. Matching nonfinite reference values are allowed. An existing workspace without this manifest field, including earlier schema 3, is not patched in place; prepare a new workspace and retain the old evidence. See [the output contract](references/runtime.md#nonfinite-output-contract).
-
-Use supplied independent examples with `--reference-root` when relevant. Otherwise follow the bundled historical examples, protected task reference and [public resource map](references/runtime.md#public-resource-map). Retain constructive Phase A → B → C. Skip the explicitly unbundled legacy API/canonical-KB paths; use the engine's injected public KB summary rather than inventing missing resources.
-
-## Run and inspect
+## Native host repair loop
 
 ```bash
-python3 <skill-dir>/scripts/drdebug.py run /path/to/new-repair-workspace \
-  --npu 0 --soc YOUR_SOC_VERSION --max-attempts 5 --max-turns 240 \
-  --worker-timeout-sec 21600 --deadline-sec 86400
-python3 <skill-dir>/scripts/drdebug.py status /path/to/new-repair-workspace
+python3 <skill-dir>/scripts/drdebug.py next /path/to/new-workspace \
+  --npu 0 --soc YOUR_SOC_VERSION --json
 ```
 
-These are generous fresh-task ceilings, not minimum consumption or a guarantee. Resume preserves the saved budget and deterministic mode; older budgets without a worker-timeout field retain their implicit 600-second cap. Read [first failure or resume](references/runtime.md#first-failure-or-resume) before touching a stopped task. Do not delete ledgers/events, reset history or reopen terminal state. A new trial must retain its parent/checkpoint and prior budget usage.
+Numerical commands can outlast a host tool's foreground limit. Use that host's background/session mechanism, retain stdout/stderr and the process's final exit status, and poll the same operation until it ends. Do not start another workspace command while it is running or treat a progress file as completion. If an operation was interrupted, inspect `status` and preserved logs before proceeding; an indeterminate action requires attention rather than a blind retry.
 
-Use `--model MODEL` only for the user's configured worker service. Provider variables stay in the launching environment or existing secret manager, outside task files/prompts/logs. Project-only Claude settings do not inherit custom-provider variables stored only in user settings. Confirm provider/tool round trips separately when needed. Shell diagnostics require explicit `--allow-worker-shell` in a trusted isolated workspace; this does not bypass permissions or directory trust.
+1. Read the full file at the returned `instructions` path, plus evidence, `request_id` and `candidate_dir`. A pending response has `state: "awaiting_host"` and `terminal: false`. If it reports a terminal outcome, inspect that outcome and stop requesting patches.
+2. Work only on the isolated candidate and the explicitly allowed audit files. Follow the [host handoff contract](references/portable-worker.md) and the request's full method prompt; use real diagnostics and the Phase A → B → C method below.
+   Necessary diagnostic builds and probes run in the separate `diagnostics.task` using `diagnostics.execution`; they are already within the authorized repair scope. Refresh that copy from the candidate, follow the probe policy and retain real outputs. These artifacts are not imported or counted as acceptance.
 
-Only copied `kernel/` sources are repair targets. Reference implementations, wrappers, cases, tolerances and verifier/history files stay protected. Preserve runtime-error evidence before interpreting numerical mismatches. Do not skip failing cases, specialize to case identities, substitute reference computation or relax acceptance.
+   The two audit paths, relative to `candidate_dir`, are `precision_tuning/precision_audit_<attempt>.md` and `precision_tuning/candidate_kb_entry.json`. Use the full paths in the returned instructions, including the `precision_tuning/` directory.
 
-The portable checkpoint selector binds objective results to source/protected-input bytes and prioritizes completed full results before compact metrics. A best checkpoint may still fail some full cases; it is not a success certificate. Report full improvements even when compact counts tie, and require a source-consistent final checkpoint before claiming the engine accepted a repair.
+3. Write the host-result JSON to the returned `result_file` path, outside candidate source files. Set `outcome` to `completed` or `failed`, `final_response` to the actual diagnosis plus the required `[ENGINE_ATTEMPT_METADATA]` footer, and a nonempty `error` for `failed`. `completed` means the host finished its turn, not that the kernel passed.
+4. Submit the same pending request exactly as issued:
+
+```bash
+python3 <skill-dir>/scripts/drdebug.py submit /path/to/new-workspace \
+  --request-id REQUEST_ID --result /path/to/request/host-result.json \
+  --npu 0 --soc YOUR_SOC_VERSION --json
+```
+
+5. Inspect engine validation, then repeat `next → host edit → submit` until terminal acceptance or another terminal outcome. Never edit the active workspace task, request evidence, engine reports or history to make a submission pass.
+
+Fresh tasks allow at most **5 attempts** and **86,400 seconds total wall time**, including time while the request is pending with the host and deterministic command execution. These are ceilings; acceptance stops early. Retain saved budget and history on resume. There is no adapter-supplied model, nested worker, per-worker turn budget or fabricated host-turn count. The former `run` command is retired; use this protocol on a newly prepared workspace.
+
+The engine checks the saved deadline when advancing the workspace; it does not control or terminate the host's model session. Set the host's own turn/cost/time limits through that host, and preserve its session plus the pending request when a limit is reached.
+
+## Required diagnostic method
+
+- **Phase A — establish the specification before reading the candidate kernel.** Read the protected `model.py`, relevant supplied/bundled reference examples, the public translator guidance and `phase-a-checklist.md`. Produce `[COMPUTATION_DECOMPOSITION]` and `[REFERENCE_IMPL_SPEC]` with API, dataflow, buffers, alignment and forbidden-pattern requirements. Read-only user references come first when supplied; otherwise use bundled history or explicitly record the public reference fallback. Existing valid static specifications may be reused only as the full method prompt permits.
+- **Phase B — inspect the whole implementation.** Read tiling, all kernel and helper files and pybind launch logic. Produce `[KERNEL_STEP_TRACE]`. Follow the request's probe policy: retain genuine measurements and required `[L5_PROBE]` / `[INSTRUMENTATION_FINDINGS]` fields, or accurately record an allowed skip or unavailable capability. Never invent probe results.
+- **Phase C — compare steps to the specification.** Check API/count arguments, buffer provenance, source lines and measured intermediate values; explicitly compare queues/buffers, reduction initialization, copy alignment, synchronization and forbidden patterns. Explain the root cause before making a focused patch. Keep the original audit fields and acceptance gates.
+
+The engine injects public KB retrieval summaries. Report only IDs actually used; do not rerun KB search or modify the seed. [The public resource map](references/runtime.md#public-resource-map) overrides unavailable legacy API/canonical-KB locations. Read relevant method sections; global scheduling, gates, checkpoints and termination belong to the engine.
+
+Protect references, wrappers, cases, tolerances, verifier/runtime code, ledgers and checkpoints. Do not skip failing cases, specialize to case identities, substitute reference computation or relax validation. Preserve runtime-error evidence before interpreting numerical mismatches.
 
 ## Independently verify and report
 
 ```bash
-python3 <skill-dir>/scripts/drdebug.py verify /path/to/new-repair-workspace \
-  --npu 0 --soc YOUR_SOC_VERSION --determinism on --casewise
+python3 <skill-dir>/scripts/drdebug.py verify /path/to/new-workspace \
+  --npu 0 --soc YOUR_SOC_VERSION --casewise --json
 ```
 
-This schema-3 path copies the active kernel to a new verification directory, performs a clean build and the original compact/full comparisons with the added nonfinite guard, checks native binding, original C++ integrity, wrapper AST and source/protected/history integrity, and optionally starts a fresh process per full-case index. It calls no model and changes neither checkpoints nor engine history. Do not run it concurrently with a worker. See [verification details](references/runtime.md#independent-verification) for time limits and reports.
+Verification uses a fresh copy of the actual active kernel, clean build, original compact/full collections, nonfinite guard, native binding and integrity checks; `--casewise` adds fresh processes per original full-case index. It invokes no model and changes no engine history. Do not verify concurrently with pending host edits or another workspace operation.
 
-Judge independent verification from its final `verification/<id>/summary.json` and command exit status, including guard coverage. `progress.json` is only a process snapshot and may retain initial failure/default values after completion.
-
-Read actual status, source-bound validation and independent summaries. Report the environment/deterministic mode, kernel identity, root cause/change, both compact and full counts, integrity and remaining failures. Keep timeout, provider/authentication failure, permission denial, environment failure and numerical failure distinct. A stopped, partial or unverified result is not a repaired kernel. The [Cumsum example](https://github.com/Shenxiu-WU/DRDebug/tree/main/examples/cumsum) offers model-free saved-candidate replay and guided live Kimi repair from the original failing kernel, with the published repair supplied separately as a reference. Disclose that reference; do not claim unaided rediscovery or confuse replay with a new model repair.
+Read the final `verification/<id>/summary.json` and command exit status; `progress.json` is not the final verdict. A best checkpoint may still fail full cases. Acceptance requires `state: "terminal"`, `terminal: true`, `engine_status.session_outcome: "success"`, `returncode: 0` and `accepted_checkpoint.ready: true`; report the separate independent verification as well. Preserve timeout, environment, permission, host/model and numerical failures as distinct outcomes. Report source identity, root cause/patch, compact/full counts, deterministic mode, integrity and remaining failures. A host response, completed submission or partial result is not a repaired kernel.

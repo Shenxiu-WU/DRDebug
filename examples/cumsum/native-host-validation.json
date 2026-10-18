@@ -1,0 +1,798 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-19",
+  "timezone": "Asia/Shanghai",
+  "scope": {
+    "protocol": "native_host",
+    "guided": true,
+    "published_reference": "examples/cumsum/repaired/kernel",
+    "unaided_rediscovery_claimed": false,
+    "nested_model_worker": false,
+    "fresh_skill_installations": true,
+    "numerical_environment_reused": true,
+    "context_configuration_is_not_a_1m_token_load_test": true,
+    "recorded_hosts": [
+      "codex",
+      "kimi",
+      "claude"
+    ],
+    "timings_are_a_host_speed_comparison": false
+  },
+  "cases": {
+    "compact": 10,
+    "full": 51,
+    "independent_full_case_processes": 51,
+    "original_seed": 0,
+    "original_thresholds_unchanged": true
+  },
+  "tested_execution_files": {
+    "skills/drdebug/SKILL.md": {
+      "sha256": "5e8138b4ece2d75b0576113743ff780a95bbdbf1263fdf60409d558cd33e6303",
+      "size": 8381
+    },
+    "skills/drdebug/scripts/checkpoint_adapter.py": {
+      "sha256": "e64c00f847ac726b1d214a5456b0f3d009fab2a3de44deae4c72df040820732d",
+      "size": 32115
+    },
+    "skills/drdebug/scripts/drdebug.py": {
+      "sha256": "c6bc84c60a209c90ee86847b4eee830f59502a05f012b86722e4a9fc160d3567",
+      "size": 40737
+    },
+    "skills/drdebug/scripts/host_session.py": {
+      "sha256": "2bd4e497110673016505bec8ac634259a3c361ee2fe9ef985bbdf993476b6557",
+      "size": 46083
+    },
+    "skills/drdebug/scripts/nonfinite_guard.py": {
+      "sha256": "5bbb1512fa1f512047152d0bca41abd0f1e499e957b2b5e6cf9e5b6a89585a8e",
+      "size": 10214
+    },
+    "skills/drdebug/scripts/runtime_checks.py": {
+      "sha256": "613b4a4474e508f2793de1ac7338e1aa43c2bebb0b2fce1b714b3c0f13bcec95",
+      "size": 28834
+    },
+    "skills/drdebug/scripts/verification.py": {
+      "sha256": "413023491a92d8b066c3c6ebf3eb6a33c8d1df7517252c4962fc16428431d318",
+      "size": 17549
+    }
+  },
+  "tested_source_manifest_sha256": "8e548c375207680e4e6d78d37b4c1809387857156696b835a3ae5d15d968d5b6",
+  "remote_cpu_tests": {
+    "ordinary": 202,
+    "optimized_python": 202,
+    "skipped": 0,
+    "passed": true
+  },
+  "frozen_paper_code_modified": false,
+  "runs": [
+    {
+      "schema_version": 1,
+      "host_cli": "codex",
+      "cli_version": "codex-cli 0.163.0",
+      "public_source_version": "v4",
+      "public_source_manifest_sha256": "8e548c375207680e4e6d78d37b4c1809387857156696b835a3ae5d15d968d5b6",
+      "requested_model": "k3",
+      "provider_model_config": "k3[1m]",
+      "context_tokens_intent": 1048576,
+      "model_identifiers_observed_in_cli_metadata": [],
+      "cli_reported_num_turns": null,
+      "codex_turn_completed_events": 1,
+      "host_elapsed_seconds": 2843.69,
+      "controller_elapsed_seconds": 4492.045,
+      "guided_reference": {
+        "supplied": true,
+        "source": "examples/cumsum/repaired",
+        "files": 8,
+        "public_repository": "https://github.com/Shenxiu-WU/DRDebug"
+      },
+      "fresh_install": {
+        "checked": true,
+        "files": 283,
+        "idempotent_install_checked": true,
+        "initial_real_host_home_empty": true,
+        "reused_compatible_numeric_runtime": true,
+        "driver_cann_torch_reinstalled_per_host": false
+      },
+      "nested_worker": false,
+      "host_returncode": 0,
+      "controller_phase": "complete",
+      "workflow_passed": true,
+      "failure_code": null,
+      "controller_receipt_sha256": "9723d58aadbe9f8f4aef08fec0d7f97adff98df9173974ddf186c33b33aac2d9",
+      "invocation_receipt_sha256": "c2ebe7dee5ceae2167cbb4aba47994dfaa2d9e8064de342766184275fcf83600",
+      "model_metadata_fallback_warning": true,
+      "nonzero_tool_results": 2,
+      "cleanup": {
+        "controller_exited": true,
+        "positive_quiescence": true,
+        "own_lease_released": 1,
+        "other_lease_rows_preserved": true,
+        "manual_cli_interrupt_sent": false
+      },
+      "tested_execution_configuration": {
+        "outer_boundary": "dedicated_nonprivileged_single_npu_container",
+        "inner_cli_sandbox": "danger-full-access",
+        "approval_policy_configured": "never",
+        "permission_mode": null,
+        "auto_mode": null,
+        "is_a_drdebug_default_or_general_recommendation": false,
+        "inner_workspace_sandbox_validated": false
+      },
+      "baseline": {
+        "original_native_sources": 8,
+        "baseline_receipt_sha256": "ce5a6a417f52c6ffe455d7a4e92547c02591452ab002297e4b891fa691653307",
+        "baseline_summary_sha256": "a5d8d73c25913923cbc68d02d62459cc8c74a47c1c23d48d0ed149c23f3203e5",
+        "baseline_compact": {
+          "passed": 6,
+          "total": 10
+        },
+        "request_submit_engine_event_bound": true,
+        "original_failing_baseline_precedes_first_host_submit": true,
+        "full_evaluation_triggered": false
+      },
+      "engine_acceptance": {
+        "terminal": true,
+        "outcome": "success",
+        "accepted_ready": true,
+        "best_attempt": 0,
+        "compact": {
+          "passed": 10,
+          "total": 10
+        },
+        "full": {
+          "passed": 51,
+          "total": 51
+        },
+        "source_sha256": {
+          "cumsum_bf16.cpp": "63a28454cbd021db7008da8c4f51996bef1fb8625af73fbea029ce058dd029ab",
+          "cumsum_fp16.cpp": "5e30c0de3bd82465bd09a637642516176672c911d3b120e2e8a73199ae565af9",
+          "cumsum_fp32.cpp": "924986f2decaadac9737f5176aff639bed5fc8816adaa48ae42fb779a0aea50d",
+          "cumsum_kernel.h": "d0a54c38193d181b8781bcdda1c440ae01e247c594d1cec171b435e8f4a14e48",
+          "cumsum_tiling.h": "a75f3f3fdce5b04f780024f6836d87d7b8a2f815fb3b428736fc10ed21b54a56",
+          "kernel_common.h": "76de56257e10f37b27d6a104062c42e6d4b0b0f0d3a890f63fb934208bff41ab",
+          "pybind11.cpp": "d0ae918b3554d969188cdb8447721aa508e0583f58da47195a93f5547ecc2d54",
+          "vector_tile.h": "856f1249635f8dea4f9d626fabeee2820bc557110b4cd0ba335bdd40d0071124"
+        },
+        "objective_receipt_sha256": "c93552ffa66e877e07aae94f293d5fa39449f51ee3e951b894f86343c8bf8f15",
+        "nonfinite_guard_required": true,
+        "nonfinite_guard_helper_sha256": "5bbb1512fa1f512047152d0bca41abd0f1e499e957b2b5e6cf9e5b6a89585a8e"
+      },
+      "independent_verification": {
+        "new_controller_workspace": true,
+        "casewise_full_cases": 51,
+        "suites": 53,
+        "distinct_child_pids": 53,
+        "original_case_indices_0_to_50_verified": true,
+        "compact_cases": 10,
+        "full_cases": 51,
+        "passed": true,
+        "summary_sha256": "cc0c5026f9209d95c0b14100ed5aa61870dbd6d0eb7f2ed8ba826294917e1e90",
+        "source_equals_engine_accepted": true,
+        "original_protected_inputs": 7,
+        "original_task_files_unchanged": 15,
+        "determinism": "on",
+        "startup_receipts_checked": 53,
+        "native_binding_checked": 53,
+        "numeric_device_reports": [
+          "npu"
+        ],
+        "runtime_exposed_npu": 0,
+        "physical_mapped_npu": 1,
+        "native_clean_build_sha256": "d2cb445b39ed45d99c293635d1c262c94820e9af278cdb23ba67ddf0d6cdd805",
+        "integrity": {
+          "original_source_unchanged": true,
+          "independent_source_unchanged": true,
+          "native_artifact_unchanged": true,
+          "protected_inputs_unchanged": true,
+          "original_history_unchanged": true
+        },
+        "guard_coverage": {
+          "suites_checked": 53,
+          "suites_passed": 53,
+          "full_case_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50
+          ],
+          "helper_sha256": "5bbb1512fa1f512047152d0bca41abd0f1e499e957b2b5e6cf9e5b6a89585a8e",
+          "all_entrypoints": [
+            "import"
+          ]
+        }
+      },
+      "host_cli_independent_summaries": [
+        {
+          "summary_sha256": "21ebcbdfc95285fc068b02a68f02ec4253138976982969906d814d4bf3ef06e7",
+          "casewise_requested": true,
+          "casewise_fresh_cases": 51,
+          "compact_cases": 10,
+          "full_cases": 51,
+          "passed": true
+        }
+      ],
+      "selected_key_scan_passed": true,
+      "native_source_export": {
+        "files": 8,
+        "immutable_submission": true,
+        "source_sha256": {
+          "cumsum_bf16.cpp": "63a28454cbd021db7008da8c4f51996bef1fb8625af73fbea029ce058dd029ab",
+          "cumsum_fp16.cpp": "5e30c0de3bd82465bd09a637642516176672c911d3b120e2e8a73199ae565af9",
+          "cumsum_fp32.cpp": "924986f2decaadac9737f5176aff639bed5fc8816adaa48ae42fb779a0aea50d",
+          "cumsum_kernel.h": "d0a54c38193d181b8781bcdda1c440ae01e247c594d1cec171b435e8f4a14e48",
+          "cumsum_tiling.h": "a75f3f3fdce5b04f780024f6836d87d7b8a2f815fb3b428736fc10ed21b54a56",
+          "kernel_common.h": "76de56257e10f37b27d6a104062c42e6d4b0b0f0d3a890f63fb934208bff41ab",
+          "pybind11.cpp": "d0ae918b3554d969188cdb8447721aa508e0583f58da47195a93f5547ecc2d54",
+          "vector_tile.h": "856f1249635f8dea4f9d626fabeee2820bc557110b4cd0ba335bdd40d0071124"
+        },
+        "identical_to_saved_reference": false,
+        "paths_different_from_saved_reference": [
+          "cumsum_kernel.h",
+          "cumsum_tiling.h"
+        ]
+      },
+      "original_fact_file_sha256": "fcff58101954900709697fc05faf6c01244a746403ab3dd3a48fb38bdf6cb38e",
+      "source_fixture": "validation-sources/codex/kernel"
+    },
+    {
+      "schema_version": 1,
+      "host_cli": "kimi",
+      "cli_version": "2.2.0",
+      "public_source_version": "v4",
+      "public_source_manifest_sha256": "8e548c375207680e4e6d78d37b4c1809387857156696b835a3ae5d15d968d5b6",
+      "requested_model": "k3",
+      "provider_model_config": "k3[1m]",
+      "context_tokens_intent": 1048576,
+      "model_identifiers_observed_in_cli_metadata": [],
+      "cli_reported_num_turns": null,
+      "codex_turn_completed_events": null,
+      "host_elapsed_seconds": 3044.488,
+      "controller_elapsed_seconds": 4668.173,
+      "guided_reference": {
+        "supplied": true,
+        "source": "examples/cumsum/repaired",
+        "files": 8,
+        "public_repository": "https://github.com/Shenxiu-WU/DRDebug"
+      },
+      "fresh_install": {
+        "checked": true,
+        "files": 283,
+        "idempotent_install_checked": true,
+        "initial_real_host_home_empty": true,
+        "reused_compatible_numeric_runtime": true,
+        "driver_cann_torch_reinstalled_per_host": false
+      },
+      "nested_worker": false,
+      "host_returncode": 0,
+      "controller_phase": "complete",
+      "workflow_passed": true,
+      "failure_code": null,
+      "controller_receipt_sha256": "24ba722d42002c3aae6cde61c5daa7a071762e6b307d8e5f26667c51b260de6e",
+      "invocation_receipt_sha256": "4e2ef141f7ee0c8f0367a347bfc731d14c0fffd039b86fe2003c16b54f456086",
+      "model_metadata_fallback_warning": false,
+      "nonzero_tool_results": 0,
+      "cleanup": {
+        "controller_exited": true,
+        "positive_quiescence": true,
+        "own_lease_released": 1,
+        "other_lease_rows_preserved": true,
+        "manual_cli_interrupt_sent": false
+      },
+      "tested_execution_configuration": {
+        "outer_boundary": "dedicated_nonprivileged_single_npu_container",
+        "inner_cli_sandbox": null,
+        "approval_policy_configured": null,
+        "permission_mode": null,
+        "auto_flag_supplied": false,
+        "prompt_flag_supplied": true,
+        "noninteractive_prompt_mode": true,
+        "noninteractive_prompt_permission_policy": "auto_by_cli_definition",
+        "is_a_drdebug_default_or_general_recommendation": false,
+        "inner_workspace_sandbox_validated": null
+      },
+      "baseline": {
+        "original_native_sources": 8,
+        "baseline_receipt_sha256": "e4f86ca08e1382cd4d3990429775cbb659695e01d42c3f14465a37319735a61d",
+        "baseline_summary_sha256": "a5d8d73c25913923cbc68d02d62459cc8c74a47c1c23d48d0ed149c23f3203e5",
+        "baseline_compact": {
+          "passed": 6,
+          "total": 10
+        },
+        "request_submit_engine_event_bound": true,
+        "original_failing_baseline_precedes_first_host_submit": true,
+        "full_evaluation_triggered": false
+      },
+      "engine_acceptance": {
+        "terminal": true,
+        "outcome": "success",
+        "accepted_ready": true,
+        "best_attempt": 0,
+        "compact": {
+          "passed": 10,
+          "total": 10
+        },
+        "full": {
+          "passed": 51,
+          "total": 51
+        },
+        "source_sha256": {
+          "cumsum_bf16.cpp": "63a28454cbd021db7008da8c4f51996bef1fb8625af73fbea029ce058dd029ab",
+          "cumsum_fp16.cpp": "5e30c0de3bd82465bd09a637642516176672c911d3b120e2e8a73199ae565af9",
+          "cumsum_fp32.cpp": "924986f2decaadac9737f5176aff639bed5fc8816adaa48ae42fb779a0aea50d",
+          "cumsum_kernel.h": "c1ef7613bb12d26cef225b9840e07a4eb53caee2be9b96c9512bdf891465848c",
+          "cumsum_tiling.h": "20202470effd95809407640475738de129fe5855c9d8923a087cf1044f1e88dc",
+          "kernel_common.h": "76de56257e10f37b27d6a104062c42e6d4b0b0f0d3a890f63fb934208bff41ab",
+          "pybind11.cpp": "d0ae918b3554d969188cdb8447721aa508e0583f58da47195a93f5547ecc2d54",
+          "vector_tile.h": "856f1249635f8dea4f9d626fabeee2820bc557110b4cd0ba335bdd40d0071124"
+        },
+        "objective_receipt_sha256": "64c2a177bdf25e33d30136f088c9d106e1820193d602035283e8136bbf902dc4",
+        "nonfinite_guard_required": true,
+        "nonfinite_guard_helper_sha256": "5bbb1512fa1f512047152d0bca41abd0f1e499e957b2b5e6cf9e5b6a89585a8e"
+      },
+      "independent_verification": {
+        "new_controller_workspace": true,
+        "casewise_full_cases": 51,
+        "suites": 53,
+        "distinct_child_pids": 53,
+        "original_case_indices_0_to_50_verified": true,
+        "compact_cases": 10,
+        "full_cases": 51,
+        "passed": true,
+        "summary_sha256": "47c7b5b4799ccaad7c7380a9f6c3bd2c87a8e4ab3396f1d14c60b5dc6c64c122",
+        "source_equals_engine_accepted": true,
+        "original_protected_inputs": 7,
+        "original_task_files_unchanged": 15,
+        "determinism": "on",
+        "startup_receipts_checked": 53,
+        "native_binding_checked": 53,
+        "numeric_device_reports": [
+          "npu"
+        ],
+        "runtime_exposed_npu": 0,
+        "physical_mapped_npu": 1,
+        "native_clean_build_sha256": "077120e86f1aa906f72789b45810d358125f694b1eba5bbd107e8ce627a59f90",
+        "integrity": {
+          "original_source_unchanged": true,
+          "independent_source_unchanged": true,
+          "native_artifact_unchanged": true,
+          "protected_inputs_unchanged": true,
+          "original_history_unchanged": true
+        },
+        "guard_coverage": {
+          "suites_checked": 53,
+          "suites_passed": 53,
+          "full_case_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50
+          ],
+          "helper_sha256": "5bbb1512fa1f512047152d0bca41abd0f1e499e957b2b5e6cf9e5b6a89585a8e",
+          "all_entrypoints": [
+            "import"
+          ]
+        }
+      },
+      "host_cli_independent_summaries": [
+        {
+          "summary_sha256": "976d617a70f245049df34f8922bd448755d312ee130c0d45e0269e7cdf08735c",
+          "casewise_requested": true,
+          "casewise_fresh_cases": 51,
+          "compact_cases": 10,
+          "full_cases": 51,
+          "passed": true
+        }
+      ],
+      "selected_key_scan_passed": true,
+      "native_source_export": {
+        "files": 8,
+        "immutable_submission": true,
+        "source_sha256": {
+          "cumsum_bf16.cpp": "63a28454cbd021db7008da8c4f51996bef1fb8625af73fbea029ce058dd029ab",
+          "cumsum_fp16.cpp": "5e30c0de3bd82465bd09a637642516176672c911d3b120e2e8a73199ae565af9",
+          "cumsum_fp32.cpp": "924986f2decaadac9737f5176aff639bed5fc8816adaa48ae42fb779a0aea50d",
+          "cumsum_kernel.h": "c1ef7613bb12d26cef225b9840e07a4eb53caee2be9b96c9512bdf891465848c",
+          "cumsum_tiling.h": "20202470effd95809407640475738de129fe5855c9d8923a087cf1044f1e88dc",
+          "kernel_common.h": "76de56257e10f37b27d6a104062c42e6d4b0b0f0d3a890f63fb934208bff41ab",
+          "pybind11.cpp": "d0ae918b3554d969188cdb8447721aa508e0583f58da47195a93f5547ecc2d54",
+          "vector_tile.h": "856f1249635f8dea4f9d626fabeee2820bc557110b4cd0ba335bdd40d0071124"
+        },
+        "identical_to_saved_reference": true,
+        "paths_different_from_saved_reference": []
+      },
+      "original_fact_file_sha256": "25398ffecf5df44c3be3bc762e9328c46857dfdbf8fbebda892caccda0a8d694",
+      "source_fixture": "repaired/kernel"
+    },
+    {
+      "schema_version": 1,
+      "host_cli": "claude",
+      "cli_version": "2.1.204 (Claude Code)",
+      "public_source_version": "v4",
+      "public_source_manifest_sha256": "8e548c375207680e4e6d78d37b4c1809387857156696b835a3ae5d15d968d5b6",
+      "requested_model": "k3[1m]",
+      "provider_model_config": "k3[1m]",
+      "context_tokens_intent": 1048576,
+      "model_identifiers_observed_in_cli_metadata": [
+        "k3",
+        "k3[1m]"
+      ],
+      "cli_reported_num_turns": 92,
+      "codex_turn_completed_events": null,
+      "host_elapsed_seconds": 1495.023,
+      "controller_elapsed_seconds": 3117.713,
+      "guided_reference": {
+        "supplied": true,
+        "source": "examples/cumsum/repaired",
+        "files": 8,
+        "public_repository": "https://github.com/Shenxiu-WU/DRDebug"
+      },
+      "fresh_install": {
+        "checked": true,
+        "files": 283,
+        "idempotent_install_checked": true,
+        "initial_real_host_home_empty": true,
+        "reused_compatible_numeric_runtime": true,
+        "driver_cann_torch_reinstalled_per_host": false
+      },
+      "nested_worker": false,
+      "host_returncode": 0,
+      "controller_phase": "complete",
+      "workflow_passed": true,
+      "failure_code": null,
+      "controller_receipt_sha256": "9a9b676456fbc8ebf1c4930c70d25490aff71dc9216252b9becd4f4aee90244d",
+      "invocation_receipt_sha256": "f4f3db0fdd5c808170472be998c02d3290af2ebb4e8c7a46b5e927f690304f9c",
+      "model_metadata_fallback_warning": false,
+      "nonzero_tool_results": 1,
+      "cleanup": {
+        "controller_exited": true,
+        "positive_quiescence": true,
+        "own_lease_released": 1,
+        "other_lease_rows_preserved": true,
+        "manual_cli_interrupt_sent": false
+      },
+      "tested_execution_configuration": {
+        "outer_boundary": "dedicated_nonprivileged_single_npu_container",
+        "inner_cli_sandbox": null,
+        "approval_policy_configured": null,
+        "permission_mode": "acceptEdits",
+        "auto_mode": null,
+        "is_a_drdebug_default_or_general_recommendation": false,
+        "inner_workspace_sandbox_validated": null
+      },
+      "baseline": {
+        "original_native_sources": 8,
+        "baseline_receipt_sha256": "738b7b5c311b6d64f8d6303e67a88b5862a33075aa153e63d64185596cd19eef",
+        "baseline_summary_sha256": "a5d8d73c25913923cbc68d02d62459cc8c74a47c1c23d48d0ed149c23f3203e5",
+        "baseline_compact": {
+          "passed": 6,
+          "total": 10
+        },
+        "request_submit_engine_event_bound": true,
+        "original_failing_baseline_precedes_first_host_submit": true,
+        "full_evaluation_triggered": false
+      },
+      "engine_acceptance": {
+        "terminal": true,
+        "outcome": "success",
+        "accepted_ready": true,
+        "best_attempt": 0,
+        "compact": {
+          "passed": 10,
+          "total": 10
+        },
+        "full": {
+          "passed": 51,
+          "total": 51
+        },
+        "source_sha256": {
+          "cumsum_bf16.cpp": "63a28454cbd021db7008da8c4f51996bef1fb8625af73fbea029ce058dd029ab",
+          "cumsum_fp16.cpp": "5e30c0de3bd82465bd09a637642516176672c911d3b120e2e8a73199ae565af9",
+          "cumsum_fp32.cpp": "924986f2decaadac9737f5176aff639bed5fc8816adaa48ae42fb779a0aea50d",
+          "cumsum_kernel.h": "c1ef7613bb12d26cef225b9840e07a4eb53caee2be9b96c9512bdf891465848c",
+          "cumsum_tiling.h": "20202470effd95809407640475738de129fe5855c9d8923a087cf1044f1e88dc",
+          "kernel_common.h": "76de56257e10f37b27d6a104062c42e6d4b0b0f0d3a890f63fb934208bff41ab",
+          "pybind11.cpp": "d0ae918b3554d969188cdb8447721aa508e0583f58da47195a93f5547ecc2d54",
+          "vector_tile.h": "856f1249635f8dea4f9d626fabeee2820bc557110b4cd0ba335bdd40d0071124"
+        },
+        "objective_receipt_sha256": "dd3ca7fffdb870f5000257239b24f0bba5f24774113690141e934eb7731d655b",
+        "nonfinite_guard_required": true,
+        "nonfinite_guard_helper_sha256": "5bbb1512fa1f512047152d0bca41abd0f1e499e957b2b5e6cf9e5b6a89585a8e"
+      },
+      "independent_verification": {
+        "new_controller_workspace": true,
+        "casewise_full_cases": 51,
+        "suites": 53,
+        "distinct_child_pids": 53,
+        "original_case_indices_0_to_50_verified": true,
+        "compact_cases": 10,
+        "full_cases": 51,
+        "passed": true,
+        "summary_sha256": "80fff356e20f2e04fb394798b929d0996a64d86c7259c62edeb238a147a4faa9",
+        "source_equals_engine_accepted": true,
+        "original_protected_inputs": 7,
+        "original_task_files_unchanged": 15,
+        "determinism": "on",
+        "startup_receipts_checked": 53,
+        "native_binding_checked": 53,
+        "numeric_device_reports": [
+          "npu"
+        ],
+        "runtime_exposed_npu": 0,
+        "physical_mapped_npu": 1,
+        "native_clean_build_sha256": "3ae954393a8e663d7256a22a071157fa7770b33149652f5ebad54a3a69d598de",
+        "integrity": {
+          "original_source_unchanged": true,
+          "independent_source_unchanged": true,
+          "native_artifact_unchanged": true,
+          "protected_inputs_unchanged": true,
+          "original_history_unchanged": true
+        },
+        "guard_coverage": {
+          "suites_checked": 53,
+          "suites_passed": 53,
+          "full_case_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50
+          ],
+          "helper_sha256": "5bbb1512fa1f512047152d0bca41abd0f1e499e957b2b5e6cf9e5b6a89585a8e",
+          "all_entrypoints": [
+            "import"
+          ]
+        }
+      },
+      "host_cli_independent_summaries": [
+        {
+          "summary_sha256": "87bd4d523965f43a25ae3baf84da53193c9be20a9b9df8d04b7e920e767a018b",
+          "casewise_requested": false,
+          "casewise_fresh_cases": 0,
+          "compact_cases": 10,
+          "full_cases": 51,
+          "passed": true
+        }
+      ],
+      "selected_key_scan_passed": true,
+      "native_source_export": {
+        "files": 8,
+        "immutable_submission": true,
+        "source_sha256": {
+          "cumsum_bf16.cpp": "63a28454cbd021db7008da8c4f51996bef1fb8625af73fbea029ce058dd029ab",
+          "cumsum_fp16.cpp": "5e30c0de3bd82465bd09a637642516176672c911d3b120e2e8a73199ae565af9",
+          "cumsum_fp32.cpp": "924986f2decaadac9737f5176aff639bed5fc8816adaa48ae42fb779a0aea50d",
+          "cumsum_kernel.h": "c1ef7613bb12d26cef225b9840e07a4eb53caee2be9b96c9512bdf891465848c",
+          "cumsum_tiling.h": "20202470effd95809407640475738de129fe5855c9d8923a087cf1044f1e88dc",
+          "kernel_common.h": "76de56257e10f37b27d6a104062c42e6d4b0b0f0d3a890f63fb934208bff41ab",
+          "pybind11.cpp": "d0ae918b3554d969188cdb8447721aa508e0583f58da47195a93f5547ecc2d54",
+          "vector_tile.h": "856f1249635f8dea4f9d626fabeee2820bc557110b4cd0ba335bdd40d0071124"
+        },
+        "identical_to_saved_reference": true,
+        "paths_different_from_saved_reference": []
+      },
+      "original_fact_file_sha256": "ccf58883ed0d410fd6ce60bf07a5a4af98c7df751be60ab30aa0b4ddb1926e13",
+      "source_fixture": "repaired/kernel"
+    }
+  ],
+  "limitations": [
+    "Guided installation and protocol validation, not an unaided-repair benchmark.",
+    "Measured original compact and full collections in the recorded environment.",
+    "Host credentials, transport and permission policy remain host-managed.",
+    "The configured 1M context was not filled to capacity in this trial."
+  ],
+  "numerical_environment": {
+    "schema_version": 1,
+    "scope": "One recorded Cumsum runtime used by the native-host validation; not a universal support matrix. Fresh Skill installations reused this compatible numerical environment.",
+    "evidence": {
+      "completed_strict_doctor_stdout_sha256": "45a6f467beb4a7404ddefd195dfd403549af96fa3a097ce909d117a1486b8b65",
+      "completed_stage_receipt_sha256": "19dca0b4ecf3c4db7bc015693de176b3d494a491e5477a00d531ff967515c2ef",
+      "completed_codex_controller_receipt_sha256": "9723d58aadbe9f8f4aef08fec0d7f97adff98df9173974ddf186c33b33aac2d9",
+      "public_source_manifest_sha256": "8e548c375207680e4e6d78d37b4c1809387857156696b835a3ae5d15d968d5b6",
+      "new_probe_executed_for_this_export": false
+    },
+    "python": {
+      "version": "3.11.14",
+      "soabi": "cpython-311-aarch64-linux-gnu",
+      "path_identity_check_passed": true
+    },
+    "architecture": {
+      "value": "aarch64",
+      "evidence": "Recorded Python SOABI; no separate machine query was run for this export."
+    },
+    "packages": {
+      "numpy": "1.26.4",
+      "torch": "2.9.0+cpu",
+      "torch_npu": "2.9.0.post6"
+    },
+    "torch_cxx11_abi": true,
+    "numpy_bridge_passed": true,
+    "cann": {
+      "recorded_version_values": [
+        "9.1.0"
+      ],
+      "toolchain_check_passed": true,
+      "ascendc_compiler_check_passed": true,
+      "ascendc_headers_check_passed": true
+    },
+    "device": {
+      "selected_soc": "Ascend910B4",
+      "runtime_device": "Ascend910B4",
+      "visible_device_count": 1,
+      "runtime_npu_id": 0,
+      "physical_npu_id_in_this_test": 1
+    },
+    "determinism": {
+      "requested": "on",
+      "tiny_probe_enabled": true,
+      "tiny_probe_warn_only": false,
+      "tiny_probe_bitwise_stable": true,
+      "tiny_probe_repeats": 5,
+      "note": "The completed controller independent verification additionally checked early-startup deterministic flags in all 53 numerical child processes."
+    },
+    "build_checks": {
+      "cmake": "cmake version 3.22.1",
+      "cxx_compiler": "c++ (Ubuntu 11.4.0-1ubuntu1~22.04.2) 11.4.0",
+      "python_headers": true,
+      "pybind11_headers": {
+        "ok": true,
+        "source": "torch_bundled"
+      }
+    },
+    "unmeasured_in_these_selected_receipts": [
+      "driver release is not included in this doctor receipt",
+      "No clean driver, CANN or numerical-package reinstall per host is claimed."
+    ]
+  },
+  "setup_attempts": [
+    {
+      "host_cli": "kimi",
+      "cli_version": "2.2.0",
+      "status": "failed_before_numerical_repair",
+      "host_returncode": 1,
+      "elapsed_seconds": 1.199,
+      "error": "Cannot combine --prompt with --auto.",
+      "correction": "Omit the conflicting --auto flag and use a fresh Skill installation, host HOME and workspace for the retry.",
+      "original_fact_file_sha256": "f8ee5ff318c0fe5279adda6d419ef999e5fb8fea4f0c28258c44998712a4ca6d",
+      "drdebug_execution_source_changed": false
+    }
+  ]
+}
