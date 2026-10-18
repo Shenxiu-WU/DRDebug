@@ -22,7 +22,9 @@ Choose one target:
 | Claude Code, user | `./install.sh --claude` | `~/.claude/skills/drdebug` |
 | Codex, project | `./install.sh --codex --project /path/to/project` | `/path/to/project/.agents/skills/drdebug` |
 | Claude Code, project | `./install.sh --claude --project /path/to/project` | `/path/to/project/.claude/skills/drdebug` |
-| Custom parent | `./install.sh --dest /path/to/skills` | `/path/to/skills/drdebug` |
+| Other compatible agents / custom parent | `./install.sh --dest /path/to/your-agent/skills` | `/path/to/your-agent/skills/drdebug` |
+
+For the generic target, replace the example path with the skills parent recognized by your agent; the installer appends `drdebug/`. Register or load that directory's `SKILL.md` using your agent's mechanism. The agent must be able to read its bundled resources and execute the documented commands. It can then orchestrate the public CLI; live paper-edition repair still requires the authenticated Claude Code worker backend.
 
 `--project` without a path uses the current directory. `--dry-run` previews the destination without writing files. An identical installation is a no-op; a different existing installation is preserved unless you use `--force`, which keeps a backup. Installation uses Python 3.10+ and the standard library, without package downloads, driver changes or account configuration.
 

@@ -65,13 +65,21 @@ cd DRDebug
 ./install.sh --codex    # Claude Code 使用：./install.sh --claude
 ```
 
+其他兼容 Agent 可使用其识别的 skills 父目录：
+
+```bash
+./install.sh --dest /path/to/your-agent/skills
+```
+
+将该路径替换为你的 Agent 实际使用的技能目录；安装器会在其中创建 `drdebug/` 子目录。Agent 需要能加载 `drdebug/SKILL.md` 及配套资源，并执行文档中的命令。
+
 安装器将自包含的 Skill 复制到 `~/.agents/skills/drdebug`（Codex）或 `~/.claude/skills/drdebug`（Claude Code），同时打包公开论文运行源码，之后移动仓库也不影响已安装的 Skill。添加 `--project /path/to/project` 可安装到指定项目，`--dest DIR` 可选择技能父目录，`--dry-run` 可先查看安装位置。已有安装默认保留；使用 `--force` 更新时会先备份。
 
 安装后，对智能体说：
 
 > 使用 drdebug 检查我的昇腾环境，为这个失败算子创建独立工作目录，再根据失败证据修复它。
 
-**安装仅需 Python 3.10+，无需额外 Python 包。** 真实修复需要用户已有的 AscendC 任务、Linux + Ascend NPU、兼容的 CANN/AscendC 与 PyTorch/torch_npu，以及已认证的 Claude Code 工作进程。Codex 可以指导并启动 Skill；论文引擎仍使用 Claude Code 后端。安装器不安装驱动，也不配置模型账号。
+**安装仅需 Python 3.10+，无需额外 Python 包。** 真实修复需要用户已有的 AscendC 任务、Linux + Ascend NPU、兼容的 CANN/AscendC 与 PyTorch/torch_npu，以及已认证的 Claude Code 工作进程。Codex 和其他兼容的宿主 Agent 可指导并调用公开 CLI；论文版实时修复仍使用已认证的 Claude Code worker 后端。安装器不安装驱动，也不配置模型账号。
 
 从 `doctor` 开始，再按 `prepare → run → status → verify` 使用。新工作区明确记录确定性模式，预检核对 ABI、NumPy 与实际设备；完整执行的全量结果参与最佳检查点选择，论文冻结归档保持不变。[安装与首次修复指南](docs/skill-guide.zh-CN.md) · [Skill 操作说明](skills/drdebug/SKILL.md) · [公开适配层的范围](skills/drdebug/references/runtime.md)。
 

@@ -65,13 +65,21 @@ cd DRDebug
 ./install.sh --codex    # or: ./install.sh --claude
 ```
 
+For another compatible agent, use its recognized skills parent directory:
+
+```bash
+./install.sh --dest /path/to/your-agent/skills
+```
+
+Replace that path with your agent's actual skills directory; the installer creates its `drdebug/` child. The agent needs to load `drdebug/SKILL.md` and the bundled resources, and be able to execute the documented commands.
+
 The installer copies a self-contained skill to `~/.agents/skills/drdebug` (Codex) or `~/.claude/skills/drdebug` (Claude Code). It bundles the public paper runtime, so the installed skill keeps working if you move the checkout. Use `--project /path/to/project` for a project install, `--dest DIR` for a custom skill parent, or `--dry-run` to inspect the destination. Existing installations are preserved; `--force` updates with a backup.
 
 Then ask your agent:
 
 > Use drdebug to check my Ascend environment, prepare a separate workspace for this failing kernel, and repair it from the failure evidence.
 
-**Installation needs Python 3.10+ and no Python packages.** Actual repairs need a user-supplied AscendC task, Linux + Ascend NPU, compatible CANN/AscendC and PyTorch/torch_npu, and an authenticated Claude Code worker. Codex can guide and launch the skill; the paper engine still uses its Claude Code backend. The installer does not install drivers or configure model access.
+**Installation needs Python 3.10+ and no Python packages.** Actual repairs need a user-supplied AscendC task, Linux + Ascend NPU, compatible CANN/AscendC and PyTorch/torch_npu, and an authenticated Claude Code worker. Codex and other compatible host agents can guide and invoke the public CLI; live paper-edition repair still uses the authenticated Claude Code worker backend. The installer does not install drivers or configure model access.
 
 Start with `doctor`, then `prepare → run → status → verify`. New workspaces explicitly record their deterministic mode; preflight checks ABI/NumPy/device compatibility, and completed full-case evidence participates in best-checkpoint selection without changing the frozen paper archive. [Installation & first repair guide](docs/skill-guide.md) · [Skill instructions](skills/drdebug/SKILL.md) · [What the public adapter changes](skills/drdebug/references/runtime.md).
 

@@ -2697,6 +2697,7 @@ html[lang=en] .hero-stats>div>span {
 .skill-cta { border:1px solid var(--strong-line); background:transparent; color:var(--ink); }
 .skill-cta:hover { border-color:var(--accent); color:var(--accent); }
 .skill-install-layout { display:grid; grid-template-columns:1fr 1.05fr; gap:54px; align-items:start; }
+.skill-quickstart { min-width:0; }
 .skill-package { border:1px solid var(--strong-line); padding:30px; background:var(--surface); }
 .skill-package-heading { display:flex; align-items:center; gap:16px; margin-bottom:24px; flex-wrap:wrap; }
 .skill-monogram { display:grid; place-items:center; width:62px; height:62px; border:1px solid var(--line); color:var(--ink); font:36px/1 var(--serif); position:relative; }
@@ -2712,7 +2713,7 @@ html[lang=en] .hero-stats>div>span {
 .skill-capabilities p { font-size:12px; margin-top:4px; }
 .skill-source,.skill-guide { color:var(--accent); font-size:13px; display:flex; justify-content:space-between; gap:16px; }
 .skill-source { border-top:1px solid var(--line); padding-top:17px; }
-.install-command-header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
+.install-command-header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
 .install-command-header>span { font-size:12px; color:var(--secondary); }
 .install-terminal { background:#151b25; color:#e5e9ef; border:1px solid #465164; }
 .terminal-heading { display:flex; gap:12px; align-items:center; padding:12px 18px; border-bottom:1px solid #394454; font:11px/1.5 var(--mono); color:#acb8cb; }
@@ -2722,6 +2723,7 @@ html[lang=en] .hero-stats>div>span {
 .install-terminal pre { margin:0; padding:24px 20px; overflow-x:auto; font:12px/2.1 var(--mono); tab-size:2; }
 .install-destination { margin:10px 0 22px; font-size:11px; overflow-wrap:anywhere; }
 .install-destination code { color:var(--secondary); font-family:var(--mono); }
+.install-generic-note { margin:-8px 0 22px; color:var(--secondary); font-size:12px; line-height:1.9; }
 .skill-invocation { border-left:3px solid var(--accent); padding:3px 0 3px 18px; }
 .skill-invocation>.eyebrow { margin-bottom:8px; }
 .skill-invocation>p:last-child { font-size:14px; color:var(--ink); line-height:1.9; }

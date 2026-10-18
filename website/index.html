@@ -11,8 +11,8 @@
   <title>DRDebug · 接近成功，继续修好</title>
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <script src="./theme.js"></script>
-  <link rel="stylesheet" href="./styles.css">
-  <script src="./script.js?v=cumsum-example-20261018" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=generic-agent-20261018">
+  <script src="./script.js?v=generic-agent-20261018" defer></script>
   <script src="./dashboard.js" defer></script>
 </head>
 <body>
@@ -94,7 +94,7 @@
     </div></section>
 
     <section id="skills" class="section skills-section" aria-labelledby="skills-title"><div class="wrap">
-      <div class="section-heading"><p class="section-index">03 / <span data-en="TAKE IT WITH YOU">安装与使用</span></p><h2 id="skills-title" data-en="Bring the repair loop to your agent.">把修复闭环，带进你的工作流。</h2><p class="section-intro" data-en="Install drdebug in Claude Code or Codex. The skill bundles the paper’s repair engine and guides you from an existing AscendC task to a separately verified patch.">将 drdebug 安装到 Claude Code 或 Codex。从已有 AscendC 任务出发，让论文版修复引擎完成诊断、补丁与独立验证。</p></div>
+      <div class="section-heading"><p class="section-index">03 / <span data-en="TAKE IT WITH YOU">安装与使用</span></p><h2 id="skills-title" data-en="Bring the repair loop to your agent.">把修复闭环，带进你的工作流。</h2><p class="section-intro" data-en="Quick installation for Claude Code and Codex, plus a custom-directory entry for other compatible agents. Bring the paper’s repair loop into your workflow.">为 Claude Code 和 Codex 提供便捷安装，同时为其他兼容 Agent 提供自定义目录安装入口。把论文版修复闭环带进你的工作流。</p></div>
       <div class="skill-install-layout">
         <article class="skill-package">
           <div class="skill-package-heading"><span class="skill-monogram" aria-hidden="true">dr<span>.</span></span><div><p class="eyebrow" data-en="ONE INSTALLABLE SKILL">一个可安装的 Skill</p><h3>drdebug</h3></div><span class="skill-version" data-en="Paper edition">论文公开版</span></div>
@@ -105,13 +105,14 @@
           <a class="text-link skill-source" href="https://github.com/Shenxiu-WU/DRDebug/tree/main/skills/drdebug" target="_blank" rel="noopener noreferrer"><span data-en="Read the skill source">查看 Skill 源码</span><span aria-hidden="true">↗</span></a>
         </article>
         <div class="skill-quickstart">
-          <div class="install-command-header"><span data-en="Choose your agent">选择使用的智能体</span><div class="segmented" role="group" aria-label="Skill 安装目标" data-en-aria="Skill installation target"><button type="button" data-install-host="codex" aria-pressed="true">Codex</button><button type="button" data-install-host="claude" aria-pressed="false">Claude Code</button></div></div>
+          <div class="install-command-header"><span data-en="Choose your agent">选择使用的智能体</span><div class="segmented" role="group" aria-label="Skill 安装目标" data-en-aria="Skill installation target"><button type="button" data-install-host="codex" aria-pressed="true">Codex</button><button type="button" data-install-host="claude" aria-pressed="false">Claude Code</button><button type="button" data-install-host="other" aria-pressed="false" aria-controls="skill-generic-note" data-en="Other agents">其他 Agent</button></div></div>
           <div class="install-terminal"><div class="terminal-heading"><span aria-hidden="true">$</span><span>terminal</span><button type="button" class="copy-install" data-copy-target="skill-install-command" data-en="Copy" aria-label="复制安装命令" data-en-aria="Copy installation commands">复制</button></div><pre><code id="skill-install-command">git clone https://github.com/Shenxiu-WU/DRDebug.git
 cd DRDebug
 ./install.sh --codex</code></pre></div>
           <p class="install-destination"><span data-en="Installs to">安装到</span> <code id="skill-install-destination">~/.agents/skills/drdebug</code></p>
+          <p id="skill-generic-note" class="install-generic-note" hidden data-en="Replace the example path with the skills parent directory your agent discovers; the installer creates drdebug/ inside it. Your agent must load SKILL.md and bundled resources, and be able to run local commands.">将示例路径替换为目标 Agent 识别的 skills 父目录，安装器会在其中创建 drdebug/。目标 Agent 需能读取 SKILL.md、加载配套资源并执行本地命令。</p>
           <div class="skill-invocation"><p class="eyebrow" data-en="THEN ASK YOUR AGENT">然后，对智能体说</p><p data-en="Use drdebug to check my Ascend environment, prepare a separate workspace for this failing kernel, and repair it from the failure evidence.">使用 drdebug 检查我的昇腾环境，为这个失败算子创建独立工作目录，再根据失败证据修复它。</p></div>
-          <div class="skill-requirements"><strong data-en="For a real NPU repair">运行真实 NPU 修复</strong><p data-en="Linux · Ascend NPU + CANN / AscendC · PyTorch / torch_npu. The paper engine uses a configured Claude Code worker; Codex can guide and launch the skill. Start with doctor to check dependencies.">需要 Linux、Ascend NPU、CANN / AscendC 与 PyTorch / torch_npu。论文引擎使用已配置的 Claude Code 工作进程；Codex 可指导和启动 Skill。先运行 doctor 检查依赖。</p></div>
+          <div class="skill-requirements"><strong data-en="For a real NPU repair">运行真实 NPU 修复</strong><p data-en="Linux · Ascend NPU + CANN / AscendC · PyTorch / torch_npu. A compatible host agent can guide and launch the public CLI; live paper-engine repair still requires an authenticated Claude Code worker. Start with doctor to check dependencies.">需要 Linux、Ascend NPU、CANN / AscendC 与 PyTorch / torch_npu。兼容的宿主 Agent 可指导和调用公开 CLI；论文引擎的实时修复仍需已认证的 Claude Code 工作进程。先运行 doctor 检查依赖。</p></div>
           <a class="text-link skill-guide" href="https://github.com/Shenxiu-WU/DRDebug/blob/main/docs/skill-guide.md" target="_blank" rel="noopener noreferrer"><span data-en="Installation & first repair guide">安装与首次修复指南</span><span aria-hidden="true">↗</span></a>
           <p id="skill-copy-status" class="skill-copy-status" role="status" aria-live="polite"></p>
         </div>

@@ -22,7 +22,9 @@ cd DRDebug
 | Claude Code 用户级 | `./install.sh --claude` | `~/.claude/skills/drdebug` |
 | Codex 项目级 | `./install.sh --codex --project /path/to/project` | `/path/to/project/.agents/skills/drdebug` |
 | Claude Code 项目级 | `./install.sh --claude --project /path/to/project` | `/path/to/project/.claude/skills/drdebug` |
-| 自定义父目录 | `./install.sh --dest /path/to/skills` | `/path/to/skills/drdebug` |
+| 其他兼容 Agent / 自定义父目录 | `./install.sh --dest /path/to/your-agent/skills` | `/path/to/your-agent/skills/drdebug` |
+
+通用入口中的路径应替换为该 Agent 识别的 skills 父目录，安装器会追加 `drdebug/`。按你的 Agent 的配置方式注册或加载其中的 `SKILL.md`；Agent 需要能读取配套资源并执行文档中的命令。它随后可编排公开 CLI，论文版实时修复仍需已认证的 Claude Code worker 后端。
 
 `--project` 不带路径时使用当前目录。`--dry-run` 只预览位置，不写文件。相同内容重复安装不会改动已有安装；内容不同则默认保留，使用 `--force` 更新时会先备份。安装仅需 Python 3.10+ 与标准库，不下载依赖、不修改驱动或配置模型账号。
 

@@ -64,10 +64,17 @@
   });
   document.getElementById("close-figure").addEventListener("click",() => dialog.close());
   dialog.addEventListener("click",event => { if(event.target === dialog) {const r = dialog.getBoundingClientRect(); if(event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close();} });
+  const installTargets = {
+    codex: {args: "--codex", destination: "~/.agents/skills/drdebug"},
+    claude: {args: "--claude", destination: "~/.claude/skills/drdebug"},
+    other: {args: "--dest /path/to/your-agent/skills", destination: "/path/to/your-agent/skills/drdebug"}
+  };
   for (const button of document.querySelectorAll("[data-install-host]")) button.addEventListener("click", () => {
-    const host = button.dataset.installHost === "claude" ? "claude" : "codex";
-    document.getElementById("skill-install-command").textContent = `git clone https://github.com/Shenxiu-WU/DRDebug.git\ncd DRDebug\n./install.sh --${host}`;
-    document.getElementById("skill-install-destination").textContent = host === "codex" ? "~/.agents/skills/drdebug" : "~/.claude/skills/drdebug";
+    const host = button.dataset.installHost;
+    const target = installTargets[host];
+    document.getElementById("skill-install-command").textContent = `git clone https://github.com/Shenxiu-WU/DRDebug.git\ncd DRDebug\n./install.sh ${target.args}`;
+    document.getElementById("skill-install-destination").textContent = target.destination;
+    document.getElementById("skill-generic-note").hidden = host !== "other";
     for (const target of document.querySelectorAll("[data-install-host]")) target.setAttribute("aria-pressed", String(target.dataset.installHost === host));
     document.getElementById("skill-copy-status").textContent = "";
   });
