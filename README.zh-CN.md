@@ -39,6 +39,7 @@ DRDebug 从一个接近正确的算子出发，依据失败证据修复已有实
 | [项目主页](https://shenxiu-wu.github.io/DRDebug/) | 修复示例、系统原理与交互式成果展示 |
 | [安装 Skill](#安装-skill) | 在 Claude Code 或 Codex 中使用自包含的论文版修复引擎 |
 | [论文与方法](#研究工作) | 精度修复研究、冻结源码与实验记录 |
+| [运行 Cumsum 示例](examples/cumsum/README.zh-CN.md) | 重放已修复内核，或借助公开参考进行 Kimi 实时修复 |
 | [复现与核验](#复现与核验) | 在 CPU 上复现论文表格，核对论文任务与测例 |
 
 ## 工作方式
@@ -72,7 +73,21 @@ cd DRDebug
 
 **安装仅需 Python 3.10+，无需额外 Python 包。** 真实修复需要用户已有的 AscendC 任务、Linux + Ascend NPU、兼容的 CANN/AscendC 与 PyTorch/torch_npu，以及已认证的 Claude Code 工作进程。Codex 可以指导并启动 Skill；论文引擎仍使用 Claude Code 后端。安装器不安装驱动，也不配置模型账号。
 
-从 `doctor` 开始，再按 `prepare → run → status` 使用。[安装与首次修复指南](docs/skill-guide.zh-CN.md) · [Skill 操作说明](skills/drdebug/SKILL.md) · [公开适配层的范围](skills/drdebug/references/runtime.md)。
+从 `doctor` 开始，再按 `prepare → run → status → verify` 使用。新工作区明确记录确定性模式，预检核对 ABI、NumPy 与实际设备；完整执行的全量结果参与最佳检查点选择，论文冻结归档保持不变。[安装与首次修复指南](docs/skill-guide.zh-CN.md) · [Skill 操作说明](skills/drdebug/SKILL.md) · [公开适配层的范围](skills/drdebug/references/runtime.md)。
+
+### 运行 Cumsum 示例
+
+[Cumsum 示例](examples/cumsum/README.zh-CN.md)提供固定哈希的已修复原生源码和论文原始输入，可选择**无需模型的候选重放**，或**使用已配置 Kimi 的有参考实时修复**，将公开的已修复实现单独作为只读案例。两者均保留原 **10 例紧凑集 + 51 例完整集**和精度阈值。
+
+实测环境为 **Ascend910B4 / CANN 9.1.0 / Torch 2.9.0+cpu / torch_npu 2.9.0.post6**，确定性模式开启：
+
+| 验证入口 | 紧凑集 | 完整集 | 原完整集逐例新进程 |
+| --- | ---: | ---: | ---: |
+| 已修复候选，包含新增非有限值检查 | **10/10** | **51/51** | **51/51** |
+| Kimi 从原始 **6/10** 基线引导修复 | **10/10** | **51/51** | **51/51** |
+| 最新适配器：默认 baseline 接纳，零 worker 调用 | **10/10** | **51/51** | 由上方独立验收覆盖 |
+
+引导修复使用 1 次尝试、**38 turns**：worker **6 分 25 秒**，含基线和引擎验收共 **15 分 5 秒**。它运行于新增 guard 之前，随后对相同修复源码单独完成新 guard 验收。最初的候选重放使用全新安装的隔离依赖，引导修复和新 guard 检查另装 Skill、另建工作区并复用该依赖。具体版本与源码身份见[验证记录](examples/cumsum/validation.zh-CN.md)。实时修复单独提供公开参考，可能产生模型费用，也不保证每次结果相同。
 
 ## 研究工作
 
@@ -163,6 +178,7 @@ python3 -m http.server 8000 --directory website
 | [`papers/2026-dont-regenerate-debug/artifact/`](papers/2026-dont-regenerate-debug/artifact/) | 冻结的方法源码、实验记录与分析脚本 |
 | [`papers/2026-dont-regenerate-debug/dataset/`](papers/2026-dont-regenerate-debug/dataset/) | 参考实现、输入测例、来源记录与校验工具 |
 | [`skills/drdebug/`](skills/drdebug/) | 可安装 Skill、便携启动器与任务规范 |
+| [`examples/cumsum/`](examples/cumsum/) | 已修复候选精度重放与独立的实时修复教程 |
 | [`tools/`](tools/) | CPU 统计复现入口 |
 | [`website/`](website/) | 项目网站与带日期的 CANNBench 快照 |
 

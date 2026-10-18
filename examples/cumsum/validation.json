@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-18",
+  "scope": "Cumsum paper input, separate published repair reference and saved repaired implementation",
+  "environment": {
+    "architecture": "aarch64",
+    "soc": "Ascend910B4",
+    "python": "3.11.14",
+    "torch": "2.9.0+cpu",
+    "torch_npu": "2.9.0.post6",
+    "numpy": "1.26.4",
+    "cann": "9.1.0",
+    "determinism": "on",
+    "warn_only": false,
+    "torch_cxx11_abi_checked": true,
+    "numpy_bridge_checked": true
+  },
+  "dependency_installation": "An isolated environment was freshly created for the initial saved replay. Guided repair and later guard/baseline checks reused it with new installations/workspaces.",
+  "cases": {
+    "compact": 10,
+    "full": 51,
+    "full_fresh_processes": 51,
+    "original_seed": 0,
+    "original_thresholds_unchanged": true,
+    "thresholds": {
+      "float32": {
+        "atol": 0.0001,
+        "rtol": 0.0001
+      },
+      "float16": {
+        "atol": 0.01,
+        "rtol": 0.001
+      },
+      "bfloat16": {
+        "atol": 0.05,
+        "rtol": 0.005
+      }
+    }
+  },
+  "source_identity": {
+    "example_manifest_sha256": "ddc2ed7da5c91817d396d6be1b4f478f189b180d2c46c3af636b1a3cd3bf0693",
+    "original_task": "papers/2026-dont-regenerate-debug/artifact/inputs/tasks/level1/005_Cumsum",
+    "original_fifteen_files_sha256": {
+      "5_Cumsum.json": "38e22d85fbf2db49e8f32318ad6ffb4653939771600c1a60fe0f4c5a674779b4",
+      "5_Cumsum.json.bak": "be6271a52716c3f892b8d58e23b59ddfa7e15fe168e48a73a12868bdbb9d1aca",
+      "LICENSE": "396258f14fc8dbe51f157f1f202269de0282bcd5d6839f8497ddc776bebf6348",
+      "LICENSE-APACHE-2.0.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "SOURCE_NOTICE.md": "7dfec6fdd6b5808bccc89947c3ea34321e1b58c070d64a09801996e4af10f056",
+      "kernel/cumsum_bf16.cpp": "63a28454cbd021db7008da8c4f51996bef1fb8625af73fbea029ce058dd029ab",
+      "kernel/cumsum_fp16.cpp": "5e30c0de3bd82465bd09a637642516176672c911d3b120e2e8a73199ae565af9",
+      "kernel/cumsum_fp32.cpp": "924986f2decaadac9737f5176aff639bed5fc8816adaa48ae42fb779a0aea50d",
+      "kernel/cumsum_kernel.h": "d1dbc161fd924111805e8ebd13d66d3bf73c9238842fe541d984f602d079cae5",
+      "kernel/cumsum_tiling.h": "e3029eed2081be2db8a2bfa555109d4ba0786e5b4fbe80004ae138282f425d65",
+      "kernel/kernel_common.h": "76de56257e10f37b27d6a104062c42e6d4b0b0f0d3a890f63fb934208bff41ab",
+      "kernel/pybind11.cpp": "5420aaea8b031af4a3c0f027e54c4f4d4299e60cac47187775f42d7bc89df517",
+      "kernel/vector_tile.h": "856f1249635f8dea4f9d626fabeee2820bc557110b4cd0ba335bdd40d0071124",
+      "model.py": "dacdc89d2ea0a90510990a465cb9e6bdd42f8af1d9d0b4ecb418c3994228fe99",
+      "model_new_ascendc.py": "4df9ffa76eadb139d512b9f5144ce927946152bef70b3a050cb37737011d0612"
+    },
+    "saved_native_eight_sha256": {
+      "cumsum_bf16.cpp": "63a28454cbd021db7008da8c4f51996bef1fb8625af73fbea029ce058dd029ab",
+      "cumsum_fp16.cpp": "5e30c0de3bd82465bd09a637642516176672c911d3b120e2e8a73199ae565af9",
+      "cumsum_fp32.cpp": "924986f2decaadac9737f5176aff639bed5fc8816adaa48ae42fb779a0aea50d",
+      "cumsum_kernel.h": "c1ef7613bb12d26cef225b9840e07a4eb53caee2be9b96c9512bdf891465848c",
+      "cumsum_tiling.h": "20202470effd95809407640475738de129fe5855c9d8923a087cf1044f1e88dc",
+      "kernel_common.h": "76de56257e10f37b27d6a104062c42e6d4b0b0f0d3a890f63fb934208bff41ab",
+      "pybind11.cpp": "d0ae918b3554d969188cdb8447721aa508e0583f58da47195a93f5547ecc2d54",
+      "vector_tile.h": "856f1249635f8dea4f9d626fabeee2820bc557110b4cd0ba335bdd40d0071124"
+    },
+    "guided_output_equals_saved_eight": true,
+    "frozen_verifier_sha256": "227408745d07f39d60e2c40ac1fc298330b1585c4b786aab92a2ce3738c3fd45"
+  },
+  "checks": {
+    "saved_candidate_guarded_replay": {
+      "status": "passed",
+      "model_calls": 0,
+      "compact_passed": 10,
+      "compact_total": 10,
+      "full_passed": 51,
+      "full_total": 51,
+      "fresh_case_processes_passed": 51,
+      "fresh_case_processes_total": 51,
+      "cli_entrypoint_passed": true,
+      "import_entrypoint_passed": true,
+      "distinct_numeric_processes": 55,
+      "startup_native_guard_and_original_integrity_verified": true,
+      "guard_policy": "exact_nan_posinf_neginf_masks_then_frozen_comparator",
+      "guard_helper_sha256": "5bbb1512fa1f512047152d0bca41abd0f1e499e957b2b5e6cf9e5b6a89585a8e",
+      "adapted_verifier_sha256": "9871cd93182ad782fc9168c3b16f223293a9b8752c6fb57e86a49e7871b02613",
+      "tested_source_archive_sha256": "39d3162b17c99208f8356042d25ed3001d30eb3e00a020b0c41b9f2924ac0cac",
+      "evidence_archive_sha256": "4b6c13e39a1596dfcb98a3c07c2172a7cdf663bf2b9b5ac2734adbad09ee36a6"
+    },
+    "guided_kimi_repair": {
+      "status": "passed",
+      "model": "k3[1m]",
+      "published_reference_supplied": true,
+      "unaided_rediscovery_claimed": false,
+      "baseline_compact_passed": 6,
+      "baseline_compact_total": 10,
+      "attempts": 1,
+      "worker_turns": 38,
+      "worker_elapsed_seconds": 384.60165973,
+      "launcher_including_baseline_elapsed_seconds": 904.8819356402382,
+      "compact_passed": 10,
+      "compact_total": 10,
+      "full_passed": 51,
+      "full_total": 51,
+      "independent_fresh_cases_passed": 51,
+      "independent_fresh_cases_total": 51,
+      "accepted_source_bound": true,
+      "tested_source_archive_sha256": "64697e2eaa84093942896be0b163615678536422e6279d8b5b4f24b519a521e3",
+      "independent_summary_sha256": "8521e5281a8a3ffd8ac5a48373c937b01474a57f7162841db0c0196c3c67f84a",
+      "runtime_nonfinite_guard_present": false,
+      "same_candidate_later_passed_added_guard": true
+    },
+    "latest_default_baseline_acceptance": {
+      "status": "passed",
+      "model_calls": 0,
+      "fresh_skill_install_and_identical_reinstall_passed": true,
+      "new_workspace": true,
+      "public_default_budgets": true,
+      "checkpoint_adapter_sha256": "e64c00f847ac726b1d214a5456b0f3d009fab2a3de44deae4c72df040820732d",
+      "candidate_and_guard_equal_guarded_replay": true,
+      "fresh_case_processes_rerun": false,
+      "note": "The already-correct baseline passed the public run and a distinct read-only final status/receipt audit, without a worker or repair attempt. Its 51-fresh-process coverage is the separately recorded guarded replay.",
+      "public_run_returncode": 0,
+      "accepted_checkpoint_ready": true,
+      "compact_passed": 10,
+      "compact_total": 10,
+      "full_passed": 51,
+      "full_total": 51,
+      "best_attempt": -1,
+      "worker_actions": 0,
+      "post_status_unlocked": true,
+      "terminal_session_outcome": "success",
+      "accepted_receipt_sha256": "9c3500981379695f12779e1873bbc1282c0670cbff34a5a148c1ba7f723c77a4",
+      "final_read_only_receipt_audit": "passed",
+      "acceptance_basis": [
+        "public_run_exit_zero",
+        "source_bound_accepted_checkpoint_ready",
+        "fresh_post_status_exit_zero_unlocked_integrity_ok_terminal_success",
+        "independent_read_only_baseline_contract_audit"
+      ],
+      "source_manifest_sha256": "6e672e5853497c2f61a8813b772086577d8787acc3f77222fd61328f949c5f23",
+      "evidence_archive_sha256": "1fda837424f7633e491542d1a64434aec3373f30de1776dfeba08224123f5dd6",
+      "evidence_archive_bytes": 205080,
+      "evidence_archive_members": 106,
+      "guard_helper_sha256": "5bbb1512fa1f512047152d0bca41abd0f1e499e957b2b5e6cf9e5b6a89585a8e",
+      "adapted_verifier_sha256": "9871cd93182ad782fc9168c3b16f223293a9b8752c6fb57e86a49e7871b02613",
+      "legacy_engine_repair_summary_flags": {
+        "objective_success": false,
+        "reportable_success": false,
+        "scope": "Repair-final-validation flags are not the zero-attempt baseline acceptance or independent verification verdict."
+      }
+    }
+  },
+  "adapter_changes": [
+    "Source-bound completed-full checkpoint selection",
+    "Dependency ABI/interpreter/NumPy/device checks",
+    "Workspace-fixed deterministic startup with per-process receipts",
+    "Runtime-only exact NaN/+Inf/-Inf output masks before the original finite comparator",
+    "Checked baseline result-directory creation before the frozen objective writer"
+  ],
+  "frozen_paper_code_modified": false,
+  "model_runtime_boundary": "Paid guided repair executed on its recorded earlier adapter. Guarded replay and the latest baseline are model-free checks; no later paid repair is claimed.",
+  "limitations": [
+    "Measured original compact/full cases and one named environment only.",
+    "Arbitrarily larger shapes, nonzero-storage-offset views and general empty/overflow/UB-capacity handling were not qualified.",
+    "A supplied-reference-guided stochastic run does not guarantee every live repair."
+  ],
+  "adapter_regression_tests": {
+    "ordinary": 189,
+    "optimized_python": 189,
+    "skipped": 0,
+    "latest_adapter_source": true
+  },
+  "guard_negative_controls": {
+    "guard_tests": 26,
+    "real_torch_cpu_controls": 11,
+    "passed": true
+  },
+  "released_execution_files_sha256": {
+    "skills/drdebug/scripts/drdebug.py": "ff386992620b0fc6a9f750b15c6f8abb729fe6e37501e64004bb5e38c3170fa3",
+    "skills/drdebug/scripts/checkpoint_adapter.py": "e64c00f847ac726b1d214a5456b0f3d009fab2a3de44deae4c72df040820732d",
+    "skills/drdebug/scripts/runtime_checks.py": "613b4a4474e508f2793de1ac7338e1aa43c2bebb0b2fce1b714b3c0f13bcec95",
+    "skills/drdebug/scripts/verification.py": "417490b723a31f067c6d0eef2828db526004191d27f5474805a155a815253b15",
+    "skills/drdebug/scripts/nonfinite_guard.py": "5bbb1512fa1f512047152d0bca41abd0f1e499e957b2b5e6cf9e5b6a89585a8e",
+    "skills/drdebug/references/portable-worker.md": "a12bcaeb35b43d276cb2a84d6259ab10b802cdfcdfef3d38d9326d58673d9b05"
+  }
+}

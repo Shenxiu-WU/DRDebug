@@ -39,6 +39,7 @@ DRDebug starts with a kernel that nearly works. It uses failure evidence to repa
 | [Project website](https://shenxiu-wu.github.io/DRDebug/) | An illustrated repair example, system overview and interactive results |
 | [Install the skill](#install-the-skill) | A self-contained paper-edition repair engine for Claude Code or Codex |
 | [Paper and method](#research) | The precision-repair study, frozen source and experiment records |
+| [Try the Cumsum example](examples/cumsum/README.md) | Verify a saved repaired kernel, or run guided Kimi repair with its public reference |
 | [Reproduce and inspect](#reproduce) | CPU table reproduction and verification of the paper’s task data |
 
 ## How it works
@@ -72,7 +73,21 @@ Then ask your agent:
 
 **Installation needs Python 3.10+ and no Python packages.** Actual repairs need a user-supplied AscendC task, Linux + Ascend NPU, compatible CANN/AscendC and PyTorch/torch_npu, and an authenticated Claude Code worker. Codex can guide and launch the skill; the paper engine still uses its Claude Code backend. The installer does not install drivers or configure model access.
 
-Start with `doctor`, then `prepare → run → status`. [Installation & first repair guide](docs/skill-guide.md) · [Skill instructions](skills/drdebug/SKILL.md) · [What the public adapter changes](skills/drdebug/references/runtime.md).
+Start with `doctor`, then `prepare → run → status → verify`. New workspaces explicitly record their deterministic mode; preflight checks ABI/NumPy/device compatibility, and completed full-case evidence participates in best-checkpoint selection without changing the frozen paper archive. [Installation & first repair guide](docs/skill-guide.md) · [Skill instructions](skills/drdebug/SKILL.md) · [What the public adapter changes](skills/drdebug/references/runtime.md).
+
+### Try Cumsum
+
+The [Cumsum example](examples/cumsum/README.md) contains hash-pinned repaired native sources and the original paper input. Choose **saved-candidate replay** without a model, or **guided live repair** with your configured Kimi worker and the published repaired implementation supplied separately as a read-only reference. Both retain the original **10 compact + 51 full cases** and precision thresholds.
+
+Verified on **Ascend910B4 / CANN 9.1.0 / Torch 2.9.0+cpu / torch_npu 2.9.0.post6**, with determinism on:
+
+| Check | Compact | Full | Fresh full-case processes |
+| --- | ---: | ---: | ---: |
+| Saved candidate with the added nonfinite guard | **10/10** | **51/51** | **51/51** |
+| Guided Kimi repair from the original **6/10** baseline | **10/10** | **51/51** | **51/51** |
+| Latest adapter: default baseline acceptance, zero worker calls | **10/10** | **51/51** | Covered separately above |
+
+Guided repair used one attempt and **38 turns**: **6 min 25 sec** of worker execution, **15 min 5 sec** including baseline and engine checks. It ran before the added guard; that guard was then independently verified on the identical repaired source. The initial replay used freshly installed isolated dependencies; guided repair and guard checks reused that environment with new installations/workspaces. See the [validation record](examples/cumsum/validation.md) for exact version and source identities. Live repair uses the separately supplied public reference, may incur model charges and does not guarantee the same outcome every time.
 
 ## Research
 
@@ -163,6 +178,7 @@ Open <http://localhost:8000>. Website source is maintained directly in [`website
 | [`papers/2026-dont-regenerate-debug/artifact/`](papers/2026-dont-regenerate-debug/artifact/) | Frozen method code, experiment records and analysis scripts |
 | [`papers/2026-dont-regenerate-debug/dataset/`](papers/2026-dont-regenerate-debug/dataset/) | Reference implementations, input cases, provenance and verification |
 | [`skills/drdebug/`](skills/drdebug/) | Installable skill, portable launcher and task contract |
+| [`examples/cumsum/`](examples/cumsum/) | Saved-candidate precision replay and a separate live repair walkthrough |
 | [`tools/`](tools/) | CPU reproduction entry point |
 | [`website/`](website/) | The project website and dated CANNBench snapshot |
 

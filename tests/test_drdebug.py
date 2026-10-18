@@ -12,9 +12,11 @@ import json
 import os
 from pathlib import Path
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from unittest import mock
 
@@ -53,7 +55,7 @@ class PortableSkillTests(unittest.TestCase):
     def run_args(self, **kwargs):
         values = {"workspace": str(self.workspace), "npu": "3", "soc": "ActualTestSOC", "model": None,
                   "claude_bin": "claude", "max_attempts": None, "max_turns": None,
-                  "deadline_sec": None, "dry_run": False, "allow_worker_shell": False}
+                  "deadline_sec": None, "worker_timeout_sec": None, "dry_run": False, "allow_worker_shell": False}
         values.update(kwargs)
         return argparse.Namespace(**values)
 
@@ -85,21 +87,272 @@ class PortableSkillTests(unittest.TestCase):
         runtime = self.workspace / "runtime"
         worker = (runtime / ".claude/agents/ascendc-debug-agent-constructive.md").read_text(encoding="utf-8")
         original = (drdebug.source_root() / ".claude/agents/ascendc-debug-agent-constructive.md").read_text(encoding="utf-8")
-        self.assertTrue(worker.startswith(original))
+        original_frontmatter, separator, original_body = original.partition("\n---\n")
+        self.assertTrue(worker.startswith(original_frontmatter + separator))
+        self.assertEqual(worker.count(original_body), 1)
+        self.assertLess(worker.index("## Prepared workspace resource context"), worker.index(original_body))
         self.assertIn("public_portable_reference_fallback", worker)
         self.assertIn("Phase A", worker)
         self.assertTrue((runtime / ".claude/skills/ascendc-debug/SKILL.md").is_file())
-        for relative in ("engine/runner.py", "engine/validate_runner.py", "scripts/precision_gate.py"):
+        for relative in ("engine/runner.py", "scripts/precision_gate.py"):
             self.assertEqual(drdebug.sha(runtime / drdebug.DEBUG_REL / relative),
                              drdebug.sha(drdebug.source_root() / drdebug.DEBUG_REL / relative))
+
+    def test_new_workspace_guard_is_staged_audited_and_integrity_protected(self):
+        before = drdebug.tree_hashes(drdebug.source_root())
+        self.prepare()
+        _, manifest = drdebug.load_workspace(self.workspace)
+        guard = manifest["nonfinite_guard"]
+        self.assertTrue(guard["hook_before_cli_main"])
+        self.assertTrue(guard["import_entrypoint_covered"])
+        self.assertFalse(guard["frozen_archive_modified"])
+        runtime = self.workspace / "runtime"
+        self.assertEqual(drdebug.sha(runtime / guard["helper"]), guard["helper_sha256"])
+        self.assertEqual(drdebug.sha(runtime / guard["verifier"]), guard["adapted_sha256"])
+        self.assertEqual(drdebug.sha(drdebug.source_root() / guard["verifier"]), guard["original_sha256"])
+        self.assertEqual(drdebug.status(self.workspace)["adapter_support"]["nonfinite_guard"], "verified")
+        (runtime / guard["helper"]).write_text("# changed guard\n")
+        with self.assertRaisesRegex(drdebug.ContractError, "runtime changed"):
+            drdebug.load_workspace(self.workspace)
+        self.assertEqual(drdebug.tree_hashes(drdebug.source_root()), before)
+
+    def test_guard_staging_failure_removes_only_new_incomplete_output(self):
+        before = drdebug.tree_hashes(drdebug.source_root())
+        with mock.patch.object(drdebug.nonfinite_guard, "stage_guard", side_effect=ValueError("synthetic guard staging failure")):
+            with self.assertRaisesRegex(ValueError, "guard staging failure"):
+                self.prepare()
+        self.assertFalse(self.workspace.exists())
+        self.assertEqual(drdebug.tree_hashes(drdebug.source_root()), before)
+        self.assertTrue((self.task / "kernel/kernel.cpp").is_file())
+
+    def test_old_workspace_without_guard_remains_explicit_and_is_not_hotpatched(self):
+        self.prepare()
+        manifest = drdebug.read_json(self.workspace / drdebug.MANIFEST)
+        guard = manifest.pop("nonfinite_guard")
+        runtime = self.workspace / "runtime"
+        (runtime / guard["helper"]).unlink()
+        (runtime / guard["verifier"]).write_bytes((drdebug.source_root() / guard["verifier"]).read_bytes())
+        manifest["runtime_sha256"] = drdebug.tree_hashes(runtime, exclude_settings=True)
+        drdebug.write_json(self.workspace / drdebug.MANIFEST, manifest)
+        before = drdebug.tree_hashes(self.workspace)
+        status = drdebug.status(self.workspace)
+        self.assertEqual(status["adapter_support"]["nonfinite_guard"], "legacy_unchecked")
+        self.assertTrue(status["nonfinite_guard"]["requires_new_workspace"])
+        self.assertEqual(drdebug.run(self.run_args(dry_run=True))["returncode"], 0)
+        self.assertEqual(drdebug.tree_hashes(self.workspace), before)
+
+    def test_original_gate_discovers_ast_bridge_and_rejects_pure_torch_wrapper(self):
+        (self.task / "model_new_ascendc.py").write_text(
+            "import torch\nclass ModelNew(torch.nn.Module):\n"
+            "    def forward(self, x):\n        return torch.relu(x)\n", encoding="utf-8")
+        self.prepare()
+        runtime = self.workspace / "runtime"
+        bridge = self.workspace / drdebug.AST_VALIDATOR_REL
+        self.assertFalse(bridge.is_symlink())
+        self.assertEqual(bridge.read_bytes(), (runtime / drdebug.AST_VALIDATOR_REL).read_bytes())
+        snippet = r'''
+import json, sys
+from pathlib import Path
+from scripts.gates.common import _find_ast_validator, check_ast_degrade
+task = Path(sys.argv[1])
+print(json.dumps({'validator': str(_find_ast_validator(task)), 'checks': check_ast_degrade(task)}))
+'''
+        env = {**os.environ, "PYTHONPATH": os.pathsep.join((str(runtime / drdebug.DEBUG_REL), str(runtime))),
+               "PYTHONDONTWRITEBYTECODE": "1"}
+        result = subprocess.run([sys.executable, "-B", "-c", snippet, str(self.workspace / "task")],
+                                cwd=runtime, env=env, capture_output=True, text=True, timeout=20, check=False)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        observed = json.loads(result.stdout)
+        self.assertEqual(observed["validator"], str(bridge))
+        self.assertTrue(observed["checks"]["ast_validator_present"])
+        self.assertFalse(observed["checks"]["ast_degrade_pass"])
+        self.assertEqual(drdebug.status(self.workspace)["adapter_support"]["ast_validator_bridge"], "verified")
+
+    def test_ast_bridge_tampering_insertion_and_symlinks_are_rejected_before_run(self):
+        self.prepare()
+        bridge = self.workspace / drdebug.AST_VALIDATOR_REL
+        original = bridge.read_bytes()
+        bridge.write_text("raise SystemExit(0)\n", encoding="utf-8")
+        with mock.patch.object(drdebug, "environment_report", side_effect=AssertionError("must not preflight")), \
+             mock.patch.object(drdebug, "execute_engine", side_effect=AssertionError("must not execute")):
+            with self.assertRaisesRegex(drdebug.ContractError, "support changed"):
+                drdebug.run(self.run_args())
+        self.assertFalse(drdebug.status(self.workspace)["integrity"]["ok"])
+        bridge.write_bytes(original)
+        injected = bridge.parent / "json.py"
+        injected.write_text("# untracked module\n", encoding="utf-8")
+        with self.assertRaisesRegex(drdebug.ContractError, "support changed"):
+            drdebug.load_workspace(self.workspace)
+        injected.unlink()
+        unexpected_directory = self.workspace / "skills/untracked"
+        unexpected_directory.mkdir()
+        with self.assertRaisesRegex(drdebug.ContractError, "Unexpected workspace support directory"):
+            drdebug.load_workspace(self.workspace)
+        unexpected_directory.rmdir()
+        bridge.unlink()
+        bridge.symlink_to(self.workspace / "runtime" / drdebug.AST_VALIDATOR_REL)
+        with self.assertRaisesRegex(drdebug.ContractError, "Symlink workspace support"):
+            drdebug.load_workspace(self.workspace)
+        bridge.unlink()
+        bridge.write_bytes(original)
+        drdebug.load_workspace(self.workspace)
+
+    def test_ast_bridge_is_denied_to_worker_edit_and_write_tools(self):
+        self.prepare()
+        support = drdebug.absolute_rule(self.workspace / "skills")
+        shadow = drdebug.absolute_rule(self.workspace / "task/skills")
+        for shell in (False, True):
+            config = drdebug.permission_config(self.workspace, allow_shell=shell)["permissions"]
+            for tool in ("Edit", "Write"):
+                self.assertIn(f"{tool}({support}/**)", config["deny"])
+                self.assertIn(f"{tool}({shadow}/**)", config["deny"])
+                self.assertFalse(any(rule.startswith(f"{tool}({support}") for rule in config["allow"]))
+
+    def test_task_local_exit_zero_shadow_cannot_replace_the_discovered_ast_bridge(self):
+        (self.task / "model_new_ascendc.py").write_text(
+            "import torch\nclass ModelNew(torch.nn.Module):\n"
+            "    def forward(self, x):\n        return torch.relu(x)\n", encoding="utf-8")
+        self.prepare()
+        shadow = self.workspace / "task" / drdebug.AST_VALIDATOR_REL
+        shadow.parent.mkdir(parents=True)
+        shadow.write_text("raise SystemExit(0)\n", encoding="utf-8")
+        runtime = self.workspace / "runtime"
+        snippet = r'''
+import json, sys
+from pathlib import Path
+from scripts.gates.common import _find_ast_validator, check_ast_degrade
+task = Path(sys.argv[1])
+print(json.dumps({'validator': str(_find_ast_validator(task)), 'checks': check_ast_degrade(task)}))
+'''
+        env = {**os.environ, "PYTHONPATH": os.pathsep.join((str(runtime / drdebug.DEBUG_REL), str(runtime))),
+               "PYTHONDONTWRITEBYTECODE": "1"}
+        result = subprocess.run([sys.executable, "-B", "-c", snippet, str(self.workspace / "task")],
+                                cwd=runtime, env=env, capture_output=True, text=True, timeout=20, check=False)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        observed = json.loads(result.stdout)
+        # This is a real bypass if the adapter lets the frozen gate run.
+        self.assertEqual(observed["validator"], str(shadow))
+        self.assertTrue(observed["checks"]["ast_degrade_pass"])
+        with mock.patch.object(drdebug, "environment_report", side_effect=AssertionError("must not preflight")), \
+             mock.patch.object(drdebug, "execute_engine", side_effect=AssertionError("must not execute")):
+            with self.assertRaisesRegex(drdebug.ContractError, "shadow support"):
+                drdebug.run(self.run_args())
+        status = drdebug.status(self.workspace)
+        self.assertFalse(status["integrity"]["ok"])
+        self.assertEqual(status["adapter_support"]["ast_validator_bridge"], "unverified")
+        shutil.rmtree(self.workspace / "task/skills")
+        drdebug.load_workspace(self.workspace)
+        (self.workspace / "task/skills").mkdir()
+        with self.assertRaisesRegex(drdebug.ContractError, "shadow support"):
+            drdebug.load_workspace(self.workspace)
+
+    def test_legacy_workspace_keeps_original_status_without_claiming_ast_bridge(self):
+        self.prepare()
+        shutil.rmtree(self.workspace / "skills")
+        manifest_path = self.workspace / drdebug.MANIFEST
+        manifest = drdebug.read_json(manifest_path)
+        manifest["schema_version"] = 1
+        manifest.pop("support_sha256")
+        drdebug.write_json(manifest_path, manifest)
+        old_status = {"session_outcome": "provider_api_error", "ast_degrade_pass": True}
+        drdebug.write_json(self.workspace / "task/debug_status.json", old_status)
+        self.append_events([{"type": "session_started"},
+                            {"type": "session_aborted", "details": {"session_outcome": "provider_api_error"}}])
+        before = drdebug.tree_hashes(self.workspace)
+        status = drdebug.status(self.workspace)
+        self.assertTrue(status["integrity"]["ok"])
+        self.assertEqual(status["adapter_support"]["ast_validator_bridge"], "legacy_unmanaged")
+        self.assertEqual(status["engine_status"], old_status)
+        self.assertEqual(drdebug.run(self.run_args())["returncode"], 8)
+        self.assertEqual(drdebug.tree_hashes(self.workspace), before)
+        injected = self.workspace / drdebug.AST_VALIDATOR_REL
+        injected.parent.mkdir(parents=True)
+        injected.write_text("# untracked legacy support\n", encoding="utf-8")
+        with self.assertRaisesRegex(drdebug.ContractError, "Legacy workspace has untracked support"):
+            drdebug.load_workspace(self.workspace)
 
     def test_reference_root_is_optional_and_user_reference_can_be_staged(self):
         references = self.base / "references"
         (references / "add/kernel").mkdir(parents=True)
         (references / "add/kernel/add.cpp").write_text("// user reference\n", encoding="utf-8")
         self.prepare(reference_root=str(references))
-        self.assertTrue((self.workspace / "runtime/archive_tasks/user_references/add/kernel/add.cpp").is_file())
-        self.assertTrue(drdebug.read_json(self.workspace / drdebug.MANIFEST)["reference_root_supplied"])
+        staged = self.workspace / "runtime/archive_tasks/user_references"
+        self.assertEqual((staged / "add/kernel/add.cpp").read_bytes(),
+                         (references / "add/kernel/add.cpp").read_bytes())
+        manifest = drdebug.read_json(self.workspace / drdebug.MANIFEST)
+        self.assertTrue(manifest["reference_root_supplied"])
+        worker = (self.workspace / "runtime/.claude/agents/ascendc-debug-agent-constructive.md").read_text(encoding="utf-8")
+        context = worker[:worker.index("# System Prompt")]
+        self.assertIn("User references supplied: `true`", context)
+        self.assertIn(f"Copied user-reference directory (read-only): `{staged}`", context)
+        self.assertIn("At the start of Phase A, use Glob", context)
+        self.assertIn("source paths and their applicability", context)
+        self.assertIn("do not establish that a repair passes", context)
+        self.assertNotIn("{{", worker)
+        self.assertIn("workspace-specific read-only reference discovery", manifest["portability_changes"])
+        drdebug.load_workspace(self.workspace)
+
+    def test_no_user_reference_is_explicit_in_early_resource_context(self):
+        self.prepare()
+        staged = self.workspace / "runtime/archive_tasks/user_references"
+        self.assertFalse(staged.exists())
+        manifest = drdebug.read_json(self.workspace / drdebug.MANIFEST)
+        self.assertFalse(manifest["reference_root_supplied"])
+        worker = (self.workspace / "runtime/.claude/agents/ascendc-debug-agent-constructive.md").read_text(encoding="utf-8")
+        context = worker[:worker.index("# System Prompt")]
+        self.assertIn("User references supplied: `false`", context)
+        self.assertIn(f"No user-reference directory was staged; do not search `{staged}`", context)
+        self.assertIn("bundled historical references", context)
+        self.assertNotIn("Copied user-reference directory (read-only)", context)
+        self.assertNotIn("{{", worker)
+
+    def test_empty_supplied_reference_has_real_directory_and_no_relevance_claim(self):
+        references = self.base / "empty-references"
+        references.mkdir()
+        self.prepare(reference_root=str(references))
+        staged = self.workspace / "runtime/archive_tasks/user_references"
+        self.assertTrue(staged.is_dir())
+        self.assertEqual(list(staged.iterdir()), [])
+        worker = (self.workspace / "runtime/.claude/agents/ascendc-debug-agent-constructive.md").read_text(encoding="utf-8")
+        context = worker[:worker.index("# System Prompt")]
+        self.assertIn("User references supplied: `true`", context)
+        self.assertIn("if the directory is empty or no example is relevant", context)
+        self.assertIn("Do not assume a matching example exists", context)
+
+    def test_reference_context_preserves_paths_with_spaces_and_original_worker_bytes(self):
+        references = self.base / "user examples with spaces"
+        (references / "Add example/kernel").mkdir(parents=True)
+        source = references / "Add example/kernel/add.cpp"
+        source.write_bytes(b"// supplied independent reference\n")
+        self.workspace = self.base / "workspace with spaces"
+        before = drdebug.tree_hashes(drdebug.source_root())
+        self.prepare(reference_root=str(references))
+        staged = self.workspace / "runtime/archive_tasks/user_references"
+        self.assertEqual((staged / "Add example/kernel/add.cpp").read_bytes(), source.read_bytes())
+        original = (drdebug.source_root() / ".claude/agents/ascendc-debug-agent-constructive.md").read_bytes()
+        worker = (self.workspace / "runtime/.claude/agents/ascendc-debug-agent-constructive.md").read_bytes()
+        frontmatter, separator, body = original.partition(b"\n---\n")
+        self.assertTrue(worker.startswith(frontmatter + separator))
+        self.assertEqual(worker.count(body), 1)
+        self.assertIn(f"`{staged}`".encode("utf-8"), worker[:worker.index(body)])
+        self.assertEqual(drdebug.tree_hashes(drdebug.source_root()), before)
+        drdebug.load_workspace(self.workspace)
+
+    def test_reference_and_early_resource_context_remain_integrity_protected(self):
+        references = self.base / "references"
+        references.mkdir()
+        (references / "example.cpp").write_text("// source example\n", encoding="utf-8")
+        self.prepare(reference_root=str(references))
+        runtime = self.workspace / "runtime"
+        for path in (runtime / "archive_tasks/user_references/example.cpp",
+                     runtime / ".claude/agents/ascendc-debug-agent-constructive.md"):
+            with self.subTest(path=path.relative_to(runtime)):
+                original = path.read_bytes()
+                path.write_bytes(original + b"\n// changed after prepare\n")
+                with self.assertRaises(drdebug.ContractError):
+                    drdebug.load_workspace(self.workspace)
+                path.write_bytes(original)
+                drdebug.load_workspace(self.workspace)
 
     def test_user_reference_collisions_cannot_overwrite_bundled_history(self):
         archive = drdebug.source_root() / "archive_tasks"
@@ -124,7 +377,7 @@ class PortableSkillTests(unittest.TestCase):
         self.assertIn("archive_tasks/user_references/", scope)
         self.assertIn("never replace bundled sources or metadata", scope)
         worker = (self.workspace / "runtime/.claude/agents/ascendc-debug-agent-constructive.md").read_text(encoding="utf-8")
-        self.assertIn("archive_tasks/user_references/", worker)
+        self.assertIn(str(copied_archive / "user_references"), worker)
 
     def test_optional_attribution_is_copied_and_protected(self):
         for name in drdebug.ATTRIBUTION_FILES:
@@ -310,7 +563,8 @@ class PortableSkillTests(unittest.TestCase):
         self.assertIn("Bash", drdebug.read_json(self.workspace / "runtime/.claude/settings.json")["permissions"]["deny"])
 
     def test_doctor_missing_dependencies_is_structured_and_strict(self):
-        with mock.patch.object(drdebug.shutil, "which", return_value=None), \
+        with mock.patch.object(drdebug.runtime_checks, "dependency_report", return_value={"ready": False, "checks": [{"name": "python:torch_npu", "ok": False, "detail": "missing"}]}), \
+             mock.patch.object(drdebug.shutil, "which", return_value=None), \
              mock.patch.object(drdebug.importlib.util, "find_spec", return_value=None), \
              mock.patch.object(drdebug.subprocess, "run", side_effect=AssertionError("must not execute")):
             report = drdebug.environment_report()
@@ -319,6 +573,95 @@ class PortableSkillTests(unittest.TestCase):
             with contextlib.redirect_stdout(io.StringIO()) as output:
                 self.assertEqual(drdebug.main(["doctor", "--strict", "--json"]), 2)
                 self.assertFalse(json.loads(output.getvalue())["ready"])
+
+    def cli_contract_report(self, cli_run):
+        with mock.patch.object(drdebug.runtime_checks, "dependency_report", return_value={"ready": True, "checks": []}), \
+             mock.patch.object(drdebug.shutil, "which", side_effect=lambda name: "/test/claude" if name == "claude" else None), \
+             mock.patch.object(drdebug.importlib.util, "find_spec", return_value=None), \
+             mock.patch.object(drdebug.subprocess, "run", side_effect=cli_run):
+            report = drdebug.environment_report()
+        return next(check for check in report["checks"] if check["name"] == "claude_cli_contract")
+
+    def test_doctor_accepts_hidden_supported_cli_flags_with_missing_argument_parser_errors(self):
+        required = {"--agent", "--setting-sources", "--allowedTools", "--add-dir", "--session-id", "--max-turns"}
+        for hidden in (set(), {"--max-turns"}, required):
+            with self.subTest(hidden=hidden):
+                calls = []
+
+                def cli_run(command, **kwargs):
+                    calls.append(command)
+                    self.assertNotIn("-p", command)
+                    self.assertNotIn("--model", command)
+                    self.assertNotIn("--version", command)
+                    self.assertFalse(kwargs.get("shell", False))
+                    self.assertEqual(kwargs["stdin"], subprocess.DEVNULL)
+                    if command == ["/test/claude", "--help"]:
+                        return subprocess.CompletedProcess(command, 0, stdout=" ".join(required - hidden))
+                    self.assertEqual(len(command), 2)
+                    self.assertIn(command[1], hidden)
+                    return subprocess.CompletedProcess(command, 1, stdout="",
+                                                       stderr=f"error: option '{command[1]} <value>' argument missing\n")
+
+                check = self.cli_contract_report(cli_run)
+                self.assertTrue(check["ok"])
+                self.assertEqual(set(check["detail"]["help_missing_flags"]), hidden)
+                self.assertEqual(check["detail"]["missing_flags"], [])
+                self.assertEqual({probe["flag"] for probe in check["detail"]["parser_probes"]}, hidden)
+                self.assertTrue(all(probe["ok"] for probe in check["detail"]["parser_probes"]))
+                self.assertEqual(len(calls), 1 + len(hidden))
+
+    def test_doctor_rejects_unknown_hidden_cli_flag(self):
+        help_text = "--agent --setting-sources --allowedTools --add-dir --session-id"
+        for returncode, error in ((1, "error: unknown option '--max-turns'\n"),
+                                  (1, "error: option '--different <value>' argument missing\n"),
+                                  (0, "")):
+            with self.subTest(returncode=returncode, error=error):
+                calls = []
+
+                def cli_run(command, **kwargs):
+                    calls.append(command)
+                    if command == ["/test/claude", "--help"]:
+                        return subprocess.CompletedProcess(command, 0, stdout=help_text)
+                    if "--version" in command:
+                        # Real CLI behavior: even an unknown option can be
+                        # hidden by the version action's early successful exit.
+                        return subprocess.CompletedProcess(command, 0, stdout="2.1.204\n")
+                    self.assertEqual(command, ["/test/claude", "--max-turns"])
+                    self.assertEqual(kwargs["stdin"], subprocess.DEVNULL)
+                    return subprocess.CompletedProcess(command, returncode, stdout="", stderr=error)
+
+                check = self.cli_contract_report(cli_run)
+                self.assertFalse(check["ok"])
+                self.assertEqual(check["detail"]["help_missing_flags"], ["--max-turns"])
+                self.assertEqual(check["detail"]["missing_flags"], ["--max-turns"])
+                self.assertEqual(check["detail"]["parser_probes"][0]["returncode"], returncode)
+                self.assertEqual(len(calls), 2)
+
+    def test_doctor_cli_probe_timeout_is_failure_without_model_execution(self):
+        help_text = "--agent --setting-sources --allowedTools --add-dir --session-id"
+        for timeout_stage in ("help", "parser"):
+            with self.subTest(timeout_stage=timeout_stage):
+                calls = []
+
+                def cli_run(command, **kwargs):
+                    calls.append(command)
+                    if command == ["/test/claude", "--help"] and timeout_stage != "help":
+                        return subprocess.CompletedProcess(command, 0, stdout=help_text)
+                    self.assertIn(command, (["/test/claude", "--help"],
+                                            ["/test/claude", "--max-turns"]))
+                    self.assertEqual(kwargs["stdin"], subprocess.DEVNULL)
+                    raise subprocess.TimeoutExpired(command, kwargs["timeout"])
+
+                check = self.cli_contract_report(cli_run)
+                self.assertFalse(check["ok"])
+                if timeout_stage == "help":
+                    self.assertEqual(check["detail"]["help_error"], "TimeoutExpired")
+                    self.assertEqual(check["detail"]["parser_probes"], [])
+                    self.assertEqual(len(calls), 1)
+                else:
+                    self.assertEqual(check["detail"]["missing_flags"], ["--max-turns"])
+                    self.assertEqual(check["detail"]["parser_probes"][0]["error"], "TimeoutExpired")
+                    self.assertEqual(len(calls), 2)
 
     def test_run_refuses_missing_dependencies_before_model_process(self):
         self.prepare()
@@ -339,7 +682,13 @@ class PortableSkillTests(unittest.TestCase):
             self.assertEqual(first["returncode"], 8)
             self.assertEqual(first_command[first_command.index("--model") + 1], model)
             self.assertEqual(execute.call_args.kwargs["cwd"], self.workspace / "runtime")
-            self.assertEqual(first_timeout, 1800)
+            self.assertAlmostEqual(first_timeout, 86400, delta=1)
+            for flag, expected in (("--max-attempts", 5), ("--max-turns", 240),
+                                   ("--soft-task-turns", 960), ("--max-task-turns", 1200),
+                                   ("--deadline-sec", 86400), ("--agent-timeout-sec", 21600)):
+                self.assertAlmostEqual(float(first_command[first_command.index(flag) + 1]), expected, delta=1)
+            self.assertEqual(first["status"]["runs"]["budget"], {
+                "max_attempts": 5, "max_turns": 240, "deadline_sec": 86400, "worker_timeout_sec": 21600})
             self.append_events([{"type": "session_started", "entry_failure_type": "precision_failed"},
                                 {"type": "attempt_started", "attempt": 0, "failure_type": "precision_failed"}])
             self.assertEqual(drdebug.run(self.run_args())["returncode"], 8)
@@ -347,8 +696,257 @@ class PortableSkillTests(unittest.TestCase):
         history = drdebug.read_json(self.workspace / drdebug.RUN_STATE)
         self.assertEqual(len(history["runs"]), 2)
         self.assertEqual(drdebug.status(self.workspace)["session"]["attempts_used"], 1)
-        with self.assertRaisesRegex(drdebug.ContractError, "Resume retains"):
-            drdebug.run(self.run_args(max_attempts=6, dry_run=True))
+        state = self.workspace / drdebug.RUN_STATE
+        before = state.read_bytes()
+        with mock.patch.object(drdebug, "environment_report", side_effect=AssertionError("must not preflight")), \
+             mock.patch.object(drdebug, "execute_engine", side_effect=AssertionError("must not execute")):
+            for override in ({"max_attempts": 6}, {"max_turns": 241}, {"deadline_sec": 86401},
+                             {"worker_timeout_sec": 21601}):
+                with self.subTest(override=override), self.assertRaisesRegex(drdebug.ContractError, "Resume retains"):
+                    drdebug.run(self.run_args(**override))
+        self.assertEqual(state.read_bytes(), before)
+
+    def test_explicit_profile_overrides_reach_engine_and_run_record(self):
+        self.prepare()
+        argv = ["run", str(self.workspace), "--npu", "3", "--soc", "ActualTestSOC",
+                "--max-attempts", "2", "--max-turns", "160", "--deadline-sec", "28800",
+                "--worker-timeout-sec", "7200.5"]
+        args = drdebug.parser().parse_args(argv + ["--dry-run"])
+        preview = drdebug.run(args)
+        self.assertEqual(preview["budget"], {"max_attempts": 2, "max_turns": 160,
+                                           "deadline_sec": 28800, "worker_timeout_sec": 7200.5})
+        self.assertEqual(preview["effective_worker_timeout_sec"], 7200.5)
+        self.assertEqual(float(preview["command"][preview["command"].index("--agent-timeout-sec") + 1]), 7200.5)
+        self.assertFalse((self.workspace / drdebug.RUN_STATE).exists())
+        with mock.patch.object(drdebug, "environment_report", return_value={"ready": True}), \
+             mock.patch.object(drdebug, "execute_engine", return_value=8) as execute:
+            result = drdebug.run(drdebug.parser().parse_args(argv))
+        command = execute.call_args.args[0]
+        for flag, expected in (("--max-attempts", 2), ("--max-turns", 160),
+                               ("--soft-task-turns", 160), ("--max-task-turns", 320),
+                               ("--deadline-sec", 28800), ("--agent-timeout-sec", 7200.5)):
+            self.assertAlmostEqual(float(command[command.index(flag) + 1]), expected, delta=1)
+        self.assertAlmostEqual(execute.call_args.kwargs["timeout"], 28800, delta=1)
+        history = result["status"]["runs"]
+        self.assertEqual(history["budget"]["worker_timeout_sec"], 7200.5)
+        self.assertEqual(history["runs"][0]["worker_timeout_sec"], 7200.5)
+        self.assertEqual(history["runs"][0]["effective_worker_timeout_sec"], 7200.5)
+
+    def test_worker_timeout_is_clamped_to_remaining_total_wall_budget(self):
+        self.prepare()
+        drdebug.write_json(self.workspace / drdebug.RUN_STATE, {
+            "budget": {"max_attempts": 5, "deadline_sec": 30000, "max_turns": 80,
+                       "worker_timeout_sec": 21600},
+            "runs": [{"started_unix": 0, "elapsed_sec": 28500}]})
+        preview = drdebug.run(self.run_args(dry_run=True))
+        self.assertEqual(preview["budget"]["worker_timeout_sec"], 21600)
+        self.assertEqual(preview["remaining_active_seconds"], 1500)
+        self.assertEqual(preview["effective_worker_timeout_sec"], 1500)
+        with mock.patch.object(drdebug, "environment_report", return_value={"ready": True}), \
+             mock.patch.object(drdebug, "execute_engine", return_value=8) as execute:
+            result = drdebug.run(self.run_args())
+        command = execute.call_args.args[0]
+        self.assertAlmostEqual(float(command[command.index("--agent-timeout-sec") + 1]), 1500, delta=1)
+        self.assertAlmostEqual(float(command[command.index("--deadline-sec") + 1]), 1500, delta=1)
+        self.assertAlmostEqual(execute.call_args.kwargs["timeout"], 1500, delta=1)
+        record = result["status"]["runs"]["runs"][-1]
+        self.assertEqual(record["worker_timeout_sec"], 21600)
+        self.assertAlmostEqual(record["effective_worker_timeout_sec"], 1500, delta=1)
+
+    def test_worker_timeout_resume_retains_first_budget_and_rejects_changes(self):
+        self.prepare()
+        with mock.patch.object(drdebug, "environment_report", return_value={"ready": True}), \
+             mock.patch.object(drdebug, "execute_engine", return_value=8) as execute:
+            drdebug.run(self.run_args(deadline_sec=50000, worker_timeout_sec=21600))
+            self.append_events([{"type": "session_started", "entry_failure_type": "precision_failed"},
+                                {"type": "attempt_started", "attempt": 0, "failure_type": "precision_failed"}])
+            resumed = drdebug.run(self.run_args())
+            command = execute.call_args.args[0]
+            self.assertEqual(float(command[command.index("--agent-timeout-sec") + 1]), 21600)
+            self.assertEqual(execute.call_count, 2)
+        self.assertEqual(resumed["status"]["runs"]["budget"]["worker_timeout_sec"], 21600)
+        self.assertEqual(resumed["status"]["session"]["attempts_used"], 1)
+        self.assertEqual(drdebug.run(self.run_args(dry_run=True, worker_timeout_sec=21600))["budget"]["worker_timeout_sec"], 21600)
+        state = self.workspace / drdebug.RUN_STATE
+        before = state.read_bytes()
+        for changed in (600, 21601):
+            with self.subTest(changed=changed), self.assertRaisesRegex(drdebug.ContractError, "Resume retains"):
+                drdebug.run(self.run_args(dry_run=True, worker_timeout_sec=changed))
+        self.assertEqual(state.read_bytes(), before)
+
+    def test_legacy_budget_keeps_implicit_worker_timeout_of_600(self):
+        self.prepare()
+        state = self.workspace / drdebug.RUN_STATE
+        drdebug.write_json(state, {"budget": {"max_attempts": 5, "deadline_sec": 1800, "max_turns": 80},
+                                  "runs": [{"started_unix": 0, "elapsed_sec": 100}]})
+        before = state.read_bytes()
+        preview = drdebug.run(self.run_args(dry_run=True))
+        self.assertEqual(preview["budget"], {"max_attempts": 5, "deadline_sec": 1800,
+                                           "max_turns": 80, "worker_timeout_sec": 600})
+        for flag, expected in (("--max-turns", 80), ("--deadline-sec", 1700), ("--agent-timeout-sec", 600)):
+            self.assertEqual(float(preview["command"][preview["command"].index(flag) + 1]), expected)
+        for override in ({"worker_timeout_sec": 21600}, {"max_turns": 240}, {"deadline_sec": 86400}):
+            with self.subTest(override=override), self.assertRaisesRegex(drdebug.ContractError, "Resume retains"):
+                drdebug.run(self.run_args(dry_run=True, **override))
+        self.assertEqual(state.read_bytes(), before)
+        with mock.patch.object(drdebug, "environment_report", return_value={"ready": True}), \
+             mock.patch.object(drdebug, "execute_engine", return_value=8) as execute:
+            drdebug.run(self.run_args(worker_timeout_sec=600))
+        command = execute.call_args.args[0]
+        self.assertEqual(float(command[command.index("--agent-timeout-sec") + 1]), 600)
+        self.assertAlmostEqual(execute.call_args.kwargs["timeout"], 1700, delta=1)
+        self.assertEqual(drdebug.read_json(state)["budget"]["worker_timeout_sec"], 600)
+
+    def test_incomplete_legacy_budget_cannot_gain_fresh_profile_defaults(self):
+        self.prepare()
+        state = self.workspace / drdebug.RUN_STATE
+        drdebug.write_json(state, {"budget": {"max_attempts": 3},
+                                  "runs": [{"started_unix": 0, "elapsed_sec": 100}]})
+        before = state.read_bytes()
+        preview = drdebug.run(self.run_args(dry_run=True))
+        expected = {"max_attempts": 3, "deadline_sec": 1800, "max_turns": 80, "worker_timeout_sec": 600}
+        self.assertEqual(preview["budget"], expected)
+        self.assertEqual(preview["remaining_active_seconds"], 1700)
+        for override in ({"max_turns": 240}, {"deadline_sec": 86400}, {"worker_timeout_sec": 21600}):
+            with self.subTest(override=override), self.assertRaisesRegex(drdebug.ContractError, "Resume retains"):
+                drdebug.run(self.run_args(dry_run=True, **override))
+        self.assertEqual(state.read_bytes(), before)
+        with mock.patch.object(drdebug, "environment_report", return_value={"ready": True}), \
+             mock.patch.object(drdebug, "execute_engine", return_value=8) as execute:
+            resumed = drdebug.run(self.run_args())
+        command = execute.call_args.args[0]
+        self.assertEqual(float(command[command.index("--max-turns") + 1]), 80)
+        self.assertEqual(float(command[command.index("--agent-timeout-sec") + 1]), 600)
+        self.assertAlmostEqual(execute.call_args.kwargs["timeout"], 1700, delta=1)
+        self.assertEqual(resumed["status"]["runs"]["budget"], expected)
+
+    def test_worker_timeout_rejects_nonpositive_and_nonfinite_before_spawn(self):
+        self.prepare()
+        with mock.patch.object(drdebug, "environment_report", side_effect=AssertionError("must not preflight")), \
+             mock.patch.object(drdebug, "execute_engine", side_effect=AssertionError("must not execute")):
+            for invalid in (0, -1, float("nan"), float("inf"), float("-inf")):
+                with self.subTest(invalid=invalid), self.assertRaisesRegex(drdebug.ContractError, "worker_timeout_sec must be finite and positive"):
+                    drdebug.run(self.run_args(worker_timeout_sec=invalid))
+        self.assertFalse((self.workspace / drdebug.RUN_STATE).exists())
+
+    def test_existing_history_without_budget_never_becomes_a_fresh_task(self):
+        self.prepare()
+        state = self.workspace / drdebug.RUN_STATE
+        for invalid in ({}, {"runs": [{"started_unix": 0, "elapsed_sec": 100}]},
+                        {"budget": {}}, {"budget": None}, {"budget": []}):
+            with self.subTest(invalid=invalid):
+                drdebug.write_json(state, invalid)
+                before = state.read_bytes()
+                with self.assertRaisesRegex(drdebug.ContractError, "no saved budget"):
+                    drdebug.run(self.run_args(dry_run=True))
+                self.assertEqual(state.read_bytes(), before)
+        state.unlink()
+        self.append_events([{"type": "session_started"}])
+        with self.assertRaisesRegex(drdebug.ContractError, "no saved budget history"):
+            drdebug.run(self.run_args(dry_run=True))
+
+    def test_preflight_cannot_overwrite_another_completed_runs_budget_history(self):
+        self.prepare()
+        state = self.workspace / drdebug.RUN_STATE
+        history = {"budget": {"max_attempts": 5, "deadline_sec": 1800, "max_turns": 80},
+                   "runs": [{"started_unix": 0, "elapsed_sec": 100}]}
+        drdebug.write_json(state, history)
+        settings = self.workspace / "runtime/.claude/settings.json"
+        original_settings = settings.read_bytes()
+
+        def another_run_completed(**kwargs):
+            history["runs"].append({"started_unix": 100, "elapsed_sec": 1000})
+            drdebug.write_json(state, history)
+            return {"ready": True}
+
+        with mock.patch.object(drdebug, "environment_report", side_effect=another_run_completed), \
+             mock.patch.object(drdebug, "execute_engine") as execute:
+            with self.assertRaisesRegex(drdebug.ContractError, "history changed during preflight"):
+                drdebug.run(self.run_args(allow_worker_shell=True))
+        execute.assert_not_called()
+        self.assertEqual(drdebug.read_json(state), history)
+        self.assertEqual(settings.read_bytes(), original_settings)
+        self.assertFalse((self.workspace / ".drdebug.lock").exists())
+        self.assertEqual(drdebug.run(self.run_args(dry_run=True))["remaining_active_seconds"], 700)
+
+    def test_preflight_cannot_start_an_engine_after_session_events_changed(self):
+        self.prepare()
+
+        def another_session_started(**kwargs):
+            self.append_events([{"type": "session_started"}])
+            return {"ready": True}
+
+        with mock.patch.object(drdebug, "environment_report", side_effect=another_session_started), \
+             mock.patch.object(drdebug, "execute_engine") as execute:
+            with self.assertRaisesRegex(drdebug.ContractError, "history changed during preflight"):
+                drdebug.run(self.run_args())
+        execute.assert_not_called()
+        self.assertEqual(drdebug.event_status(self.workspace / "task")["events"], 1)
+        self.assertFalse((self.workspace / drdebug.RUN_STATE).exists())
+        self.assertFalse((self.workspace / ".drdebug.lock").exists())
+
+    def test_outer_timeout_and_interruption_remain_distinct_from_engine_exit_code_4(self):
+        self.prepare()
+        with mock.patch.object(drdebug, "environment_report", return_value={"ready": True}), \
+             mock.patch.object(drdebug, "execute_engine", side_effect=[
+                 4, drdebug.EngineStopped(4, "active_wall_clock_budget_exhausted"),
+                 drdebug.EngineStopped(130, "interrupted")]):
+            results = [drdebug.run(self.run_args()) for _ in range(3)]
+        self.assertEqual([r["returncode"] for r in results], [4, 4, 130])
+        outcomes = ["engine_returned", "active_wall_clock_budget_exhausted", "interrupted"]
+        self.assertEqual([r["launcher_outcome"] for r in results], outcomes)
+        records = drdebug.read_json(self.workspace / drdebug.RUN_STATE)["runs"]
+        self.assertEqual([r["launcher_outcome"] for r in records], outcomes)
+        self.assertTrue(all(r["elapsed_sec"] >= 0 and r["finished_at"] for r in records))
+        self.assertFalse((self.workspace / ".drdebug.lock").exists())
+
+    @unittest.skipUnless(os.name == "posix", "requires an isolated POSIX process group")
+    def test_timeout_stops_term_ignoring_child_even_when_parent_exits_promptly(self):
+        ready, survived = self.base / "child.ready", self.base / "child.survived"
+        child = ("import pathlib, signal, sys, time; signal.signal(signal.SIGTERM, signal.SIG_IGN); "
+                 "pathlib.Path(sys.argv[1]).write_text('ready'); time.sleep(2); "
+                 "pathlib.Path(sys.argv[2]).write_text('survived')")
+        parent = ("import subprocess, sys, time; "
+                  "subprocess.Popen([sys.executable, '-c', sys.argv[1], sys.argv[2], sys.argv[3]]); "
+                  "time.sleep(60)")
+        proc = subprocess.Popen([sys.executable, "-c", parent, child, str(ready), str(survived)],
+                                start_new_session=True)
+        try:
+            deadline = time.monotonic() + 5
+            while not ready.exists() and time.monotonic() < deadline:
+                time.sleep(0.02)
+            self.assertTrue(ready.exists(), "test child did not initialize")
+            with self.assertRaises(drdebug.EngineStopped) as stopped:
+                drdebug._wait_engine(proc, 0.1)
+            self.assertEqual(stopped.exception.outcome, "active_wall_clock_budget_exhausted")
+            time.sleep(2.1)
+            self.assertFalse(survived.exists(), "child outlived its engine's wall-clock cap")
+        finally:
+            try:
+                os.killpg(proc.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            proc.wait()
+
+    def test_wait_cleanup_handles_grace_timeout_interruption_and_missing_group(self):
+        for first, grace, vanished in ((subprocess.TimeoutExpired("engine", 1),
+                                       subprocess.TimeoutExpired("engine", 5), False),
+                                      (KeyboardInterrupt(), 0, False),
+                                      (subprocess.TimeoutExpired("engine", 1), 0, True)):
+            with self.subTest(first=type(first).__name__, vanished=vanished):
+                proc = mock.Mock(pid=12345)
+                proc.wait.side_effect = [first, grace, 0]
+                with mock.patch.object(drdebug.os, "name", "posix"), \
+                     mock.patch.object(drdebug.os, "killpg", side_effect=ProcessLookupError() if vanished else None) as kill:
+                    with self.assertRaises(drdebug.EngineStopped) as stopped:
+                        drdebug._wait_engine(proc, 1)
+                self.assertEqual(stopped.exception.returncode, 130 if isinstance(first, KeyboardInterrupt) else 4)
+                self.assertEqual(kill.call_args_list, [mock.call(12345, signal.SIGTERM), mock.call(12345, signal.SIGKILL)])
+        proc = mock.Mock()
+        proc.wait.return_value = 4
+        with mock.patch.object(drdebug.os, "killpg") as kill:
+            self.assertEqual(drdebug._wait_engine(proc, 1), 4)
+        kill.assert_not_called()
 
     def test_terminal_session_never_restarts_and_failure_code_is_preserved(self):
         self.prepare()
@@ -373,6 +971,24 @@ class PortableSkillTests(unittest.TestCase):
             drdebug.run(self.run_args(dry_run=True))
         self.assertEqual(before, path.read_bytes())
 
+    def test_new_execution_mode_is_frozen_and_startup_adapter_is_protected(self):
+        self.prepare(determinism="on")
+        _, manifest = drdebug.load_workspace(self.workspace)
+        self.assertEqual(manifest["schema_version"], 3)
+        self.assertEqual(manifest["execution"]["determinism"], "on")
+        command = drdebug.run(self.run_args(dry_run=True))
+        self.assertIn(str(self.workspace / "adapter"), command["environment"]["PYTHONPATH"])
+        with self.assertRaises(drdebug.ContractError):
+            drdebug.run(self.run_args(dry_run=True, determinism="off"))
+        (self.workspace / "adapter/sitecustomize.py").write_text("# changed startup policy\n")
+        with self.assertRaises(drdebug.ContractError):
+            drdebug.load_workspace(self.workspace)
+
+    def test_saved_replay_preflight_does_not_require_model_cli(self):
+        with mock.patch.object(drdebug.runtime_checks, "dependency_report", return_value={"ready": True, "checks": []}), \
+             mock.patch.object(drdebug.subprocess, "run", side_effect=AssertionError("must not call model CLI")):
+            self.assertTrue(drdebug.environment_report(require_worker=False)["ready"])
+
     def test_process_launch_uses_argv_not_shell_strings(self):
         cwd = self.base / "runtime"
         cwd.mkdir()
@@ -387,7 +1003,7 @@ class PortableSkillTests(unittest.TestCase):
         isolated = self.base / "standalone/skills/drdebug"
         (isolated / "scripts").mkdir(parents=True)
         (isolated / "references").mkdir()
-        shutil.copyfile(LAUNCHER, isolated / "scripts/drdebug.py")
+        shutil.copytree(LAUNCHER.parent, isolated / "scripts", dirs_exist_ok=True)
         shutil.copyfile(drdebug.SKILL_ROOT / "references/portable-worker.md", isolated / "references/portable-worker.md")
         drdebug.copy_tree(drdebug.source_root(), isolated / "runtime/source/debug_agent_v5")
         self.assertEqual(drdebug.source_root(isolated), isolated / "runtime/source/debug_agent_v5")

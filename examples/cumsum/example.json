@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "name": "cumsum-precision-repair",
+  "op_name": "5_Cumsum",
+  "original_task": "papers/2026-dont-regenerate-debug/artifact/inputs/tasks/level1/005_Cumsum",
+  "original_task_files": {
+    "5_Cumsum.json": {
+      "sha256": "38e22d85fbf2db49e8f32318ad6ffb4653939771600c1a60fe0f4c5a674779b4",
+      "size": 1859
+    },
+    "5_Cumsum.json.bak": {
+      "sha256": "be6271a52716c3f892b8d58e23b59ddfa7e15fe168e48a73a12868bdbb9d1aca",
+      "size": 9500
+    },
+    "LICENSE": {
+      "sha256": "396258f14fc8dbe51f157f1f202269de0282bcd5d6839f8497ddc776bebf6348",
+      "size": 1066
+    },
+    "LICENSE-APACHE-2.0.txt": {
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    "SOURCE_NOTICE.md": {
+      "sha256": "7dfec6fdd6b5808bccc89947c3ea34321e1b58c070d64a09801996e4af10f056",
+      "size": 1364
+    },
+    "kernel/cumsum_bf16.cpp": {
+      "sha256": "63a28454cbd021db7008da8c4f51996bef1fb8625af73fbea029ce058dd029ab",
+      "size": 509
+    },
+    "kernel/cumsum_fp16.cpp": {
+      "sha256": "5e30c0de3bd82465bd09a637642516176672c911d3b120e2e8a73199ae565af9",
+      "size": 503
+    },
+    "kernel/cumsum_fp32.cpp": {
+      "sha256": "924986f2decaadac9737f5176aff639bed5fc8816adaa48ae42fb779a0aea50d",
+      "size": 504
+    },
+    "kernel/cumsum_kernel.h": {
+      "sha256": "d1dbc161fd924111805e8ebd13d66d3bf73c9238842fe541d984f602d079cae5",
+      "size": 4814
+    },
+    "kernel/cumsum_tiling.h": {
+      "sha256": "e3029eed2081be2db8a2bfa555109d4ba0786e5b4fbe80004ae138282f425d65",
+      "size": 320
+    },
+    "kernel/kernel_common.h": {
+      "sha256": "76de56257e10f37b27d6a104062c42e6d4b0b0f0d3a890f63fb934208bff41ab",
+      "size": 536
+    },
+    "kernel/pybind11.cpp": {
+      "sha256": "5420aaea8b031af4a3c0f027e54c4f4d4299e60cac47187775f42d7bc89df517",
+      "size": 4018
+    },
+    "kernel/vector_tile.h": {
+      "sha256": "856f1249635f8dea4f9d626fabeee2820bc557110b4cd0ba335bdd40d0071124",
+      "size": 777
+    },
+    "model.py": {
+      "sha256": "dacdc89d2ea0a90510990a465cb9e6bdd42f8af1d9d0b4ecb418c3994228fe99",
+      "size": 1397
+    },
+    "model_new_ascendc.py": {
+      "sha256": "4df9ffa76eadb139d512b9f5144ce927946152bef70b3a050cb37737011d0612",
+      "size": 465
+    }
+  },
+  "repaired_files": {
+    "cumsum_bf16.cpp": {
+      "sha256": "63a28454cbd021db7008da8c4f51996bef1fb8625af73fbea029ce058dd029ab",
+      "size": 509
+    },
+    "cumsum_fp16.cpp": {
+      "sha256": "5e30c0de3bd82465bd09a637642516176672c911d3b120e2e8a73199ae565af9",
+      "size": 503
+    },
+    "cumsum_fp32.cpp": {
+      "sha256": "924986f2decaadac9737f5176aff639bed5fc8816adaa48ae42fb779a0aea50d",
+      "size": 504
+    },
+    "cumsum_kernel.h": {
+      "sha256": "c1ef7613bb12d26cef225b9840e07a4eb53caee2be9b96c9512bdf891465848c",
+      "size": 11690
+    },
+    "cumsum_tiling.h": {
+      "sha256": "20202470effd95809407640475738de129fe5855c9d8923a087cf1044f1e88dc",
+      "size": 437
+    },
+    "kernel_common.h": {
+      "sha256": "76de56257e10f37b27d6a104062c42e6d4b0b0f0d3a890f63fb934208bff41ab",
+      "size": 536
+    },
+    "pybind11.cpp": {
+      "sha256": "d0ae918b3554d969188cdb8447721aa508e0583f58da47195a93f5547ecc2d54",
+      "size": 4441
+    },
+    "vector_tile.h": {
+      "sha256": "856f1249635f8dea4f9d626fabeee2820bc557110b4cd0ba335bdd40d0071124",
+      "size": 777
+    }
+  },
+  "provenance": {
+    "original_source": "Public frozen paper initial task; historical input hashes retained in artifact/inputs/FROZEN_INPUT_SHA256.json",
+    "repaired_source": "2026-10-18 precision-only Cumsum acceptance run; final active source snapshot, not the stale engine current_best",
+    "snapshot_manifest_sha256": "da030802b818ddd0817b3e723105e7db17e325065db8d496690571f2184f6cba",
+    "source_map_sha256": "1d7a4615f1bf315bc78ce7b891a12c5ca386ecf0f8eeda026c420b7764434517",
+    "scope": "Eight native source files only; original reference, wrapper, compact/full cases, verifier and dtype tolerances unchanged. No binaries, model transcripts, credentials or private performance/surrogate/joint-optimization code.",
+    "license": "MIT for candidate sources, retaining existing file-level notices. Original NPUKernelBench reference and case attribution remains Apache-2.0."
+  },
+  "historical_validation": {
+    "date": "2026-10-18",
+    "environment": {
+      "os": "Linux",
+      "hardware": "Ascend910B4",
+      "cann": "9.1.0",
+      "torch_distribution": "2.9.0",
+      "torch_import": "2.9.0+cpu",
+      "torch_npu": "2.9.0.post6",
+      "deterministic_algorithms": true,
+      "deterministic_warn_only": false
+    },
+    "seed": 0,
+    "compact_cases": 10,
+    "full_cases": 51,
+    "full_dtypes": {
+      "float16": 16,
+      "float32": 26,
+      "bfloat16": 9
+    },
+    "tolerances": {
+      "float32": {
+        "atol": 0.0001,
+        "rtol": 0.0001
+      },
+      "float16": {
+        "atol": 0.01,
+        "rtol": 0.001
+      },
+      "bfloat16": {
+        "atol": 0.05,
+        "rtol": 0.005
+      }
+    },
+    "engine": {
+      "compact_passed": 10,
+      "compact_total": 10,
+      "full_passed": 51,
+      "full_total": 51
+    },
+    "independent_clean_build": {
+      "compact_passed": 10,
+      "compact_total": 10,
+      "full_passed": 51,
+      "full_total": 51,
+      "ast_passed": true,
+      "integrity_checks_passed": 7
+    },
+    "independent_fresh_processes": {
+      "matched": 51,
+      "total": 51,
+      "runtime_errors": 0,
+      "numerical_errors": 0,
+      "crashes": 0,
+      "timeouts": 0,
+      "not_run": 0,
+      "integrity_checks_passed": 6
+    },
+    "scope": "A fixed saved candidate in this environment and original seed-0 case collections. The live repair resumed a prior 9/10 checkpoint; this is not evidence of guaranteed fresh-initial LLM repair or correctness on other hardware, versions or arbitrary inputs."
+  },
+  "repair_summary": [
+    "Replace an unaligned short FP32 UB-to-UB DataCopy with a zero-valued Adds copy.",
+    "Use dtype/layout branches for prefix accumulation, including forty balanced continuous partitions for outerSize==1 non-last-dimension FP16/FP32 and FP16 roundback; preserve sequential outerSize>1 behavior.",
+    "Validate using original complete cases and dtype-specific thresholds; no reference substitution or case-identity specialization."
+  ]
+}
