@@ -1,13 +1,17 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/readme/hero-dark.svg?v=attention-20261019">
-    <img src="assets/readme/hero-light.svg?v=attention-20261019" alt="DRDebug：Don’t Regenerate, Debug。构造的 Masked Softmax 示例中，4096 个值为 1 的指数项采用逐次 FP16 累加时，分母停在 2048；改用 FP32 累加后，分母恢复为 4096，整行权重之和从 200% 恢复为 100%。" width="100%">
-  </picture>
+  <a href="https://shenxiu-wu.github.io/DRDebug/#hero-title">
+    <picture>
+      <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="assets/readme/hero-dark-static.svg?v=explained-comparison-20261019">
+      <source media="(prefers-reduced-motion: reduce)" srcset="assets/readme/hero-light-static.svg?v=explained-comparison-20261019">
+      <source media="(prefers-color-scheme: dark)" srcset="assets/readme/hero-dark.svg?v=explained-comparison-20261019">
+      <img src="assets/readme/hero-light.svg?v=explained-comparison-20261019" alt="DRDebug：Don’t Regenerate, Debug。左右完整的 Masked Softmax 伪代码，对比独立的失败模式与正确实现。六组编号箭头、对应修正和原因与影响说明同步依次高亮：行步长、掩码与补齐、最大值范围、指数稳定化、归约轴、FP32 累加；跨块归一化单独列出。这是多种问题的组合示意，不是一次真实修复记录。" width="100%">
+    </picture>
+  </a>
 </p>
 
 <p align="center"><strong>从失败证据出发，定向修复接近正确的加速器算子。</strong></p>
 
-<p align="center">首图以构造 CPU 示例展示累加精度修复。<a href="https://shenxiu-wu.github.io/DRDebug/#hero-title">交互查看索引、掩码、归约与浮点计算中的问题 ↗</a></p>
+<p align="center">依次查看六处修正及其原因与影响；各类缺陷分别验证，组合为一张示意图。<a href="https://shenxiu-wu.github.io/DRDebug/#hero-title">交互查看输入与证据 ↗</a> · <a href="assets/readme/hero-light-static.svg">静态全图</a></p>
 
 <p align="center">
   <a href="https://shenxiu-wu.github.io/DRDebug/"><img src="https://img.shields.io/badge/Website-DRDebug-6a50a8?style=flat-square" alt="Project website"></a>
@@ -169,7 +173,7 @@ python3 -B tools/verify_paper_inputs.py
 <details>
 <summary>运行精度示例或本地预览网站</summary>
 
-在 CPU 上复现首图中的累加精度修复，以及其他构造的 Masked Softmax 输入：
+在 CPU 上分别复现首图代码对比所对应的 Masked Softmax 失败输入：
 
 ```bash
 python3 -B website/examples/attention-repair-demo.py

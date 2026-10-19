@@ -1,51 +1,252 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="580" viewBox="0 0 1200 580" role="img" aria-labelledby="title desc">
-  <title id="title">DRDebug — Don’t Regenerate, Debug</title>
-  <desc id="desc">Evidence-guided repair of near-miss accelerator kernels. In a constructed Masked Softmax CPU example with 4,096 valid zero scores, sequential FP16 accumulation stops at 2,048: output weights total 200 percent. Changing only the accumulator to FP32 yields a denominator of 4,096 and weights totaling 100 percent. Inputs and outputs remain FP16. Real kernels require independent NPU validation.</desc>
-  <rect x="1" y="1" width="1198" height="578" rx="18" fill="#f7f4ee" stroke="#ced4df"/>
-  <g fill="#6a50a8"><rect x="48" y="49" width="10" height="10"/><rect x="63" y="49" width="10" height="10" opacity=".72"/><rect x="48" y="64" width="10" height="10" opacity=".72"/><path d="m64 69 4 4 7-10" stroke="#6a50a8" stroke-width="3" fill="none"/></g>
-  <g font-family="Arial, Helvetica, sans-serif">
-    <text x="91" y="67" fill="#59677c" font-size="14" letter-spacing="1.6">ACCELERATOR KERNEL REPAIR</text>
-    <text x="48" y="183" fill="#232b38" font-family="Georgia, 'Times New Roman', serif" font-size="86" letter-spacing="-2">DRDebug<tspan fill="#6a50a8">.</tspan></text>
-    <text x="51" y="239" fill="#6a50a8" font-family="Georgia, 'Times New Roman', serif" font-size="34">Don’t Regenerate, Debug.</text>
-    <text x="51" y="299" fill="#232b38" font-size="22">Repair near-miss accelerator kernels.</text>
-    <text x="51" y="335" fill="#59677c" font-size="22">Evidence guides the edit.</text>
-    <text x="51" y="368" fill="#59677c" font-size="22">Validation decides what stays.</text>
-    <path d="M51 406H510" stroke="#ced4df"/>
-    <rect x="51" y="428" width="99" height="32" rx="5" fill="#e4eefb"/>
-    <text x="100.5" y="449" text-anchor="middle" fill="#3e628a" font-size="14">Indexing</text>
-    <rect x="159" y="428" width="99" height="32" rx="5" fill="#f7f0dd"/>
-    <text x="208.5" y="449" text-anchor="middle" fill="#7b6532" font-size="14">Masking</text>
-    <rect x="267" y="428" width="112" height="32" rx="5" fill="#f0eaf7"/>
-    <text x="323" y="449" text-anchor="middle" fill="#695184" font-size="14">Reduction</text>
-    <rect x="388" y="428" width="122" height="32" rx="5" fill="#f9e3dc"/>
-    <text x="449" y="449" text-anchor="middle" fill="#8b513b" font-size="14">Numerics</text>
-    <text x="51" y="503" fill="#59677c" font-size="13" letter-spacing="1.4">REPRODUCE · DIAGNOSE · PATCH · VERIFY</text>
-    <text x="51" y="532" fill="#59677c" font-size="15">Keep the kernel. Repair the cause.</text>
-  </g>
-  <rect x="559" y="44" width="594" height="507" rx="10" fill="#e5e0d9"/>
-  <rect x="551" y="36" width="594" height="507" rx="10" fill="#fffdfa" stroke="#ced4df"/>
-  <g font-family="Arial, Helvetica, sans-serif">
-    <text x="578" y="68" fill="#59677c" font-size="13" letter-spacing="1.2">REPAIR NOTE / MASKED SOFTMAX</text>
-    <path d="M578 86H1118" stroke="#ced4df"/>
-    <text x="578" y="121" fill="#232b38" font-family="Georgia, 'Times New Roman', serif" font-size="27">Why can weights total 200%?</text>
-    <text x="578" y="155" fill="#59677c" font-size="18">4,096 valid positions · all scores are zero</text>
-    <text x="578" y="188" fill="#232b38" font-family="'Courier New', monospace" font-size="22">score = 0 → exp(score) = 1</text>
-    <rect x="578" y="207" width="540" height="37" rx="3" fill="#f6e8e1"/>
-    <rect x="578" y="249" width="540" height="37" rx="3" fill="#e9f0e7"/>
-    <text x="592" y="232" fill="#9b503d" font-family="'Courier New', monospace" font-size="22">− d = sum(e, accumulator=FP16)</text>
-    <text x="592" y="274" fill="#416c51" font-family="'Courier New', monospace" font-size="22">+ d = sum(e, accumulator=FP32)</text>
-    <text x="578" y="319" fill="#59677c" font-size="13" letter-spacing="1">OUTPUT WEIGHT TOTAL · EXPECTED 100%</text>
-    <path d="M845 335V415" stroke="#ced4df"/>
-    <text x="578" y="344" fill="#9b503d" font-size="13" letter-spacing="1">BEFORE</text>
-    <text x="578" y="389" fill="#9b503d" font-family="Georgia, 'Times New Roman', serif" font-size="49">200%</text>
-    <text x="578" y="415" fill="#59677c" font-family="'Courier New', monospace" font-size="18">denominator: 2,048</text>
-    <path d="M775 372h39m-8-6 8 6-8 6" fill="none" stroke="#6a50a8" stroke-width="2.5"/>
-    <text x="872" y="344" fill="#416c51" font-size="13" letter-spacing="1">AFTER</text>
-    <text x="872" y="389" fill="#416c51" font-family="Georgia, 'Times New Roman', serif" font-size="49">100%</text>
-    <text x="872" y="415" fill="#59677c" font-family="'Courier New', monospace" font-size="18">denominator: 4,096</text>
-    <path d="M578 435H1118" stroke="#ced4df"/>
-    <text x="578" y="461" fill="#232b38" font-size="17">Sequential FP16 rounding: 2,048 + 1 → 2,048.</text>
-    <text x="578" y="490" fill="#59677c" font-size="15">FP16 input / output. Only the accumulator changes.</text>
-    <text x="578" y="517" fill="#59677c" font-size="14">Constructed CPU example · NPU validation required.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="940" viewBox="0 0 1280 940" role="img" aria-labelledby="title desc">
+  <title id="title">DRDebug — compare failure patterns with targeted corrections</title>
+  <desc id="desc">A full ten-line Masked Softmax pseudocode block on the left collects independent defects; the right shows the corresponding correct implementation. Six arrows identify row addressing, row masks and padding, masked maximum, exponential stabilization, reduction axis and accumulator precision. Cross-tile normalization is a separate alternative below. This is a composite illustration, not one recorded repair run. Arrows, correction sites and a cause-and-effect note below the code are highlighted together in sequence; the note is hidden between highlights and the code remains still.</desc>
+<style>.step-focus { opacity:0; pointer-events:none; }
+@keyframes correction-1 { 0.0000% { opacity:0; } 5.4545% { opacity:0; } 6.0000% { opacity:1; } 19.4545% { opacity:1; } 20.0000% { opacity:0; } 100.0000% { opacity:0; } }
+.step-1 { animation:correction-1 33s linear infinite; }
+@keyframes correction-2 { 0.0000% { opacity:0; } 20.0000% { opacity:0; } 20.5455% { opacity:1; } 34.0000% { opacity:1; } 34.5455% { opacity:0; } 100.0000% { opacity:0; } }
+.step-2 { animation:correction-2 33s linear infinite; }
+@keyframes correction-3 { 0.0000% { opacity:0; } 34.5455% { opacity:0; } 35.0909% { opacity:1; } 48.5455% { opacity:1; } 49.0909% { opacity:0; } 100.0000% { opacity:0; } }
+.step-3 { animation:correction-3 33s linear infinite; }
+@keyframes correction-4 { 0.0000% { opacity:0; } 49.0909% { opacity:0; } 49.6364% { opacity:1; } 63.0909% { opacity:1; } 63.6364% { opacity:0; } 100.0000% { opacity:0; } }
+.step-4 { animation:correction-4 33s linear infinite; }
+@keyframes correction-5 { 0.0000% { opacity:0; } 63.6364% { opacity:0; } 64.1818% { opacity:1; } 77.6364% { opacity:1; } 78.1818% { opacity:0; } 100.0000% { opacity:0; } }
+.step-5 { animation:correction-5 33s linear infinite; }
+@keyframes correction-6 { 0.0000% { opacity:0; } 78.1818% { opacity:0; } 78.7273% { opacity:1; } 92.1818% { opacity:1; } 92.7273% { opacity:0; } 100.0000% { opacity:0; } }
+.step-6 { animation:correction-6 33s linear infinite; }
+@media (prefers-reduced-motion:reduce) { .step-focus { animation:none!important; opacity:0!important; } }</style>
+  <rect x="1" y="1" width="1278" height="938" rx="18" fill="#f7f4ee" stroke="#ced4df"/>
+  <g font-family="Arial,Helvetica,sans-serif">
+    <g fill="#6a50a8"><rect x="36" y="37" width="9" height="9"/><rect x="49" y="37" width="9" height="9" opacity=".7"/><rect x="36" y="50" width="9" height="9" opacity=".7"/><path d="m50 55 4 4 6-8" fill="none" stroke="#6a50a8" stroke-width="2.5"/></g>
+    <text x="73" y="64" fill="#232b38" font-family="Georgia,'Times New Roman',serif" font-size="47" letter-spacing="-1.5">DRDebug<tspan fill="#6a50a8">.</tspan></text>
+    <text x="378" y="52" fill="#6a50a8" font-family="Georgia,'Times New Roman',serif" font-size="27">Don’t Regenerate, Debug.</text>
+    <text x="378" y="82" fill="#59677c" font-size="17">Keep the implementation. Correct the failing steps.</text>
+    <text x="36" y="124" fill="#232b38" font-size="23" font-weight="600">One kernel. Multiple ways to go wrong.</text>
+    <text x="36" y="153" fill="#59677c" font-size="16">Follow the highlighted correction and its explanation below.</text>
+
+<rect x="759" y="116" width="103" height="29" rx="5" fill="#e4eefb"/><text x="810.5" y="136" text-anchor="middle" fill="#3e628a" font-size="14">Indexing</text>
+<rect x="872" y="116" width="99" height="29" rx="5" fill="#f7f0dd"/><text x="921.5" y="136" text-anchor="middle" fill="#7b6532" font-size="14">Masking</text>
+<rect x="981" y="116" width="111" height="29" rx="5" fill="#f0eaf7"/><text x="1036.5" y="136" text-anchor="middle" fill="#695184" font-size="14">Reduction</text>
+<rect x="1102" y="116" width="142" height="29" rx="5" fill="#f9e3dc"/><text x="1173.0" y="136" text-anchor="middle" fill="#8b513b" font-size="14">Floating point</text>
+<rect x="32" y="184" width="550" height="467" rx="9" fill="#fffdfa" stroke="#ced4df"/>
+        <text x="52" y="213" fill="#232b38" font-size="15" font-weight="600" letter-spacing="1.2">FAILURE PATTERNS</text>
+        <text x="52" y="236" fill="#59677c" font-size="13">masked_softmax · independent defects shown together</text>
+        <path d="M32 250h550" stroke="#ced4df"/>
+<rect x="698" y="184" width="550" height="467" rx="9" fill="#fffdfa" stroke="#ced4df"/>
+        <text x="718" y="213" fill="#232b38" font-size="15" font-weight="600" letter-spacing="1.2">TARGETED CORRECTIONS</text>
+        <text x="718" y="236" fill="#59677c" font-size="13">Same computation, corrected at the source</text>
+        <path d="M698 250h550" stroke="#ced4df"/>
+<rect x="33" y="259" width="548" height="34" fill="#f3f3ed"/>
+<text x="46" y="284" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">01</text>
+<text x="90" y="284" fill="#232b38" opacity=".68" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">x = load_rows(scores,</text>
+<rect x="699" y="259" width="548" height="34" fill="#f3f3ed"/>
+<text x="712" y="284" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">01</text>
+<text x="756" y="284" fill="#232b38" opacity=".68" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">x = load_rows(scores,</text>
+<rect x="33" y="293" width="548" height="34" fill="#e4eefb"/>
+<rect x="33" y="293" width="4" height="34" fill="#3e628a"/>
+<text x="46" y="318" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">02</text>
+<text x="90" y="318" fill="#232b38" opacity="1" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">              stride=rows)</text>
+<text x="74" y="318" fill="#3e628a" font-size="17" text-anchor="middle">−</text>
+<rect x="699" y="293" width="548" height="34" fill="#fffdfa"/>
+<text x="712" y="318" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">02</text>
+<text x="756" y="318" fill="#232b38" opacity="1" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">              stride=cols)</text>
+<text x="740" y="318" fill="#416c51" font-size="17" text-anchor="middle">+</text>
+<rect x="1030.2" y="296" width="58.8" height="28" rx="3" fill="#e4eefb"/>
+<text x="1033.2" y="318" fill="#3e628a" font-family="Consolas,'Liberation Mono',monospace" font-size="22" font-weight="600" xml:space="preserve">cols</text>
+<path d="M595 311h88m-8-6 8 6-8 6" fill="none" stroke="#3e628a" stroke-width="1.9"/>
+<circle cx="638" cy="311" r="11" fill="#e4eefb" stroke="#3e628a"/><text x="638" y="315" text-anchor="middle" fill="#3e628a" font-size="12" font-weight="600">1</text>
+<rect x="33" y="327" width="548" height="34" fill="#f3f3ed"/>
+<text x="46" y="352" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">03</text>
+<text x="90" y="352" fill="#232b38" opacity=".68" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">x = fp32(x)</text>
+<rect x="699" y="327" width="548" height="34" fill="#f3f3ed"/>
+<text x="712" y="352" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">03</text>
+<text x="756" y="352" fill="#232b38" opacity=".68" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">x = fp32(x)</text>
+<rect x="33" y="361" width="548" height="34" fill="#f7f0dd"/>
+<rect x="33" y="361" width="4" height="34" fill="#7b6532"/>
+<text x="46" y="386" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">04</text>
+<text x="90" y="386" fill="#232b38" opacity="1" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">s = where(valid[0], x, 0)</text>
+<text x="74" y="386" fill="#7b6532" font-size="17" text-anchor="middle">−</text>
+<rect x="699" y="361" width="548" height="34" fill="#fffdfa"/>
+<text x="712" y="386" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">04</text>
+<text x="756" y="386" fill="#232b38" opacity="1" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">s = where(valid, x, -INF)</text>
+<text x="740" y="386" fill="#416c51" font-size="17" text-anchor="middle">+</text>
+<rect x="885.0" y="364" width="72.0" height="28" rx="3" fill="#f7f0dd"/>
+<text x="888.0" y="386" fill="#7b6532" font-family="Consolas,'Liberation Mono',monospace" font-size="22" font-weight="600" xml:space="preserve">valid</text>
+<rect x="1017.0" y="364" width="72.0" height="28" rx="3" fill="#f7f0dd"/>
+<text x="1020.0" y="386" fill="#7b6532" font-family="Consolas,'Liberation Mono',monospace" font-size="22" font-weight="600" xml:space="preserve">-INF)</text>
+<path d="M595 379h88m-8-6 8 6-8 6" fill="none" stroke="#7b6532" stroke-width="1.9"/>
+<circle cx="638" cy="379" r="11" fill="#f7f0dd" stroke="#7b6532"/><text x="638" y="383" text-anchor="middle" fill="#7b6532" font-size="12" font-weight="600">2</text>
+<rect x="33" y="395" width="548" height="34" fill="#f7f0dd"/>
+<rect x="33" y="395" width="4" height="34" fill="#7b6532"/>
+<text x="46" y="420" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">05</text>
+<text x="90" y="420" fill="#232b38" opacity="1" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">m = max(x, axis=-1)</text>
+<text x="74" y="420" fill="#7b6532" font-size="17" text-anchor="middle">−</text>
+<rect x="699" y="395" width="548" height="34" fill="#fffdfa"/>
+<text x="712" y="420" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">05</text>
+<text x="756" y="420" fill="#232b38" opacity="1" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">m = max(s, axis=-1)</text>
+<text x="740" y="420" fill="#416c51" font-size="17" text-anchor="middle">+</text>
+<rect x="858.6" y="398" width="19.2" height="28" rx="3" fill="#f7f0dd"/>
+<text x="861.6" y="420" fill="#7b6532" font-family="Consolas,'Liberation Mono',monospace" font-size="22" font-weight="600" xml:space="preserve">s</text>
+<path d="M595 413h88m-8-6 8 6-8 6" fill="none" stroke="#7b6532" stroke-width="1.9"/>
+<circle cx="638" cy="413" r="11" fill="#f7f0dd" stroke="#7b6532"/><text x="638" y="417" text-anchor="middle" fill="#7b6532" font-size="12" font-weight="600">3</text>
+<rect x="33" y="429" width="548" height="34" fill="#f9e3dc"/>
+<rect x="33" y="429" width="4" height="34" fill="#8b513b"/>
+<text x="46" y="454" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">06</text>
+<text x="90" y="454" fill="#232b38" opacity="1" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">z = s</text>
+<text x="74" y="454" fill="#8b513b" font-size="17" text-anchor="middle">−</text>
+<rect x="699" y="429" width="548" height="34" fill="#fffdfa"/>
+<text x="712" y="454" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">06</text>
+<text x="756" y="454" fill="#232b38" opacity="1" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">z = s - m</text>
+<text x="740" y="454" fill="#416c51" font-size="17" text-anchor="middle">+</text>
+<rect x="805.8" y="432" width="72.0" height="28" rx="3" fill="#f9e3dc"/>
+<text x="808.8" y="454" fill="#8b513b" font-family="Consolas,'Liberation Mono',monospace" font-size="22" font-weight="600" xml:space="preserve">s - m</text>
+<path d="M595 447h88m-8-6 8 6-8 6" fill="none" stroke="#8b513b" stroke-width="1.9"/>
+<circle cx="638" cy="447" r="11" fill="#f9e3dc" stroke="#8b513b"/><text x="638" y="451" text-anchor="middle" fill="#8b513b" font-size="12" font-weight="600">4</text>
+<rect x="33" y="463" width="548" height="34" fill="#f3f3ed"/>
+<text x="46" y="488" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">07</text>
+<text x="90" y="488" fill="#232b38" opacity=".68" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">e = exp_fp32(z)</text>
+<rect x="699" y="463" width="548" height="34" fill="#f3f3ed"/>
+<text x="712" y="488" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">07</text>
+<text x="756" y="488" fill="#232b38" opacity=".68" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">e = exp_fp32(z)</text>
+<rect x="33" y="497" width="548" height="34" fill="#f0eaf7"/>
+<rect x="33" y="497" width="4" height="34" fill="#695184"/>
+<text x="46" y="522" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">08</text>
+<text x="90" y="522" fill="#232b38" opacity="1" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">d = sum(e, axis=0,</text>
+<text x="74" y="522" fill="#695184" font-size="17" text-anchor="middle">−</text>
+<rect x="699" y="497" width="548" height="34" fill="#fffdfa"/>
+<text x="712" y="522" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">08</text>
+<text x="756" y="522" fill="#232b38" opacity="1" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">d = sum(e, axis=-1,</text>
+<text x="740" y="522" fill="#416c51" font-size="17" text-anchor="middle">+</text>
+<rect x="898.2" y="500" width="98.39999999999999" height="28" rx="3" fill="#f0eaf7"/>
+<text x="901.2" y="522" fill="#695184" font-family="Consolas,'Liberation Mono',monospace" font-size="22" font-weight="600" xml:space="preserve">axis=-1</text>
+<path d="M595 515h88m-8-6 8 6-8 6" fill="none" stroke="#695184" stroke-width="1.9"/>
+<circle cx="638" cy="515" r="11" fill="#f0eaf7" stroke="#695184"/><text x="638" y="519" text-anchor="middle" fill="#695184" font-size="12" font-weight="600">5</text>
+<rect x="33" y="531" width="548" height="34" fill="#f9e3dc"/>
+<rect x="33" y="531" width="4" height="34" fill="#8b513b"/>
+<text x="46" y="556" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">09</text>
+<text x="90" y="556" fill="#232b38" opacity="1" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">        accumulator=FP16)</text>
+<text x="74" y="556" fill="#8b513b" font-size="17" text-anchor="middle">−</text>
+<rect x="699" y="531" width="548" height="34" fill="#fffdfa"/>
+<text x="712" y="556" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">09</text>
+<text x="756" y="556" fill="#232b38" opacity="1" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">        accumulator=FP32)</text>
+<text x="740" y="556" fill="#416c51" font-size="17" text-anchor="middle">+</text>
+<rect x="1017.0" y="534" width="58.8" height="28" rx="3" fill="#f9e3dc"/>
+<text x="1020.0" y="556" fill="#8b513b" font-family="Consolas,'Liberation Mono',monospace" font-size="22" font-weight="600" xml:space="preserve">FP32</text>
+<path d="M595 549h88m-8-6 8 6-8 6" fill="none" stroke="#8b513b" stroke-width="1.9"/>
+<circle cx="638" cy="549" r="11" fill="#f9e3dc" stroke="#8b513b"/><text x="638" y="553" text-anchor="middle" fill="#8b513b" font-size="12" font-weight="600">6</text>
+<rect x="33" y="565" width="548" height="34" fill="#f3f3ed"/>
+<text x="46" y="590" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">10</text>
+<text x="90" y="590" fill="#232b38" opacity=".68" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">p = fp16(e / d)</text>
+<rect x="699" y="565" width="548" height="34" fill="#f3f3ed"/>
+<text x="712" y="590" fill="#59677c" font-family="Consolas,'Liberation Mono',monospace" font-size="14">10</text>
+<text x="756" y="590" fill="#232b38" opacity=".68" font-family="Consolas,'Liberation Mono',monospace" font-size="22" xml:space="preserve">p = fp16(e / d)</text>
+<g class="step-focus step-1" opacity="0" data-correction="1" aria-hidden="true">
+<rect x="34" y="294" width="547" height="32" rx="2" fill="none" stroke="#3e628a" stroke-width="2"/>
+<rect x="700" y="294" width="547" height="32" rx="2" fill="none" stroke="#3e628a" stroke-width="2"/>
+<path d="M595 311h88m-8-6 8 6-8 6" fill="none" stroke="#3e628a" stroke-width="3.6"/>
+<circle cx="638" cy="311" r="12" fill="#3e628a"/>
+<text x="638" y="315" text-anchor="middle" fill="#fffdfa" font-size="13" font-weight="600">1</text>
+<path d="M1033.2 322h52.8" stroke="#3e628a" stroke-width="2.4"/>
+<g data-explanation="1">
+<rect x="32" y="670" width="1216" height="100" rx="7" fill="#e4eefb"/>
+<rect x="32" y="680" width="4" height="80" rx="2" fill="#3e628a"/>
+<text x="52" y="696" fill="#3e628a" font-size="18" font-weight="600">01 / Wrong row address</text>
+<text x="52" y="725" fill="#3e628a" font-size="11" font-weight="600" letter-spacing=".8">CAUSE</text>
+<text x="119" y="725" fill="#232b38" font-size="17">stride=rows advances by the row count, so the next row loads the wrong values.</text>
+<text x="52" y="751" fill="#3e628a" font-size="11" font-weight="600" letter-spacing=".8">PATCH</text>
+<text x="119" y="751" fill="#232b38" font-size="17">stride=cols restores the correct row start before any arithmetic.</text>
+</g></g>
+<g class="step-focus step-2" opacity="0" data-correction="2" aria-hidden="true">
+<rect x="34" y="362" width="547" height="32" rx="2" fill="none" stroke="#7b6532" stroke-width="2"/>
+<rect x="700" y="362" width="547" height="32" rx="2" fill="none" stroke="#7b6532" stroke-width="2"/>
+<path d="M595 379h88m-8-6 8 6-8 6" fill="none" stroke="#7b6532" stroke-width="3.6"/>
+<circle cx="638" cy="379" r="12" fill="#7b6532"/>
+<text x="638" y="383" text-anchor="middle" fill="#fffdfa" font-size="13" font-weight="600">2</text>
+<path d="M888.0 390h66" stroke="#7b6532" stroke-width="2.4"/>
+<path d="M1020.0 390h66" stroke="#7b6532" stroke-width="2.4"/>
+<g data-explanation="2">
+<rect x="32" y="670" width="1216" height="100" rx="7" fill="#f7f0dd"/>
+<rect x="32" y="680" width="4" height="80" rx="2" fill="#7b6532"/>
+<text x="52" y="696" fill="#7b6532" font-size="18" font-weight="600">02 / Two masking errors, one correction site</text>
+<text x="52" y="725" fill="#7b6532" font-size="11" font-weight="600" letter-spacing=".8">CAUSE</text>
+<text x="119" y="725" fill="#232b38" font-size="17">A shared mask can select the wrong items; zero-filled padding still adds weight.</text>
+<text x="52" y="751" fill="#7b6532" font-size="11" font-weight="600" letter-spacing=".8">PATCH</text>
+<text x="119" y="751" fill="#232b38" font-size="17">Use each row’s mask and −INF to exclude invalid positions before normalization.</text>
+</g></g>
+<g class="step-focus step-3" opacity="0" data-correction="3" aria-hidden="true">
+<rect x="34" y="396" width="547" height="32" rx="2" fill="none" stroke="#7b6532" stroke-width="2"/>
+<rect x="700" y="396" width="547" height="32" rx="2" fill="none" stroke="#7b6532" stroke-width="2"/>
+<path d="M595 413h88m-8-6 8 6-8 6" fill="none" stroke="#7b6532" stroke-width="3.6"/>
+<circle cx="638" cy="413" r="12" fill="#7b6532"/>
+<text x="638" y="417" text-anchor="middle" fill="#fffdfa" font-size="13" font-weight="600">3</text>
+<path d="M861.6 424h13.2" stroke="#7b6532" stroke-width="2.4"/>
+<g data-explanation="3">
+<rect x="32" y="670" width="1216" height="100" rx="7" fill="#f7f0dd"/>
+<rect x="32" y="680" width="4" height="80" rx="2" fill="#7b6532"/>
+<text x="52" y="696" fill="#7b6532" font-size="18" font-weight="600">03 / The wrong maximum breaks stability</text>
+<text x="52" y="725" fill="#7b6532" font-size="11" font-weight="600" letter-spacing=".8">CAUSE</text>
+<text x="119" y="725" fill="#232b38" font-size="17">Padding’s raw 0 can outrank valid scores near −104, so valid exponentials underflow.</text>
+<text x="52" y="751" fill="#7b6532" font-size="11" font-weight="600" letter-spacing=".8">PATCH</text>
+<text x="119" y="751" fill="#232b38" font-size="17">Take max(s) after masking; the valid exponentials remain representable in this input.</text>
+</g></g>
+<g class="step-focus step-4" opacity="0" data-correction="4" aria-hidden="true">
+<rect x="34" y="430" width="547" height="32" rx="2" fill="none" stroke="#8b513b" stroke-width="2"/>
+<rect x="700" y="430" width="547" height="32" rx="2" fill="none" stroke="#8b513b" stroke-width="2"/>
+<path d="M595 447h88m-8-6 8 6-8 6" fill="none" stroke="#8b513b" stroke-width="3.6"/>
+<circle cx="638" cy="447" r="12" fill="#8b513b"/>
+<text x="638" y="451" text-anchor="middle" fill="#fffdfa" font-size="13" font-weight="600">4</text>
+<path d="M808.8 458h66" stroke="#8b513b" stroke-width="2.4"/>
+<g data-explanation="4">
+<rect x="32" y="670" width="1216" height="100" rx="7" fill="#f9e3dc"/>
+<rect x="32" y="680" width="4" height="80" rx="2" fill="#8b513b"/>
+<text x="52" y="696" fill="#8b513b" font-size="18" font-weight="600">04 / Exponentials overflow or vanish</text>
+<text x="52" y="725" fill="#8b513b" font-size="11" font-weight="600" letter-spacing=".8">CAUSE</text>
+<text x="119" y="725" fill="#232b38" font-size="17">Without the shift, exp(90) becomes Inf; exp(−104) rounds to zero in FP32.</text>
+<text x="52" y="751" fill="#8b513b" font-size="11" font-weight="600" letter-spacing=".8">PATCH</text>
+<text x="119" y="751" fill="#232b38" font-size="17">Subtract the row maximum to preserve relative weights and avoid these NaN-producing extremes.</text>
+</g></g>
+<g class="step-focus step-5" opacity="0" data-correction="5" aria-hidden="true">
+<rect x="34" y="498" width="547" height="32" rx="2" fill="none" stroke="#695184" stroke-width="2"/>
+<rect x="700" y="498" width="547" height="32" rx="2" fill="none" stroke="#695184" stroke-width="2"/>
+<path d="M595 515h88m-8-6 8 6-8 6" fill="none" stroke="#695184" stroke-width="3.6"/>
+<circle cx="638" cy="515" r="12" fill="#695184"/>
+<text x="638" y="519" text-anchor="middle" fill="#fffdfa" font-size="13" font-weight="600">5</text>
+<path d="M901.2 526h92.4" stroke="#695184" stroke-width="2.4"/>
+<g data-explanation="5">
+<rect x="32" y="670" width="1216" height="100" rx="7" fill="#f0eaf7"/>
+<rect x="32" y="680" width="4" height="80" rx="2" fill="#695184"/>
+<text x="52" y="696" fill="#695184" font-size="18" font-weight="600">05 / Separate inputs share a denominator</text>
+<text x="52" y="725" fill="#695184" font-size="11" font-weight="600" letter-spacing=".8">CAUSE</text>
+<text x="119" y="725" fill="#232b38" font-size="17">axis=0 mixes rows, giving each column a cross-batch denominator.</text>
+<text x="52" y="751" fill="#695184" font-size="11" font-weight="600" letter-spacing=".8">PATCH</text>
+<text x="119" y="751" fill="#232b38" font-size="17">Reduce axis=−1 instead: each row uses the sum of its own exponentials.</text>
+</g></g>
+<g class="step-focus step-6" opacity="0" data-correction="6" aria-hidden="true">
+<rect x="34" y="532" width="547" height="32" rx="2" fill="none" stroke="#8b513b" stroke-width="2"/>
+<rect x="700" y="532" width="547" height="32" rx="2" fill="none" stroke="#8b513b" stroke-width="2"/>
+<path d="M595 549h88m-8-6 8 6-8 6" fill="none" stroke="#8b513b" stroke-width="3.6"/>
+<circle cx="638" cy="549" r="12" fill="#8b513b"/>
+<text x="638" y="553" text-anchor="middle" fill="#fffdfa" font-size="13" font-weight="600">6</text>
+<path d="M1020.0 560h52.8" stroke="#8b513b" stroke-width="2.4"/>
+<g data-explanation="6">
+<rect x="32" y="670" width="1216" height="100" rx="7" fill="#f9e3dc"/>
+<rect x="32" y="680" width="4" height="80" rx="2" fill="#8b513b"/>
+<text x="52" y="696" fill="#8b513b" font-size="18" font-weight="600">06 / Small increments disappear</text>
+<text x="52" y="725" fill="#8b513b" font-size="11" font-weight="600" letter-spacing=".8">CAUSE</text>
+<text x="119" y="725" fill="#232b38" font-size="17">Sequential FP16 rounding stalls at 2,048 when summing 4,096 ones.</text>
+<text x="52" y="751" fill="#8b513b" font-size="11" font-weight="600" letter-spacing=".8">PATCH</text>
+<text x="119" y="751" fill="#232b38" font-size="17">Accumulate in FP32 to reach 4,096; keep the final output FP16.</text>
+</g></g>
+<path d="M50 608h514" stroke="#ced4df"/>
+<path d="M716 608h514" stroke="#ced4df"/>
+<text x="52" y="633" fill="#59677c" font-size="13">Contiguous rows · ≥1 valid item/row · keepdims</text>
+    <text x="718" y="633" fill="#59677c" font-size="13">FP16 input/output · FP32 internal · per-row normalization</text>
+    <rect x="32" y="790" width="1216" height="56" rx="7" fill="#f0eaf7"/>
+    <text x="51" y="812" fill="#695184" font-size="12" font-weight="600" letter-spacing=".7">ANOTHER IMPLEMENTATION RISK · CROSS-TILE NORMALIZATION</text>
+    <text x="51" y="833" fill="#695184" font-family="Consolas,'Liberation Mono',monospace" font-size="17">sum_per_tile(e)  →  sum(e, axis=-1)</text>
+    <text x="1226" y="826" text-anchor="end" fill="#695184" font-size="14">Merge the denominator before normalizing.</text>
+    <text x="33" y="877" fill="#232b38" font-size="15">Constructed illustration: independent failure patterns shown together, not one recorded repair.</text>
+    <text x="33" y="904" fill="#59677c" font-size="14">Each defect is evaluated separately. Real kernels require independent NPU validation.</text>
+    <text x="1246" y="904" text-anchor="end" fill="#6a50a8" font-size="14">Explore the inputs and evidence on the website ↗</text>
   </g>
 </svg>

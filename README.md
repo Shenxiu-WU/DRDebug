@@ -1,13 +1,17 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/readme/hero-dark.svg?v=attention-20261019">
-    <img src="assets/readme/hero-light.svg?v=attention-20261019" alt="DRDebug: Don’t Regenerate, Debug. In a constructed Masked Softmax example with 4,096 unit exponential values, a sequential FP16 sum stalls at 2,048. FP32 accumulation restores the denominator to 4,096 and the row’s total weight from 200% to 100%." width="100%">
-  </picture>
+  <a href="https://shenxiu-wu.github.io/DRDebug/#hero-title">
+    <picture>
+      <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="assets/readme/hero-dark-static.svg?v=explained-comparison-20261019">
+      <source media="(prefers-reduced-motion: reduce)" srcset="assets/readme/hero-light-static.svg?v=explained-comparison-20261019">
+      <source media="(prefers-color-scheme: dark)" srcset="assets/readme/hero-dark.svg?v=explained-comparison-20261019">
+      <img src="assets/readme/hero-light.svg?v=explained-comparison-20261019" alt="DRDebug: Don’t Regenerate, Debug. Two complete Masked Softmax pseudocode blocks compare independent failure patterns with the correct implementation. Six numbered arrows, corresponding corrections and cause-and-effect notes highlight together in sequence: row stride, masks and padding, masked maximum, exponential stabilization, reduction axis and FP32 accumulation. Cross-tile normalization is shown separately. This composite illustration is not one recorded repair run." width="100%">
+    </picture>
+  </a>
 </p>
 
 <p align="center"><strong>A domain-specific agent for repairing near-miss accelerator kernels.</strong></p>
 
-<p align="center">A constructed CPU illustration of an accumulation repair. <a href="https://shenxiu-wu.github.io/DRDebug/#hero-title">Explore indexing, masking, reduction and floating-point failures ↗</a></p>
+<p align="center">Follow six correction sites with explanations of their causes and effects; each defect is evaluated separately. <a href="https://shenxiu-wu.github.io/DRDebug/#hero-title">Explore the inputs and evidence ↗</a> · <a href="assets/readme/hero-light-static.svg">Static overview</a></p>
 
 <p align="center">
   <a href="https://shenxiu-wu.github.io/DRDebug/"><img src="https://img.shields.io/badge/Website-DRDebug-6a50a8?style=flat-square" alt="Project website"></a>
@@ -169,7 +173,7 @@ The separate [dataset companion](papers/2026-dont-regenerate-debug/dataset/READM
 <details>
 <summary>Run the precision illustration or preview the website</summary>
 
-Reproduce the banner’s accumulation repair and the other constructed Masked Softmax inputs on a CPU:
+Reproduce the independent Masked Softmax failure inputs behind the banner’s code comparison on a CPU:
 
 ```bash
 python3 -B website/examples/attention-repair-demo.py
