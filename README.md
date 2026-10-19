@@ -130,7 +130,7 @@ Sources: [Debug outcomes](papers/2026-dont-regenerate-debug/artifact/results/rq1
 
 ## CANNBench results
 
-The repair approach also carries forward to a broader community benchmark, with standard and hidden tests. These results are reported separately from the paper’s NPUKernelBench experiment.
+The repair approach also carries forward to CANNBench Season 1, a broader community benchmark with standard and hidden tests. Season 1 closed on 15 October 2026. These results are reported separately from the paper’s NPUKernelBench experiment.
 
 **Snapshot: 15 October 2026** · Official-Tasks 1.1 (package 1.1.2) · A3 / Ascend 910C · standard + hidden tests.
 
@@ -141,9 +141,9 @@ The repair approach also carries forward to a broader community benchmark, with 
 
 **Seven of the eight Level 4 operators pass every test.** The remaining operator has one failing case across its 100 standard and hidden tests.
 
-The official aggregate is **Debug-Agent Claude Code Kimi K3**. Passed-case rankings cover 170 public aggregates in this snapshot. Pass-rate comparisons use complete test coverage (15 solutions overall; 19 at Level 4); the aggregate also ranks first in both.
+The official aggregate is **Debug-Agent Claude Code Kimi K3**. The table’s **#1** ranks are by passed cases among 170 public aggregates in this snapshot. Pass-rate comparisons use complete test coverage (15 solutions overall; 19 at Level 4); the aggregate also ranks first in both. The Season 1 screenshot is sorted by composite score, where our aggregate ranks **sixth**.
 
-[Official leaderboard](https://cannbench.com/leaderboard/official-tasks) · [Dated data & scope](website/data/leaderboard-2026-10-15.json) · [Interactive breakdown](https://shenxiu-wu.github.io/DRDebug/#results)
+[Season 1 leaderboard screenshot](website/assets/evidence/cannbench-season-1-a3-2026-10-15.png) · [Dated data & scope](website/data/leaderboard-2026-10-15.json) · [Interactive breakdown](https://shenxiu-wu.github.io/DRDebug/#results)
 
 ## Reproduce
 

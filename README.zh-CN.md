@@ -130,7 +130,7 @@ kimi --skills-dir "$HOME/.config/agents/skills"
 
 ## CANNBench 成果
 
-我们将这套修复思路延伸到更广泛的社区评测，用标准集与隐藏集共同检验正确性。以下成果与论文中的 NPUKernelBench 实验分别报告。
+我们将这套修复思路延伸到更广泛的社区评测 CANNBench Season 1，用标准集与隐藏集共同检验正确性。Season 1 已于 2026 年 10 月 15 日封榜。以下成果与论文中的 NPUKernelBench 实验分别报告。
 
 **2026 年 10 月 15 日快照** · Official-Tasks 1.1（任务包 1.1.2）· A3 / Ascend 910C · 标准集 + 隐藏集。
 
@@ -141,9 +141,9 @@ kimi --skills-dir "$HOME/.config/agents/skills"
 
 **8 个 Level 4 算子中，7 个通过全部测试。** 另一个算子在其 100 个标准与隐藏测例中仅剩 1 例未通过。
 
-官方聚合名为 **Debug-Agent Claude Code Kimi K3**。该快照包含 170 个公开聚合方案；通过率比较仅纳入完整覆盖测试集的方案（全量 15 个、Level 4 为 19 个），我们的聚合方案在这两项通过率上也均排名第一。
+官方聚合名为 **Debug-Agent Claude Code Kimi K3**。表中的**第 1** 指通过用例数在该快照的 170 个公开聚合方案中排名第一；通过率比较仅纳入完整覆盖测试集的方案（全量 15 个、Level 4 为 19 个），我们的聚合方案在这两项通过率上也均排名第一。Season 1 截图按综合得分排序，本项目排名**第 6**。
 
-[官方排行榜](https://cannbench.com/leaderboard/official-tasks) · [日期快照与统计口径](website/data/leaderboard-2026-10-15.json) · [交互式结果明细](https://shenxiu-wu.github.io/DRDebug/#results)
+[Season 1 排行榜截图](website/assets/evidence/cannbench-season-1-a3-2026-10-15.png) · [日期快照与统计口径](website/data/leaderboard-2026-10-15.json) · [交互式结果明细](https://shenxiu-wu.github.io/DRDebug/#results)
 
 ## 复现与核验
 
