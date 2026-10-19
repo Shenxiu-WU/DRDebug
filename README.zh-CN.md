@@ -1,11 +1,13 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/readme/hero-dark.svg">
-    <img src="assets/readme/hero-light.svg" alt="DRDebug: Don’t Regenerate, Debug. Repair near-miss accelerator kernels from failure evidence." width="100%">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/readme/hero-dark.svg?v=attention-20261019">
+    <img src="assets/readme/hero-light.svg?v=attention-20261019" alt="DRDebug：Don’t Regenerate, Debug。构造的 Masked Softmax 示例中，4096 个值为 1 的指数项采用逐次 FP16 累加时，分母停在 2048；改用 FP32 累加后，分母恢复为 4096，整行权重之和从 200% 恢复为 100%。" width="100%">
   </picture>
 </p>
 
 <p align="center"><strong>从失败证据出发，定向修复接近正确的加速器算子。</strong></p>
+
+<p align="center">首图以构造 CPU 示例展示累加精度修复。<a href="https://shenxiu-wu.github.io/DRDebug/#hero-title">交互查看索引、掩码、归约与浮点计算中的问题 ↗</a></p>
 
 <p align="center">
   <a href="https://shenxiu-wu.github.io/DRDebug/"><img src="https://img.shields.io/badge/Website-DRDebug-6a50a8?style=flat-square" alt="Project website"></a>
@@ -167,13 +169,13 @@ python3 -B tools/verify_paper_inputs.py
 <details>
 <summary>运行精度示例或本地预览网站</summary>
 
-在 CPU 上复现横幅中的 FP16 舍入示例：
+在 CPU 上复现首图中的累加精度修复，以及其他构造的 Masked Softmax 输入：
 
 ```bash
-python3 -B website/examples/fp16-reduction-demo.py
+python3 -B website/examples/attention-repair-demo.py
 ```
 
-6 组构造检查从 3/6 通过变为 6/6。示例用于说明数值原因和修复思路；真实算子的接纳仍需完整设备验证。
+[网页交互示例](https://shenxiu-wu.github.io/DRDebug/#hero-title)用**八个主题、九组构造输入**展示索引、掩码、归约与浮点计算中的问题。默认显示正确代码，点击主题展开对应的缺陷行与补丁，再点同一主题即可复原。每组输入只引入一种缺陷；脚本将九组修复后的输出逐一与独立参考比对。这是教学用 CPU 示例，不是修复成功率统计或 NPU 验收记录；真实算子的接纳仍需完整设备验证。
 
 本地预览支持中英双语和深浅主题的项目网站：
 

@@ -1,11 +1,13 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/readme/hero-dark.svg">
-    <img src="assets/readme/hero-light.svg" alt="DRDebug: Don’t Regenerate, Debug. Repair near-miss accelerator kernels from failure evidence." width="100%">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/readme/hero-dark.svg?v=attention-20261019">
+    <img src="assets/readme/hero-light.svg?v=attention-20261019" alt="DRDebug: Don’t Regenerate, Debug. In a constructed Masked Softmax example with 4,096 unit exponential values, a sequential FP16 sum stalls at 2,048. FP32 accumulation restores the denominator to 4,096 and the row’s total weight from 200% to 100%." width="100%">
   </picture>
 </p>
 
 <p align="center"><strong>A domain-specific agent for repairing near-miss accelerator kernels.</strong></p>
+
+<p align="center">A constructed CPU illustration of an accumulation repair. <a href="https://shenxiu-wu.github.io/DRDebug/#hero-title">Explore indexing, masking, reduction and floating-point failures ↗</a></p>
 
 <p align="center">
   <a href="https://shenxiu-wu.github.io/DRDebug/"><img src="https://img.shields.io/badge/Website-DRDebug-6a50a8?style=flat-square" alt="Project website"></a>
@@ -167,13 +169,13 @@ The separate [dataset companion](papers/2026-dont-regenerate-debug/dataset/READM
 <details>
 <summary>Run the precision illustration or preview the website</summary>
 
-Reproduce the banner’s constructed FP16 rounding example on a CPU:
+Reproduce the banner’s accumulation repair and the other constructed Masked Softmax inputs on a CPU:
 
 ```bash
-python3 -B website/examples/fp16-reduction-demo.py
+python3 -B website/examples/attention-repair-demo.py
 ```
 
-The six constructed checks improve from 3/6 to 6/6. This illustrates the numerical cause and patch; real kernel acceptance still uses full device validation.
+The [interactive illustration](https://shenxiu-wu.github.io/DRDebug/#hero-title) covers **eight themes and nine constructed inputs** across indexing, masking, reductions and floating-point computation. It starts with correct code; selecting a theme expands the defective line and its patch, and selecting it again restores the correct implementation. Each input introduces only one defect. The script checks all nine repaired outputs against an independent reference. This is an educational CPU illustration, not a repair-success-rate measurement or an NPU validation record; real kernel acceptance requires full device validation.
 
 Preview the bilingual website, with light and dark themes:
 

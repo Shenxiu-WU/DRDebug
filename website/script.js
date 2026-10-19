@@ -46,8 +46,7 @@
     if (skillGuide) skillGuide.href = `https://github.com/Shenxiu-WU/DRDebug/blob/main/docs/skill-guide${language === "zh" ? ".zh-CN" : ""}.md`;
     const skillExample = document.querySelector(".skill-example");
     if (skillExample) skillExample.href = `https://github.com/Shenxiu-WU/DRDebug/blob/main/examples/cumsum/README${language === "zh" ? ".zh-CN" : ""}.md`;
-    const skillValidation = document.querySelector(".skill-validation");
-    if (skillValidation) skillValidation.href = `https://github.com/Shenxiu-WU/DRDebug/blob/main/examples/cumsum/native-host-validation${language === "zh" ? ".zh-CN" : ""}.md`;
+    for (const link of document.querySelectorAll(".skill-validation, .repair-real-example")) link.href = `https://github.com/Shenxiu-WU/DRDebug/blob/main/examples/cumsum/native-host-validation${language === "zh" ? ".zh-CN" : ""}.md`;
     const copyStatus = document.getElementById("skill-copy-status");
     if (copyStatus) copyStatus.textContent = "";
     document.dispatchEvent(new CustomEvent("site:language",{detail:{lang:language}}));

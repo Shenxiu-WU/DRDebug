@@ -11,8 +11,10 @@
   <title>DRDebug · 接近成功，继续修好</title>
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <script src="./theme.js"></script>
-  <link rel="stylesheet" href="./styles.css?v=native-host-20261019">
-  <script src="./script.js?v=coding-agent-wording-20261019" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=repair-motion-20261019">
+  <script src="./script.js?v=repair-motion-20261019" defer></script>
+  <script src="./repair-explanations.js?v=20261019" defer></script>
+  <script src="./repair-demo.js?v=repair-motion-20261019" defer></script>
   <script src="./dashboard.js" defer></script>
 </head>
 <body>
@@ -33,7 +35,7 @@
     </div>
   </header>
   <main id="main">
-    <section class="hero wrap" aria-labelledby="hero-title">
+    <section class="hero wrap" aria-labelledby="hero-title" data-repair-demo>
       <div class="hero-copy">
         <p class="eyebrow hero-kicker"><span data-en="KERNEL PRECISION REPAIR">算子精度修复智能体</span><span class="kicker-platform">ASCEND NPU</span></p>
         <h1 id="hero-title"><span data-en="Don’t regenerate.">接近成功的算子，</span><em data-en="Debug.">值得被修好。</em></h1>
@@ -46,18 +48,65 @@
         </div>
       </div>
       <figure class="repair-folio" aria-labelledby="repair-title" aria-describedby="repair-caption">
-        <div class="repair-sheet-top"><span>DEBUG AGENT / REPAIR TRACE</span><span class="example-stamp" data-en="CONSTRUCTED EXAMPLE">构造示例</span></div>
-        <h2 id="repair-title" class="repair-title" data-en="This sum kernel turns 1 into 0.">这个求和内核，把 1 算成了 0。</h2>
-        <p class="repair-subtitle" data-en="FP16 ReduceSum · reference: high-precision sum">FP16 ReduceSum · 参考为高精度求和</p>
-        <ol class="repair-flow">
-          <li><span class="repair-step-number" aria-hidden="true">01</span><div class="repair-step-content"><div class="repair-step-heading"><h3 data-en="Reproduce the failure">复现失败</h3><span data-en="ENGINE">引擎</span></div><code class="repair-input">x = [2048, 1, -2048]</code><div class="repair-outputs"><span><small data-en="Candidate">候选输出</small><b class="repair-wrong">0</b></span><span class="repair-not-equal" aria-hidden="true">≠</span><span><small data-en="Reference">参考输出</small><b>1</b></span></div></div></li>
-          <li><span class="repair-step-number" aria-hidden="true">02</span><div class="repair-step-content"><div class="repair-step-heading"><h3 data-en="Probe the intermediate state">追踪中间值</h3><span data-en="ON-DEMAND PROBE">按需探针</span></div><div class="rounding-evidence"><code>2048 + <mark>1</mark> → 2048</code><span data-en="FP16 rounding loses the increment">FP16 舍入，小量在这里丢失</span></div></div></li>
-          <li><span class="repair-step-number" aria-hidden="true">03</span><div class="repair-step-content"><div class="repair-step-heading"><h3 data-en="Patch the cause">定向修复</h3><span data-en="REPAIR WORKER">工作智能体</span></div><div class="repair-diff" aria-label="伪代码：累加器由FP16改为FP32" data-en-aria="Pseudocode: change the accumulator from FP16 to FP32"><code class="diff-before">− accumulator: FP16</code><code class="diff-after">+ accumulator: FP32</code></div><p class="repair-step-note" data-en="Pseudocode · match the reference; keep FP16 input/output.">伪代码 · 对齐参考语义，输入/输出仍为 FP16。</p></div></li>
-          <li><span class="repair-step-number" aria-hidden="true">04</span><div class="repair-step-content"><div class="repair-step-heading"><h3 data-en="Validate the patch">验证修复</h3><span data-en="ENGINE">引擎</span></div><div class="repaired-trace"><code>2048 → 2049 → <b>1</b></code><span class="repair-pass" data-en="Error = 0">误差 = 0</span></div><p class="repair-step-note"><span data-en="6 constructed checks: ">6 组构造回归：</span><strong>3/6 → 6/6</strong><span data-en=" pass."> 通过。</span></p></div></li>
-        </ol>
-        <figcaption id="repair-caption" class="repair-caption"><span data-en="Constructed CPU example. Real kernel acceptance requires the complete NPU evaluation.">构造样例，CPU 数值复现；正式内核接纳需完整 NPU 评测。</span><a href="./examples/fp16-reduction-demo.py" download data-en="Reproduce the example ↗">复现此示例 ↗</a></figcaption>
-        <a class="repair-benchmark" href="#results"><span><b>CANNBench · Level 4</b><small data-en="Pass-rate #1 · complete coverage">完整覆盖方案 · 通过率第 1</small></span><strong><span data-stat="level4Passed">799</span><small>/ <span data-stat="level4Total">800</span></small><span aria-hidden="true">↗</span></strong></a>
+        <div class="repair-sheet-top"><span>DRDEBUG / ATTENTION WEIGHTS</span><span class="example-stamp" data-en="CONSTRUCTED EXAMPLES">构造示例</span></div>
+        <h2 id="repair-title" class="repair-title" data-en="See the repair. Understand the cause.">看见修复，理解原因。</h2>
+        <p class="repair-subtitle" data-en="One Masked Softmax, with examples of indexing, masking, reduction and floating-point failures.">同一段 Masked Softmax，展示读取、掩码、归约与浮点计算中的问题。</p>
+        <div class="repair-scenarios" role="group" aria-label="选择失败场景" data-en-aria="Choose a failure scenario">
+          <button type="button" data-repair-scenario="row_stride" data-code-family="index" aria-pressed="false" data-en="Row offset" aria-expanded="false" aria-controls="repair-detail">行起点</button>
+          <button type="button" data-repair-scenario="mask_broadcast" data-code-family="mask" aria-pressed="false" data-en="Mask rows" aria-expanded="false" aria-controls="repair-detail">掩码广播</button>
+          <button type="button" data-repair-scenario="padding_mask" data-code-family="mask" aria-pressed="false" data-en="Padding" aria-expanded="false" aria-controls="repair-detail">补齐掩码</button>
+          <button type="button" data-repair-scenario="reduction_axis" data-code-family="reduce" aria-pressed="false" data-en="Reduce axis" aria-expanded="false" aria-controls="repair-detail">归约维度</button>
+          <button type="button" data-repair-scenario="tile_local_sum" data-code-family="reduce" aria-pressed="false" data-en="Tile sums" aria-expanded="false" aria-controls="repair-detail">分块归约</button>
+          <button type="button" data-repair-scenario="sum_rounding" data-code-family="numeric" aria-pressed="false" data-en="FP16 sum" aria-expanded="false" aria-controls="repair-detail">累加精度</button>
+          <button type="button" data-repair-scenario="exp_range" data-code-family="numeric" aria-pressed="false" data-en="Exp range" aria-expanded="false" aria-controls="repair-detail">指数范围</button>
+          <button type="button" data-repair-scenario="masked_max" data-code-family="mask" aria-pressed="false" data-en="Masked max" aria-expanded="false" aria-controls="repair-detail">最大值范围</button>
+        </div>
+        <div id="repair-range-inputs" class="repair-range-inputs" role="group" aria-label="指数范围的两组失败输入" data-en-aria="Two failing inputs for exponential range" hidden><button type="button" data-repair-range="exp_overflow" aria-pressed="true" data-en="Large positive scores">大正分数 · 溢出</button><button type="button" data-repair-range="exp_underflow" aria-pressed="false" data-en="Large negative scores">大负分数 · 下溢</button></div>
+        <div class="repair-case-summary"><p id="repair-case-summary">默认是正确实现。点选问题展开补丁，再点同一问题即可复原。</p><a id="repair-detail-link" href="#repair-detail" hidden data-en="Read the cause and evidence ↓">查看原因与证据 ↓</a></div>
+        <div class="repair-editor">
+          <div class="repair-editor-heading"><span><b>masked_softmax</b><small data-en="PSEUDOCODE">伪代码</small></span><span id="repair-code-status" role="status" aria-live="polite">正确实现</span></div>
+          <div class="repair-code-legend" aria-label="代码颜色说明" data-en-aria="Code color key"><span data-code-family="index" data-en="Indexing">索引</span><span data-code-family="mask" data-en="Masking">掩码</span><span data-code-family="reduce" data-en="Reduction">归约</span><span data-code-family="numeric" data-en="Numerics">浮点</span></div>
+          <pre class="repair-source" tabindex="0" aria-label="完整 Masked Softmax 伪代码，可横向滚动" data-en-aria="Complete Masked Softmax pseudocode; scroll horizontally if needed" aria-describedby="repair-code-hint"><code>
+            <span class="repair-source-line" data-repair-code-line="1" data-code-family="index"><span class="repair-line-number" aria-hidden="true">01</span><span class="repair-line-pair"><span class="repair-line-before"><span class="repair-line-sign"></span><span class="repair-line-text">x = load_rows(scores,</span></span><span class="repair-line-after" hidden><span class="repair-line-sign">+</span><span class="repair-line-text">x = load_rows(scores,</span></span></span></span>
+            <span class="repair-source-line" data-repair-code-line="2" data-code-family="index"><span class="repair-line-number" aria-hidden="true">02</span><span class="repair-line-pair"><span class="repair-line-before"><span class="repair-line-sign"></span><span class="repair-line-text">              stride=cols)</span></span><span class="repair-line-after" hidden><span class="repair-line-sign">+</span><span class="repair-line-text">              stride=cols)</span></span></span></span>
+            <span class="repair-source-line" data-repair-code-line="3" data-code-family="numeric"><span class="repair-line-number" aria-hidden="true">03</span><span class="repair-line-pair"><span class="repair-line-before"><span class="repair-line-sign"></span><span class="repair-line-text">x = fp32(x)</span></span><span class="repair-line-after" hidden><span class="repair-line-sign">+</span><span class="repair-line-text">x = fp32(x)</span></span></span></span>
+            <span class="repair-source-line" data-repair-code-line="4" data-code-family="mask"><span class="repair-line-number" aria-hidden="true">04</span><span class="repair-line-pair"><span class="repair-line-before"><span class="repair-line-sign"></span><span class="repair-line-text">s = where(valid, x, -INF)</span></span><span class="repair-line-after" hidden><span class="repair-line-sign">+</span><span class="repair-line-text">s = where(valid, x, -INF)</span></span></span></span>
+            <span class="repair-source-line" data-repair-code-line="5" data-code-family="mask"><span class="repair-line-number" aria-hidden="true">05</span><span class="repair-line-pair"><span class="repair-line-before"><span class="repair-line-sign"></span><span class="repair-line-text">m = max(s, axis=-1)</span></span><span class="repair-line-after" hidden><span class="repair-line-sign">+</span><span class="repair-line-text">m = max(s, axis=-1)</span></span></span></span>
+            <span class="repair-source-line" data-repair-code-line="6" data-code-family="numeric"><span class="repair-line-number" aria-hidden="true">06</span><span class="repair-line-pair"><span class="repair-line-before"><span class="repair-line-sign"></span><span class="repair-line-text">z = s - m</span></span><span class="repair-line-after" hidden><span class="repair-line-sign">+</span><span class="repair-line-text">z = s - m</span></span></span></span>
+            <span class="repair-source-line" data-repair-code-line="7" data-code-family="numeric"><span class="repair-line-number" aria-hidden="true">07</span><span class="repair-line-pair"><span class="repair-line-before"><span class="repair-line-sign"></span><span class="repair-line-text">e = exp_fp32(z)</span></span><span class="repair-line-after" hidden><span class="repair-line-sign">+</span><span class="repair-line-text">e = exp_fp32(z)</span></span></span></span>
+            <span class="repair-source-line" data-repair-code-line="8" data-code-family="reduce"><span class="repair-line-number" aria-hidden="true">08</span><span class="repair-line-pair"><span class="repair-line-before"><span class="repair-line-sign"></span><span class="repair-line-text">d = sum(e, axis=-1,</span></span><span class="repair-line-after" hidden><span class="repair-line-sign">+</span><span class="repair-line-text">d = sum(e, axis=-1,</span></span></span></span>
+            <span class="repair-source-line" data-repair-code-line="9" data-code-family="numeric"><span class="repair-line-number" aria-hidden="true">09</span><span class="repair-line-pair"><span class="repair-line-before"><span class="repair-line-sign"></span><span class="repair-line-text">        accumulator=FP32)</span></span><span class="repair-line-after" hidden><span class="repair-line-sign">+</span><span class="repair-line-text">        accumulator=FP32)</span></span></span></span>
+            <span class="repair-source-line" data-repair-code-line="10" data-code-family="output"><span class="repair-line-number" aria-hidden="true">10</span><span class="repair-line-pair"><span class="repair-line-before"><span class="repair-line-sign"></span><span class="repair-line-text">p = fp16(e / d)</span></span><span class="repair-line-after" hidden><span class="repair-line-sign">+</span><span class="repair-line-text">p = fp16(e / d)</span></span></span></span>
+          </code></pre>
+          <p id="repair-code-hint" class="repair-code-hint" data-en="Pale colors mark places to inspect. − marks a defect; + marks its patch.">浅色标记可检查的位置；− 表示缺陷，＋ 表示补丁。</p>
+          <p class="repair-code-contract" data-en="Contiguous rows, with a valid position in every row. Reductions keep dimensions for broadcasting.">输入为连续行，每行至少一个有效位置；归约保留维度以广播。</p>
+        </div>
+        <figcaption id="repair-caption" class="repair-caption" data-en="Constructed CPU examples. Real kernels need independent NPU validation.">构造 CPU 示例；真实内核仍需独立 NPU 验收。</figcaption>
       </figure>
+      <section id="repair-detail" class="repair-detail" aria-labelledby="repair-detail-title" hidden>
+        <div class="repair-detail-heading"><div><p class="eyebrow" data-en="ONE DEFECT · ONE EXPLANATION">一个问题 · 一条修复线索</p><h3 id="repair-detail-title"></h3></div><button type="button" data-repair-reset data-en="Close and restore code">收起并复原</button></div>
+        <p id="repair-input" class="repair-input"></p>
+        <div class="repair-detail-grid">
+          <dl class="repair-reasoning"><div><dt data-en="What goes wrong">问题是什么</dt><dd id="repair-problem"></dd></div><div><dt data-en="Where it happens">代码中如何体现</dt><dd id="repair-location"></dd></div><div><dt data-en="Why it matters">造成什么影响</dt><dd id="repair-impact"></dd></div></dl>
+          <div class="repair-measurement">
+        <div class="repair-evidence" aria-live="polite" aria-atomic="true">
+          <h3 id="repair-metric-label">整行权重之和</h3>
+          <div class="repair-evidence-pair"><div class="is-before"><span data-en="Before">修复前</span><strong id="repair-evidence-before">200.0%</strong><small id="repair-note-before">归约分母 = 2,048</small></div><div class="is-after"><span data-en="After">修复后</span><strong id="repair-evidence-after">100.0%</strong><small id="repair-note-after">归约分母 = 4,096</small></div></div>
+        </div>
+        <div class="repair-validation"><span data-en="Full output vs. independent reference">完整输出与独立参考比对</span><strong><span id="repair-before-verdict">不通过</span><svg viewBox="0 0 30 14" aria-label="修复后" data-en-aria="after repair"><path d="M1 7h26M20 1l7 6-7 6"/></svg><span id="repair-after-verdict">通过</span></strong></div>
+            <p id="repair-simulation-note" class="repair-retain"></p>
+          </div>
+        <div id="repair-weight-chart" class="repair-weight-chart" hidden>
+          <div class="repair-chart-heading"><h3 id="repair-chart-title">输出权重</h3><div class="repair-chart-legend"><span class="is-before" data-en="Before">修复前</span><span class="is-after" data-en="After">修复后</span></div></div>
+          <div class="repair-weight-row" data-position="0" role="img"><span class="repair-position">A</span><div class="repair-weight-pair"><div class="is-before"><span class="repair-weight-track"><span></span></span><strong></strong></div><div class="is-after"><span class="repair-weight-track"><span></span></span><strong></strong></div></div></div>
+          <div class="repair-weight-row" data-position="1" role="img"><span class="repair-position">B</span><div class="repair-weight-pair"><div class="is-before"><span class="repair-weight-track"><span></span></span><strong></strong></div><div class="is-after"><span class="repair-weight-track"><span></span></span><strong></strong></div></div></div>
+          <div class="repair-weight-row" data-position="2" role="img"><span class="repair-position">C</span><div class="repair-weight-pair"><div class="is-before"><span class="repair-weight-track"><span></span></span><strong></strong></div><div class="is-after"><span class="repair-weight-track"><span></span></span><strong></strong></div></div></div>
+          <div class="repair-weight-row" data-position="3" role="img" hidden><span class="repair-position">D</span><div class="repair-weight-pair"><div class="is-before"><span class="repair-weight-track"><span></span></span><strong></strong></div><div class="is-after"><span class="repair-weight-track"><span></span></span><strong></strong></div></div></div>
+          <p class="repair-chart-scale" data-en="All bars use 0–100%. NaN means a failed, nonnumeric output.">横条均为 0–100%；NaN 表示输出已不是有效数值。</p>
+        </div>
+        </div>
+      </section>
+      <div class="repair-resources"><span data-en="Eight topics · nine constructed inputs">八个主题 · 九组构造输入</span><a href="./examples/attention-repair-demo.py" download data-en="Reproduce on CPU ↗">CPU 复现 ↗</a><a href="https://github.com/Shenxiu-WU/DRDebug/blob/main/papers/2026-dont-regenerate-debug/artifact/code/debug_agent_v5/archive_tasks/sparse_attention/design/tile_level/sparse_flash_attention.py#L109-L119" target="_blank" rel="noopener noreferrer" data-en="Public reference ↗">公开参考机制 ↗</a><a class="repair-real-example" href="https://github.com/Shenxiu-WU/DRDebug/blob/main/examples/cumsum/native-host-validation.zh-CN.md" target="_blank" rel="noopener noreferrer"><span data-en="Real Cumsum repair · 51-case validation ↗">真实 Cumsum 修复 · 51 例验收 ↗</span></a></div>
       <div class="hero-footnote">
         <div class="benchmark-scope" aria-label="排行榜筛选与评测范围" data-en-aria="Leaderboard filters and evaluation scope"><a href="https://cannbench.com/leaderboard/official-tasks" target="_blank" rel="noopener noreferrer">CANNBench / <strong>official-tasks</strong> ↗</a><span><span data-en="Version ">版本 </span><strong>1.1</strong> <small><span data-en="package ">任务包 </span>1.1.2</small></span><span><strong>A3</strong> / NPU <strong>910C</strong></span><span data-en="Standard + hidden tests">标准集 + 隐藏集</span><span data-en="53 operators · 5,300 cases">53 个算子 · 5,300 例</span></div>
         <p class="aggregate-line"><span data-en="Official aggregate">官方聚合名</span><strong>Debug-Agent Claude Code Kimi K3</strong><span class="snapshot-meta"><span data-en="Snapshot">快照</span> <time id="snapshot-date" datetime="2026-10-15">2026-10-15</time></span></p>
