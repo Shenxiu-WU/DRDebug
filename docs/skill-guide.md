@@ -18,11 +18,20 @@ Choose the directory your existing host discovers; Codex is only the example abo
 | --- | --- | --- |
 | Codex, user | `./install.sh --codex` | `~/.agents/skills/drdebug` |
 | Claude Code, user | `./install.sh --claude` | `~/.claude/skills/drdebug` |
+| Kimi Code | `./install.sh --dest "$HOME/.config/agents/skills"` | `~/.config/agents/skills/drdebug` |
 | Codex, project | `./install.sh --codex --project /path/to/project` | `/path/to/project/.agents/skills/drdebug` |
 | Claude Code, project | `./install.sh --claude --project /path/to/project` | `/path/to/project/.claude/skills/drdebug` |
-| Other compatible host, including a Kimi-backed agent | `./install.sh --dest /path/to/your-agent/skills` | `/path/to/your-agent/skills/drdebug` |
+| Other compatible agent | `./install.sh --dest /path/to/your-agent/skills` | `/path/to/your-agent/skills/drdebug` |
 
-For a custom target, replace the path with the actual skills parent and load/register its `drdebug/SKILL.md` through that host's mechanism. A model name alone is not a host: it needs tools to read evidence, edit files and run or transport CLI commands. No Claude Code backend is required for Codex, Kimi-backed or generic hosts. Authentication, model selection, permissions and SSH remain with the selected host; do not put keys in task data, prompts, results or logs.
+Start Kimi Code with an explicit skills directory after installing:
+
+```bash
+kimi --skills-dir "$HOME/.config/agents/skills"
+```
+
+[`--skills-dir`](https://github.com/moonshotai/kimi-cli/blob/main/docs/en/customization/skills.md) takes the **skills parent**, not `drdebug/` or `SKILL.md`. It overrides user/project skill discovery while retaining built-in skills; repeat the flag for any additional custom skill roots. This explicit loading method avoids relying on version-specific automatic discovery paths.
+
+For another compatible agent, replace the custom target with its actual skills parent and load/register `drdebug/SKILL.md` through that host's mechanism. Kimi Code is the host agent; Kimi K3 is a model, which can also be configured in other hosts. Each host needs tools to read evidence, edit files and run or transport CLI commands. Authentication, model selection, permissions and SSH remain with the selected host; do not put keys in task data, prompts, results or logs.
 
 `--project` without a path uses the current directory. `--dry-run` previews the destination. Identical installation is a no-op; `--force` updates a different installation with a backup. The installer copies runtime source and provenance so the Skill is independent of the original checkout. It installs neither host agents nor NPU drivers/packages and changes no model account configuration.
 
@@ -36,7 +45,7 @@ Do not confuse execution requirements with a pip `requirements.txt`:
 | --- | --- |
 | Install / inspect the public CLI | Python 3.10+ and standard library; no provider SDK or coding-agent CLI. |
 | Build / numerically evaluate a kernel | Linux + accessible Ascend NPU/driver, compatible CANN/AscendC, CMake 3.16+, C++ compiler/Python headers, matching Torch/torch_npu, NumPy and pybind headers. |
-| Propose a repair | One host agent's existing model/tool access. Claude Code, Codex, a Kimi-backed agent or another compatible host can fill this role. |
+| Propose a repair | One host agent's existing model/tool access. Codex, Claude Code, Kimi Code or another compatible agent can fill this role. |
 
 The separate [execution requirements note](skill-guide-requirements.md) distinguishes system/runtime requirements from pip package inputs.
 
@@ -56,7 +65,7 @@ python3 "$DRDEBUG_SKILL/scripts/drdebug.py" doctor \
   --npu 0 --soc YOUR_SOC_VERSION --runtime-probe --strict
 ```
 
-Use the actual installed path for Claude Code/project/custom installs. Select a free device ID exposed to the execution environment and the SoC identifier accepted by the installed compiler, not merely a benchmark label. `--npu` selects an exposed device through `ASCEND_RT_VISIBLE_DEVICES`; the adapter uses logical `npu:0` internally. Containers can remap host IDs: verify enumeration inside the actual execution environment and record the host physical ID separately.
+Use the actual installed path for Claude Code, Kimi Code, project or custom installs. Select a free device ID exposed to the execution environment and the SoC identifier accepted by the installed compiler, not merely a benchmark label. `--npu` selects an exposed device through `ASCEND_RT_VISIBLE_DEVICES`; the adapter uses logical `npu:0` internally. Containers can remap host IDs: verify enumeration inside the actual execution environment and record the host physical ID separately.
 
 `doctor --json` provides machine-readable inventory; `--strict` fails on missing execution prerequisites. The optional runtime probe performs a built-in NPU add and repeated fixed-input FP16 cumsum. It does not run the user's kernel, authenticate a host or call a model. A probe pass is not task acceptance. There is no required Claude executable and no worker-authentication preflight.
 

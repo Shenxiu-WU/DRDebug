@@ -67,7 +67,7 @@ python3 -m http.server 8000 --directory website
 
 ## 可安装 Skill 展示
 
-`#skills` 保留原有灰绿分区、能力卡、安装命令切换与复制按钮，展示当前原生宿主协议。Claude Code、Codex、使用 Kimi 的 Agent 和其他兼容宿主是可选入口；安装目标只选择 Skill 目录，不选择引擎内部模型。通用入口使用宿主实际识别的 skills 父目录，不假定 Kimi 专用自动发现路径。
+`#skills` 保留原有灰绿分区、能力卡、安装命令切换与复制按钮，展示当前原生宿主协议。Codex、Claude Code、Kimi Code 和其他兼容 Agent 分列为四个安装选项；安装目标只选择 Skill 目录，不选择引擎内部模型。Kimi Code 安装到 `~/.config/agents/skills/drdebug`，再用 `kimi --skills-dir "$HOME/.config/agents/skills"` 显式加载 skills 父目录；该参数替代本次会话的用户／项目自动发现，可重复指定以加入其他技能目录。其他 Agent 保留通用 `--dest` 入口，使用宿主实际识别的 skills 父目录。
 
 宿主使用自己的模型、工具和对话；CLI 只运行确定性步骤，不启动嵌套 worker 或调用 provider。`next` 返回请求 ID、隔离候选目录与完整指令，宿主编辑候选并在其外部写真实结果 JSON；`submit --request-id ID --result RESULT_JSON` 进行验证和推进。循环到终态后独立 `verify --casewise --json`。宿主的 completed 不表示内核通过。
 

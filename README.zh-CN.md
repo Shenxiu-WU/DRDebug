@@ -62,18 +62,26 @@ DRDebug 从一个接近正确的算子出发，依据失败证据修复已有实
 ```bash
 git clone https://github.com/Shenxiu-WU/DRDebug.git
 cd DRDebug
-./install.sh --codex    # 可选宿主；也可使用 ./install.sh --claude
 ```
 
-其他兼容宿主，包括使用 Kimi 的 Agent，可选择其实际 skills 父目录：
+选择你的宿主：
+
+| 宿主 | 安装命令 |
+| --- | --- |
+| Codex | `./install.sh --codex` |
+| Claude Code | `./install.sh --claude` |
+| Kimi Code | `./install.sh --dest "$HOME/.config/agents/skills"` |
+| 其他兼容 Agent | `./install.sh --dest /path/to/your-agent/skills` |
+
+使用 Kimi Code 时，启动 CLI 并显式加载 skills 父目录：
 
 ```bash
-./install.sh --dest /path/to/your-agent/skills
+kimi --skills-dir "$HOME/.config/agents/skills"
 ```
 
-安装器追加 `drdebug/` 子目录，由宿主加载其中的 `SKILL.md`，用自己的工具读取请求、编辑文件。Codex 与 Claude Code 快捷入口分别选择 `~/.agents/skills/drdebug` 和 `~/.claude/skills/drdebug`。`--project /path/to/project` 选择项目级安装，`--dry-run` 预览位置，`--force` 更新时先备份。安装后的 runtime 不依赖原 checkout。
+安装器追加 `drdebug/` 子目录，由宿主加载其中的 `SKILL.md`，用自己的工具读取请求、编辑文件。Kimi Code 的 [`--skills-dir`](https://github.com/moonshotai/kimi-cli/blob/main/docs/en/customization/skills.md) 接收 **skills 父目录**，并替换用户级／项目级 Skill 自动发现；如需其他自定义 Skill 目录，应一并指定。Codex 与 Claude Code 快捷入口分别选择 `~/.agents/skills/drdebug` 和 `~/.claude/skills/drdebug`。其他兼容 Agent 使用其实际 skills 父目录与加载机制。`--project /path/to/project` 选择项目级安装，`--dry-run` 预览位置，`--force` 更新时先备份。安装后的 runtime 不依赖原 checkout。
 
-**安装仅需 Python 3.10+ 与标准库。** 数值执行还需要已有任务、Linux + 昇腾 NPU、兼容的 CANN/AscendC、Torch/torch_npu、NumPy 与构建工具。Claude Code、Codex、使用 Kimi 的 Agent 或其他兼容宿主任选其一；编码智能体 CLI 不是内部依赖，Skill 不启动嵌套模型 worker。模型密钥、权限与 SSH 由宿主管理。
+**安装仅需 Python 3.10+ 与标准库。** 数值执行还需要已有任务、Linux + 昇腾 NPU、兼容的 CANN/AscendC、Torch/torch_npu、NumPy 与构建工具。Codex、Claude Code、Kimi Code 或其他兼容 Agent 任选其一作为宿主；编码智能体 CLI 不是内部依赖，Skill 不启动嵌套模型 worker。模型密钥、权限与 SSH 由宿主管理。
 
 当前流程：**`doctor → prepare → next → 宿主编辑 → submit → … → verify`**。`next` 返回确定性证据、`request_id`、隔离的 `candidate_dir` 和需要完整读取的 `instructions` 文件。宿主只编辑允许的候选文件，向其外部的 `result_file` 写结果 JSON，包含 `outcome`（`completed` 或 `failed`）、真实 `final_response` 和要求的元数据尾部。`submit --request-id ID --result RESULT_JSON` 验证并推进任务。接纳由引擎决定，宿主完成不等于数值通过。
 

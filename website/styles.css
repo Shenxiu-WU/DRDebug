@@ -2715,6 +2715,8 @@ html[lang=en] .hero-stats>div>span {
 .skill-source { border-top:1px solid var(--line); padding-top:17px; }
 .install-command-header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
 .install-command-header>span { font-size:12px; color:var(--secondary); }
+.install-command-header .segmented { max-width:100%; flex-wrap:wrap; }
+.install-command-header .segmented button { white-space:nowrap; }
 .install-terminal { background:#151b25; color:#e5e9ef; border:1px solid #465164; }
 .terminal-heading { display:flex; gap:12px; align-items:center; padding:12px 18px; border-bottom:1px solid #394454; font:11px/1.5 var(--mono); color:#acb8cb; }
 .terminal-heading>span:first-child { color:#b9adfa; }

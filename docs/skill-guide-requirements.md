@@ -16,6 +16,6 @@ Use the [Ascend compatibility table](https://github.com/Ascend/pytorch/blob/mast
 
 具体版本组合依照[昇腾兼容表](https://github.com/Ascend/pytorch/blob/master/COMPATIBILITY.en.md)，不同架构和工具链不共享一份通用 pin。使用隔离环境，使启动器与 `PATH` 上的 `python3` 一致；历史扩展固定 `_GLIBCXX_USE_CXX11_ABI=1`，实际 ABI 兼容性须通过 `doctor`。优先采用 Torch 自带的 pybind 头文件。
 
-Claude Code, Codex, a Kimi-backed agent and other compatible hosts are alternatives. The host handles its own model configuration and any remote transport. `doctor` checks deterministic execution prerequisites, not a coding-agent CLI, provider account or host-model tool chain. An installation or probe pass is not full numerical task acceptance.
+Codex, Claude Code, Kimi Code and other compatible agents are alternative hosts. Kimi Code is the agent; Kimi K3 is a model, which can also be configured in other hosts. The host handles its own model configuration and any remote transport. `doctor` checks deterministic execution prerequisites, not a coding-agent CLI, provider account or host-model tool chain. An installation or probe pass is not full numerical task acceptance.
 
-Claude Code、Codex、使用 Kimi 的 Agent 与其他兼容宿主任选其一；宿主处理自己的模型配置和远程传输。`doctor` 检查确定性执行依赖，不检查编码智能体 CLI、provider 账号或宿主模型工具链。安装成功或探针通过不等于任务完整数值验收通过。
+Codex、Claude Code、Kimi Code 与其他兼容 Agent 任选其一作为宿主。Kimi Code 是智能体，Kimi K3 是模型，其他宿主也可配置这一模型。宿主处理自己的模型配置和远程传输。`doctor` 检查确定性执行依赖，不检查编码智能体 CLI、provider 账号或宿主模型工具链。安装成功或探针通过不等于任务完整数值验收通过。

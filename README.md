@@ -62,18 +62,26 @@ Acceptance requires full numerical testing and an integrity check. Explore the [
 ```bash
 git clone https://github.com/Shenxiu-WU/DRDebug.git
 cd DRDebug
-./install.sh --codex    # optional host; alternatively: ./install.sh --claude
 ```
 
-For another compatible host, including a Kimi-backed agent, choose its actual skills parent:
+Choose your host:
+
+| Host | Install command |
+| --- | --- |
+| Codex | `./install.sh --codex` |
+| Claude Code | `./install.sh --claude` |
+| Kimi Code | `./install.sh --dest "$HOME/.config/agents/skills"` |
+| Other compatible agent | `./install.sh --dest /path/to/your-agent/skills` |
+
+For Kimi Code, explicitly load the skills parent when starting the CLI:
 
 ```bash
-./install.sh --dest /path/to/your-agent/skills
+kimi --skills-dir "$HOME/.config/agents/skills"
 ```
 
-The installer appends `drdebug/`; the host loads that directory's `SKILL.md`, reads requests and edits files with its own tools. Codex and Claude Code shortcuts select `~/.agents/skills/drdebug` and `~/.claude/skills/drdebug`. `--project /path/to/project` selects a project install, `--dry-run` previews the destination, and `--force` updates with a backup. The installed runtime is independent of the checkout.
+The installer appends `drdebug/`; the host loads that directory's `SKILL.md`, reads requests and edits files with its own tools. Kimi Code's [`--skills-dir`](https://github.com/moonshotai/kimi-cli/blob/main/docs/en/customization/skills.md) takes the **parent directory** and replaces user/project skill discovery, so include any other custom skill roots you need. Codex and Claude Code shortcuts select `~/.agents/skills/drdebug` and `~/.claude/skills/drdebug`. For another compatible agent, use its actual skills parent and loading mechanism. `--project /path/to/project` selects a project install, `--dry-run` previews the destination, and `--force` updates with a backup. The installed runtime is independent of the checkout.
 
-**Installation needs Python 3.10+ and its standard library.** Numerical execution additionally needs an existing task, Linux + Ascend NPU, compatible CANN/AscendC, Torch/torch_npu, NumPy and build tools. Choose one optional host—Claude Code, Codex, Kimi-backed or another compatible agent. No coding-agent CLI is an internal dependency; the Skill does not launch a nested model worker. Model credentials, permissions and any SSH access stay with the host.
+**Installation needs Python 3.10+ and its standard library.** Numerical execution additionally needs an existing task, Linux + Ascend NPU, compatible CANN/AscendC, Torch/torch_npu, NumPy and build tools. Choose one host: Codex, Claude Code, Kimi Code or another compatible agent. No coding-agent CLI is an internal dependency; the Skill does not launch a nested model worker. Model credentials, permissions and any SSH access stay with the host.
 
 Current workflow: **`doctor → prepare → next → host edit → submit → … → verify`**. `next` returns deterministic evidence, a `request_id`, isolated `candidate_dir` and an `instructions` file to read in full. The host edits only the allowed candidate files, then writes the returned `result_file` outside them with `outcome` (`completed` or `failed`) and its actual `final_response`, including the required metadata footer. `submit --request-id ID --result RESULT_JSON` validates and advances the task. The engine decides acceptance; host completion is not a numerical pass.
 

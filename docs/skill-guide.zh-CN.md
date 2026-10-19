@@ -18,11 +18,20 @@ cd DRDebug
 | --- | --- | --- |
 | Codex，用户级 | `./install.sh --codex` | `~/.agents/skills/drdebug` |
 | Claude Code，用户级 | `./install.sh --claude` | `~/.claude/skills/drdebug` |
+| Kimi Code | `./install.sh --dest "$HOME/.config/agents/skills"` | `~/.config/agents/skills/drdebug` |
 | Codex，项目级 | `./install.sh --codex --project /path/to/project` | `/path/to/project/.agents/skills/drdebug` |
 | Claude Code，项目级 | `./install.sh --claude --project /path/to/project` | `/path/to/project/.claude/skills/drdebug` |
-| 其他兼容宿主，包括使用 Kimi 的 Agent | `./install.sh --dest /path/to/your-agent/skills` | `/path/to/your-agent/skills/drdebug` |
+| 其他兼容 Agent | `./install.sh --dest /path/to/your-agent/skills` | `/path/to/your-agent/skills/drdebug` |
 
-自定义安装时，将路径替换为实际 skills 父目录，再通过宿主机制加载或注册 `drdebug/SKILL.md`。模型名称本身不等于宿主：它还需要读取证据、编辑文件、执行或传递 CLI 命令的工具。Codex、Kimi 和通用宿主均不依赖内部 Claude Code 后端。认证、模型选择、权限与 SSH 由所选宿主配置，密钥不要写入任务、提示词、结果或日志。
+Kimi Code 安装后，启动时显式指定 skills 目录：
+
+```bash
+kimi --skills-dir "$HOME/.config/agents/skills"
+```
+
+[`--skills-dir`](https://github.com/moonshotai/kimi-cli/blob/main/docs/en/customization/skills.md) 接收 **skills 父目录**，不是 `drdebug/` 或 `SKILL.md`。它替换用户级／项目级 Skill 自动发现，保留内置 Skill；如需其他自定义 Skill 目录，可重复传入此参数。这样无需依赖不同版本的自动发现路径。
+
+其他兼容 Agent 使用实际 skills 父目录，再通过宿主机制加载或注册 `drdebug/SKILL.md`。Kimi Code 是宿主智能体，Kimi K3 是模型，其他宿主也可以配置这一模型。宿主需具备读取证据、编辑文件、执行或传递 CLI 命令的工具。认证、模型选择、权限与 SSH 由所选宿主配置，密钥不要写入任务、提示词、结果或日志。
 
 `--project` 不带路径时使用当前目录；`--dry-run` 只查看安装位置。相同安装不重复写入；`--force` 更新不同时会先备份。安装器复制运行源码和来源记录，安装后不依赖原 checkout。它不安装宿主程序、NPU 驱动或 Python 运行包，也不修改模型账号配置。
 
@@ -36,7 +45,7 @@ cd DRDebug
 | --- | --- |
 | 安装／查看公开 CLI | Python 3.10+ 与标准库；不要求 provider SDK 或编码智能体 CLI。 |
 | 构建／数值验证算子 | Linux + 可访问的昇腾 NPU 与驱动、兼容 CANN/AscendC、CMake 3.16+、C++ 编译器／Python 头文件、匹配的 Torch/torch_npu、NumPy 与 pybind 头文件。 |
-| 提出修复 | 一个宿主已有的模型与工具能力；Claude Code、Codex、使用 Kimi 的 Agent 或其他兼容宿主均可。 |
+| 提出修复 | 一个宿主已有的模型与工具能力；Codex、Claude Code、Kimi Code 或其他兼容 Agent 均可。 |
 
 独立的[执行环境说明](skill-guide-requirements.md)区分系统／运行要求与 pip 包输入。
 
@@ -56,7 +65,7 @@ python3 "$DRDEBUG_SKILL/scripts/drdebug.py" doctor \
   --npu 0 --soc YOUR_SOC_VERSION --runtime-probe --strict
 ```
 
-Claude Code、项目级和自定义安装使用各自实际路径。选择执行环境可见的空闲设备 ID 和已安装编译器接受的 SoC 标识，不根据排行榜硬件标签猜测。`--npu` 通过 `ASCEND_RT_VISIBLE_DEVICES` 选择该环境暴露的设备，适配器内部使用逻辑 `npu:0`。容器可能重映射宿主机编号；请在实际执行环境中核对枚举结果，并单独记录宿主机物理编号。
+Claude Code、Kimi Code、项目级和自定义安装使用各自实际路径。选择执行环境可见的空闲设备 ID 和已安装编译器接受的 SoC 标识，不根据排行榜硬件标签猜测。`--npu` 通过 `ASCEND_RT_VISIBLE_DEVICES` 选择该环境暴露的设备，适配器内部使用逻辑 `npu:0`。容器可能重映射宿主机编号；请在实际执行环境中核对枚举结果，并单独记录宿主机物理编号。
 
 `doctor --json` 输出机器可读清单，`--strict` 在缺少执行依赖时失败。可选的 runtime probe 执行内置 NPU add 和固定输入 FP16 cumsum 重复测试，不运行用户内核、不认证宿主，也不调用模型。探针通过不等于任务接纳。预检不要求 Claude 可执行文件，也不再检查内部 worker 认证。
 
