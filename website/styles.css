@@ -1084,6 +1084,39 @@ details[open]>summary::after {
   color:var(--secondary);
 }
 
+.author-list li {
+  white-space:nowrap;
+}
+
+.author-email {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:24px;
+  height:24px;
+  margin-left:3px;
+  border-radius:4px;
+  vertical-align:middle;
+  color:var(--muted);
+}
+
+.author-email svg {
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.author-email:hover,.author-email:focus-visible {
+  color:var(--accent);
+  background:var(--selected);
+}
+
+.author-email:focus-visible {
+  outline-offset:2px;
+}
+
 .authors sup {
   color:var(--accent);
   font:9px var(--mono);

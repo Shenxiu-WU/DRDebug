@@ -204,6 +204,15 @@ python3 -m http.server 8000 --directory website
 
 每篇论文独立存放在 `papers/` 下。论文已发布版本保留各自的标签，补充源码在归档的公开变更记录中说明；网站与 Skill 在仓库中同步维护。
 
+## 作者与联系
+
+| 作者 | 机构 | 邮箱 |
+| --- | --- | --- |
+| **Yansong Sun**（共同第一作者） | 香港城市大学 | [yansonsun3-c@my.cityu.edu.hk](mailto:yansonsun3-c@my.cityu.edu.hk) |
+| **Shenxiu Wu**（共同第一作者） | 香港城市大学 | [shenxiu.wu@my.cityu.edu.hk](mailto:shenxiu.wu@my.cityu.edu.hk) |
+| **Zhichao Lu**（通讯作者） | 香港城市大学 | [zhichao.lu@cityu.edu.hk](mailto:zhichao.lu@cityu.edu.hk) |
+| **Qingfu Zhang**（通讯作者） | 香港城市大学 | [qingfu.zhang@cityu.edu.hk](mailto:qingfu.zhang@cityu.edu.hk) |
+
 ## 引用
 
 ```bibtex

@@ -204,6 +204,15 @@ Open <http://localhost:8000>. Website source is maintained directly in [`website
 
 Each paper has its own directory under `papers/`. Published paper versions retain their release tags. Restored source materials are documented in the artifact’s public release changes; website and skill updates are maintained alongside them.
 
+## Authors & contact
+
+| Author | Affiliation | Email |
+| --- | --- | --- |
+| **Yansong Sun** (Co-first author) | City University of Hong Kong | [yansonsun3-c@my.cityu.edu.hk](mailto:yansonsun3-c@my.cityu.edu.hk) |
+| **Shenxiu Wu** (Co-first author) | City University of Hong Kong | [shenxiu.wu@my.cityu.edu.hk](mailto:shenxiu.wu@my.cityu.edu.hk) |
+| **Zhichao Lu** (Corresponding author) | City University of Hong Kong | [zhichao.lu@cityu.edu.hk](mailto:zhichao.lu@cityu.edu.hk) |
+| **Qingfu Zhang** (Corresponding author) | City University of Hong Kong | [qingfu.zhang@cityu.edu.hk](mailto:qingfu.zhang@cityu.edu.hk) |
+
 ## Citation
 
 ```bibtex
