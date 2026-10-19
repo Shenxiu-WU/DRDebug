@@ -54,8 +54,8 @@ DRDebug 从一个接近正确的算子出发，依据失败证据修复已有实
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/readme/repair-loop-dark.svg">
-    <img src="assets/readme/repair-loop.svg" alt="Near-miss kernel → reproduce → diagnose → patch → validate → accepted repair. Failed validation returns to diagnosis. The engine owns evidence and validation; the large language model proposes patches." width="100%">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/readme/repair-loop-dark.svg?v=role-colors-20261020">
+    <img src="assets/readme/repair-loop.svg?v=role-colors-20261020" alt="Near-miss kernel → reproduce → diagnose → patch → validate → accepted repair. Failed validation returns to diagnosis. The engine owns evidence and validation; the large language model proposes patches." width="100%">
   </picture>
 </p>
 
