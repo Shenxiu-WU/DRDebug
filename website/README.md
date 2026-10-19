@@ -67,12 +67,12 @@ python3 -m http.server 8000 --directory website
 
 ## 可安装 Skill 展示
 
-`#skills` 保留原有灰绿分区、能力卡、安装命令切换与复制按钮，展示当前原生宿主协议。Codex、Claude Code、Kimi Code 和其他兼容 Agent 分列为四个安装选项；安装目标只选择 Skill 目录，不选择引擎内部模型。Kimi Code 安装到 `~/.config/agents/skills/drdebug`，再用 `kimi --skills-dir "$HOME/.config/agents/skills"` 显式加载 skills 父目录；该参数替代本次会话的用户／项目自动发现，可重复指定以加入其他技能目录。其他 Agent 保留通用 `--dest` 入口，使用宿主实际识别的 skills 父目录。
+`#skills` 保留原有灰绿分区、能力卡、安装命令切换与复制按钮，展示当前智能体驱动修复流程。Codex、Claude Code、Kimi Code 和其他兼容 Agent 分列为四个安装选项；安装目标只选择 Skill 目录，不选择引擎内部模型。Kimi Code 安装到 `~/.config/agents/skills/drdebug`，再用 `kimi --skills-dir "$HOME/.config/agents/skills"` 显式加载 skills 父目录；该参数替代本次会话的用户／项目自动发现，可重复指定以加入其他技能目录。其他 Agent 保留通用 `--dest` 入口，使用编码智能体能够识别的 skills 父目录。
 
-宿主使用自己的模型、工具和对话；CLI 只运行确定性步骤，不启动嵌套 worker 或调用 provider。`next` 返回请求 ID、隔离候选目录与完整指令，宿主编辑候选并在其外部写真实结果 JSON；`submit --request-id ID --result RESULT_JSON` 进行验证和推进。循环到终态后独立 `verify --casewise --json`。宿主的 completed 不表示内核通过。
+编码智能体沿用已有的模型、工具和对话；CLI 只运行确定性步骤，不启动嵌套 worker 或调用 provider。`next` 返回请求 ID、隔离候选目录与完整指令，智能体编辑候选并在其外部写真实结果 JSON；`submit --request-id ID --result RESULT_JSON` 进行验证和推进。循环到终态后独立 `verify --casewise --json`。智能体的 completed 不表示内核通过。
 
-新 schema-4 工作区默认最多 5 次尝试、86,400 秒总墙钟，包含待处理宿主时间与确定性命令；不伪造 turns。旧 run 入口退役，历史工作区只保留原合同下的 status／受支持独立 verify，不热迁移。
+新 schema-4 工作区默认最多 5 次尝试、86,400 秒总墙钟，包含等待智能体处理的时间与确定性命令；不伪造 turns。旧 run 入口退役，历史工作区只保留原合同下的 status／受支持独立 verify，不热迁移。
 
-统一安装器在 `../install.sh`，当前双语指南在 `../docs/skill-guide.zh-CN.md` 和 `../docs/skill-guide.md`。安装仅需 Python 3.10+ 与标准库；NPU 执行依赖另行说明，doctor 不要求 Claude 或其他宿主 CLI。模型密钥、权限和 SSH 由宿主管理。网页不执行安装器或 CLI。
+统一安装器在 `../install.sh`，当前双语指南在 `../docs/skill-guide.zh-CN.md` 和 `../docs/skill-guide.md`。安装仅需 Python 3.10+ 与标准库；NPU 执行依赖另行说明，doctor 不要求 Claude Code 或其他编码智能体 CLI。模型密钥、权限和 SSH 由你使用的智能体管理。网页不执行安装器或 CLI。
 
-Cumsum 教程与全新安装验证记录分别链接，并随语言切换。原生宿主记录包含真实请求、提交、源码身份与独立 51 例验收；使用公开参考引导，宿主配置与验证边界详见结果矩阵。历史验证回执单独保留。安装、环境预检、历史重放和新的真实修复分别表述，论文归档保持不变。
+Cumsum 教程与全新安装验证记录分别链接，并随语言切换。智能体驱动修复记录包含真实请求、提交、源码身份与独立 51 例验收；使用公开参考引导，编码智能体配置与验证边界详见结果矩阵。历史验证回执单独保留。安装、环境预检、历史重放和新的真实修复分别表述，论文归档保持不变。

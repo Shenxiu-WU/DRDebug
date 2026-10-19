@@ -1,19 +1,21 @@
-# Cumsum: replay a candidate or repair with your host
+<a id="cumsum-replay-a-candidate-or-repair-with-your-host"></a>
+
+# Cumsum: replay a candidate or repair with your agent
 
 [English](README.md) · [简体中文](README.zh-CN.md)
 
-Use either **model-free independent verification of the saved candidate**, or **guided native-host repair from the original failing task**. Both retain the original reference, wrapper, 10 compact cases, 51 full cases and dtype-specific tolerances. The paper archive and historical validation receipts remain unchanged.
+Use either **model-free independent verification of the saved candidate**, or **reference-guided repair by your coding agent from the original failing task**. Both retain the original reference, wrapper, 10 compact cases, 51 full cases and dtype-specific tolerances. The paper archive and historical validation receipts remain unchanged.
 
-| Route | Starting kernel | Model / host | What to check |
+| Route | Starting kernel | Model / agent | What to check |
 | --- | --- | --- | --- |
 | Saved-candidate replay | Eight hash-pinned repaired native sources | No model | Independent clean build and original numerical/integrity checks |
-| Native-host guided repair | Original paper input, with repaired source separately supplied as a read-only example | Your existing host's model and tools | Real request → host patch → engine acceptance → independent verification |
+| Agent-driven repair | Original paper input, with repaired source separately supplied as a read-only example | Your current model and tools | Real request → agent patch → engine acceptance → independent verification |
 
 ## Before running
 
 Follow the [current installation guide](../../docs/skill-guide.md) and [execution requirements](../../docs/skill-guide-requirements.md). Numerical commands run on a Linux Ascend machine/container with the compatible driver/CANN, ABI-compatible Torch/torch_npu, NumPy and build tools. Use one isolated Python environment for the launcher and `python3` on `PATH`. The installer itself needs only Python 3.10+ and its standard library.
 
-Claude Code, Codex, Kimi-backed and other compatible hosts are optional alternatives. The host uses its own model/tools and manages credentials, permissions and remote SSH. DRDebug neither launches a nested coding agent nor chooses a provider. Saved replay calls no model.
+Choose Codex, Claude Code, Kimi Code or another compatible coding agent. It uses its existing model and tools and manages credentials, permissions and remote SSH. DRDebug neither launches a nested coding agent nor chooses a provider. Saved replay calls no model.
 
 Run commands from the repository root, choosing new input/workspace paths, a free device ID exposed to the execution environment and the installed compiler's real SoC identifier. `--npu ID` selects an exposed device through `ASCEND_RT_VISIBLE_DEVICES`; the adapter uses logical `npu:0`. Containers may remap host physical IDs, so check enumeration inside the execution environment and record the host ID separately. Replace the illustrative `0` and `YOUR_SOC_VERSION` below.
 
@@ -25,11 +27,13 @@ python3 "$DRDEBUG_SKILL/scripts/drdebug.py" doctor --runtime-probe \
 python3 examples/cumsum/prepare.py --check
 ```
 
-For an existing Codex/Claude/custom installation, use its actual installed Skill path instead. Source assets come from this checkout; the installer does not copy the entire example or all paper tasks.
+For an existing Codex/Claude Code/Kimi Code/custom installation, use its actual installed Skill path instead. Source assets come from this checkout; the installer does not copy the entire example or all paper tasks.
+
+<a id="1-replay-the-saved-repaired-candidate"></a>
 
 ## 1. Independently replay the saved candidate
 
-This does not ask the host to repair anything or inherit an old success status:
+This does not ask your agent to repair anything or inherit an old success status:
 
 ```bash
 python3 examples/cumsum/prepare.py --mode replay --output /path/to/cumsum-replay-input
@@ -43,7 +47,9 @@ Judge the actual final `verification/<id>/summary.json` and CLI exit status. A f
 
 Each fresh-case process regenerates the original seed-0 full input collection and selects its original index. Full-suite and fresh-process outcomes are separate measurements; neither changes reference or tolerance.
 
-## 2. Guided repair with the native host protocol
+<a id="2-guided-repair-with-the-native-host-protocol"></a>
+
+## 2. Reference-guided repair with your agent
 
 The original failing task remains the repair target. `--reference-root` supplies `examples/cumsum/repaired` separately as a read-only AscendC example. Disclose that reference: this is **guided repair**, not unaided rediscovery. A separate study without the reference may omit that option in another new workspace and consume more budget.
 
@@ -56,9 +62,9 @@ python3 "$DRDEBUG_SKILL/scripts/drdebug.py" next /path/to/cumsum-live \
   --npu 0 --soc YOUR_SOC_VERSION --max-attempts 5 --deadline-sec 86400 --json
 ```
 
-For `state: "awaiting_host"`, read the complete file at `instructions`, its evidence, `request_id` and `candidate_dir`. The current host follows the full diagnostic method with its own tools, edits only allowlisted isolated candidate/audit files and writes the actual response to `result_file`, outside candidate sources. Do not edit the active task, protected inputs, request metadata, engine reports or history.
+For `state: "awaiting_host"`, read the complete file at `instructions`, its evidence, `request_id` and `candidate_dir`. Your coding agent follows the full diagnostic method with its own tools, edits only allowlisted isolated candidate/audit files and writes the actual response to `result_file`, outside candidate sources. Do not edit the active task, protected inputs, request metadata, engine reports or history.
 
-The result JSON must contain `outcome` (`completed` or `failed`) and the actual `final_response` ending in the full prompt's factual `[ENGINE_ATTEMPT_METADATA]` footer; `error` must be nonempty for `failed` and is optional for `completed`. No success/precision values or fabricated turns are needed. `completed` means the host finished its work, not that tests passed.
+The result JSON must contain `outcome` (`completed` or `failed`) and the actual `final_response` ending in the full prompt's factual `[ENGINE_ATTEMPT_METADATA]` footer; `error` must be nonempty for `failed` and is optional for `completed`. No success/precision values or fabricated turns are needed. `completed` means the agent finished its work, not that tests passed.
 
 ```bash
 python3 "$DRDEBUG_SKILL/scripts/drdebug.py" submit /path/to/cumsum-live \
@@ -67,7 +73,7 @@ python3 "$DRDEBUG_SKILL/scripts/drdebug.py" submit /path/to/cumsum-live \
 python3 "$DRDEBUG_SKILL/scripts/drdebug.py" status /path/to/cumsum-live
 ```
 
-Replace both placeholders with that packet's actual values. Read engine validation and repeat `next → host edit → submit` while nonterminal. The saved ceilings are five attempts and 86,400 seconds total wall time, **including pending host time and deterministic commands**; resume retains them. Do not delete history, change budgets, reopen terminal state or invent model-turn counts. See [recovery rules](../../skills/drdebug/references/runtime.md#first-failure-or-resume).
+Replace both placeholders with that packet's actual values. Read engine validation and repeat `next → agent edit → submit` while nonterminal. The saved ceilings are five attempts and 86,400 seconds total wall time, **including time spent waiting for the agent and running deterministic commands**; resume retains them. Do not delete history, change budgets, reopen terminal state or invent model-turn counts. See [recovery rules](../../skills/drdebug/references/runtime.md#first-failure-or-resume).
 
 Acceptance requires `state: "terminal"`, `terminal: true`, `engine_status.session_outcome: "success"`, `returncode: 0` and `accepted_checkpoint.ready: true`. Independently verify the actual accepted source:
 
@@ -76,17 +82,19 @@ python3 "$DRDEBUG_SKILL/scripts/drdebug.py" verify /path/to/cumsum-live \
   --npu 0 --soc YOUR_SOC_VERSION --casewise --json
 ```
 
-A host reply or best-but-partial checkpoint is not a pass. A baseline already passing all gates may be accepted without any host patch; do not manufacture an attempt. Legacy workspaces preserve their evidence for `status` and supported independent `verify`; current repair uses a new schema-4 workspace. The old `run` command is retired.
+An agent response or best-but-partial checkpoint is not a pass. A baseline already passing all gates may be accepted without any agent patch; do not manufacture an attempt. Legacy workspaces preserve their evidence for `status` and supported independent `verify`; current repair uses a new schema-4 workspace. The old `run` command is retired.
 
-## Native-host measurements
+<a id="native-host-measurements"></a>
 
-The [fresh-install native-host record](native-host-validation.md) follows the original 6/10 compact baseline through a real repair submission, 10/10 compact + 51/51 full acceptance, and a separate clean-workspace verification with 51 fresh-case processes. It lists actual tested hosts, K3 / 1M configuration, source identities and the supplied public reference. See the [machine-readable record](native-host-validation.json) and [captured source fixtures](validation-sources/README.md).
+## Agent-driven repair measurements
+
+The [fresh-install agent-driven repair record](native-host-validation.md) follows the original 6/10 compact baseline through a real repair submission, 10/10 compact + 51/51 full acceptance, and a separate clean-workspace verification with 51 fresh-case processes. It lists coding agents actually tested, K3 / 1M configuration, source identities and the supplied public reference. See the [machine-readable record](native-host-validation.json) and [captured source fixtures](validation-sources/README.md).
 
 ## Historical results, kept separately
 
 The [versioned validation record](validation.md) and [machine-readable receipts](validation.json) predate native `next`/`submit`. They retain the measured saved replay and reference-guided Kimi repair on **Ascend910B4 / CANN 9.1.0 / Torch 2.9.0 / torch_npu 2.9.0.post6**, determinism on. The historical guided run went from **6/10** to **10/10 compact + 51/51 full** in one attempt / 38 actual turns, followed by **51/51** fresh-case checks. It used an earlier adapter; the identical output was later verified with the added nonfinite guard.
 
-Those receipts and model-specific timings remain historical evidence, **not a fresh pass claim for the new host protocol**. No new NPU acceptance is implied by installation, a pending request or adapter CPU tests. Establish and retain your own source-bound numerical results.
+Those receipts and model-specific timings remain historical evidence, **not a fresh pass claim for the current agent-driven workflow**. No new NPU acceptance is implied by installation, a pending request or adapter CPU tests. Establish and retain your own source-bound numerical results.
 
 ## What changed in the saved candidate
 
