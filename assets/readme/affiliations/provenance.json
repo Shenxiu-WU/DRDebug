@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "description": "Original affiliation and research-group logos used in the README author section. Display compositions may add whitespace only; original files below are preserved unchanged.",
+  "rights_notice": "All logos and associated trademarks remain the property of their respective owners. Their inclusion identifies affiliations and links to the requested institutional or project pages; it does not grant trademark rights or imply a separate endorsement. These source assets are excluded from the repository MIT license.",
+  "assets": [
+    {
+      "id": "cityuhk",
+      "file": "sources/cityuhk.svg",
+      "source_type": "official-website",
+      "source_url": "https://optima.cs.cityu.edu.hk/images/logopic/CityU_Vertical_Logo_CMYK.svg",
+      "source_description": "Optima Group official website at City University of Hong Kong",
+      "retrieved_at_utc": "2026-10-21T13:18:56+00:00",
+      "sha256": "ea0616da1bb6f46be763a98825c187916b704bed87b9a98000eaf8260e9a2205",
+      "size_bytes": 24665,
+      "dimensions": {
+        "viewBox": "0 0 261.83 147.4",
+        "width": 261.83,
+        "height": 147.4
+      },
+      "click_target": "https://www.cityu.edu.hk/",
+      "modifications": "None. Original file bytes preserved.",
+      "rights": "Logo and trademark rights remain with their respective owner. This file is not relicensed under the repository MIT license."
+    },
+    {
+      "id": "optima-group",
+      "file": "sources/optima-group.jpg",
+      "source_type": "user-supplied",
+      "source_description": "Original Optima Group logo supplied by the project maintainer in the author-logo request on 2026-10-21.",
+      "sha256": "35f3acbea189f2f263ed334a12a8227bfd98707402a5c990785404380900167b",
+      "size_bytes": 274172,
+      "dimensions": {
+        "width": 6261,
+        "height": 1280
+      },
+      "click_target": "https://optima.cs.cityu.edu.hk/",
+      "modifications": "None. Original file bytes preserved.",
+      "rights": "Logo and trademark rights remain with Optima Group and their respective owners. This file is not relicensed under the repository MIT license."
+    },
+    {
+      "id": "huawei",
+      "file": "sources/huawei.png",
+      "source_type": "official-website",
+      "source_url": "https://www.huawei.com/-/media/hcomponent-header/1.0.1.20260908162100/component/img/huawei_logo.png",
+      "source_description": "Huawei official corporate website header",
+      "retrieved_at_utc": "2026-10-21T13:18:56+00:00",
+      "sha256": "492e58a2680a4f4607185e21d55183f0d2ac976b8f4737512a495672d31e4070",
+      "size_bytes": 12719,
+      "dimensions": {
+        "width": 266,
+        "height": 60
+      },
+      "click_target": "https://gitcode.com/cann",
+      "modifications": "None. Original file bytes preserved.",
+      "rights": "Logo and trademark rights remain with their respective owner. This file is not relicensed under the repository MIT license."
+    }
+  ]
+}

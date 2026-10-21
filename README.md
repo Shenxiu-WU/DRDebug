@@ -206,12 +206,45 @@ Each paper has its own directory under `papers/`. Published paper versions retai
 
 ## Authors & contact
 
-| Author | Affiliation | Email |
-| --- | --- | --- |
-| **Yansong Sun** (Co-first author) | City University of Hong Kong | [yansonsun3-c@my.cityu.edu.hk](mailto:yansonsun3-c@my.cityu.edu.hk) |
-| **Shenxiu Wu** (Co-first author) | City University of Hong Kong | [shenxiu.wu@my.cityu.edu.hk](mailto:shenxiu.wu@my.cityu.edu.hk) |
-| **Zhichao Lu** (Corresponding author) | City University of Hong Kong | [zhichao.lu@cityu.edu.hk](mailto:zhichao.lu@cityu.edu.hk) |
-| **Qingfu Zhang** (Corresponding author) | City University of Hong Kong | [qingfu.zhang@cityu.edu.hk](mailto:qingfu.zhang@cityu.edu.hk) |
+<p align="center">
+  <a href="https://www.cityu.edu.hk/" title="City University of Hong Kong"><img src="assets/readme/affiliations/cityuhk.svg" alt="City University of Hong Kong — university homepage" width="190"></a>
+  <a href="https://optima.cs.cityu.edu.hk/" title="Optima Group"><img src="assets/readme/affiliations/optima-group.svg" alt="Optima Group — research group homepage" width="190"></a>
+  <a href="https://gitcode.com/cann" title="Huawei · CANN community"><img src="assets/readme/affiliations/huawei.svg" alt="Huawei — CANN community" width="190"></a>
+</p>
+
+<br>
+
+<table align="center">
+  <thead>
+    <tr>
+      <th>Author</th>
+      <th>Affiliation</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Yansong Sun</strong> (Co-first author)</td>
+      <td>City University of Hong Kong</td>
+      <td><a href="mailto:yansonsun3-c@my.cityu.edu.hk">yansonsun3-c@my.cityu.edu.hk</a></td>
+    </tr>
+    <tr>
+      <td><strong>Shenxiu Wu</strong> (Co-first author)</td>
+      <td>City University of Hong Kong</td>
+      <td><a href="mailto:shenxiu.wu@my.cityu.edu.hk">shenxiu.wu@my.cityu.edu.hk</a></td>
+    </tr>
+    <tr>
+      <td><strong>Zhichao Lu</strong> (Corresponding author)</td>
+      <td>City University of Hong Kong</td>
+      <td><a href="mailto:zhichao.lu@cityu.edu.hk">zhichao.lu@cityu.edu.hk</a></td>
+    </tr>
+    <tr>
+      <td><strong>Qingfu Zhang</strong> (Corresponding author)</td>
+      <td>City University of Hong Kong</td>
+      <td><a href="mailto:qingfu.zhang@cityu.edu.hk">qingfu.zhang@cityu.edu.hk</a></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Citation
 

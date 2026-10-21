@@ -206,12 +206,45 @@ python3 -m http.server 8000 --directory website
 
 ## 作者与联系
 
-| 作者 | 机构 | 邮箱 |
-| --- | --- | --- |
-| **Yansong Sun**（共同第一作者） | 香港城市大学 | [yansonsun3-c@my.cityu.edu.hk](mailto:yansonsun3-c@my.cityu.edu.hk) |
-| **Shenxiu Wu**（共同第一作者） | 香港城市大学 | [shenxiu.wu@my.cityu.edu.hk](mailto:shenxiu.wu@my.cityu.edu.hk) |
-| **Zhichao Lu**（通讯作者） | 香港城市大学 | [zhichao.lu@cityu.edu.hk](mailto:zhichao.lu@cityu.edu.hk) |
-| **Qingfu Zhang**（通讯作者） | 香港城市大学 | [qingfu.zhang@cityu.edu.hk](mailto:qingfu.zhang@cityu.edu.hk) |
+<p align="center">
+  <a href="https://www.cityu.edu.hk/" title="香港城市大学"><img src="assets/readme/affiliations/cityuhk.svg" alt="香港城市大学 — 学校主页" width="190"></a>
+  <a href="https://optima.cs.cityu.edu.hk/" title="Optima Group"><img src="assets/readme/affiliations/optima-group.svg" alt="Optima Group — 课题组主页" width="190"></a>
+  <a href="https://gitcode.com/cann" title="华为 · CANN 社区"><img src="assets/readme/affiliations/huawei.svg" alt="华为 — CANN 社区" width="190"></a>
+</p>
+
+<br>
+
+<table align="center">
+  <thead>
+    <tr>
+      <th>作者</th>
+      <th>机构</th>
+      <th>邮箱</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Yansong Sun</strong>（共同第一作者）</td>
+      <td>香港城市大学</td>
+      <td><a href="mailto:yansonsun3-c@my.cityu.edu.hk">yansonsun3-c@my.cityu.edu.hk</a></td>
+    </tr>
+    <tr>
+      <td><strong>Shenxiu Wu</strong>（共同第一作者）</td>
+      <td>香港城市大学</td>
+      <td><a href="mailto:shenxiu.wu@my.cityu.edu.hk">shenxiu.wu@my.cityu.edu.hk</a></td>
+    </tr>
+    <tr>
+      <td><strong>Zhichao Lu</strong>（通讯作者）</td>
+      <td>香港城市大学</td>
+      <td><a href="mailto:zhichao.lu@cityu.edu.hk">zhichao.lu@cityu.edu.hk</a></td>
+    </tr>
+    <tr>
+      <td><strong>Qingfu Zhang</strong>（通讯作者）</td>
+      <td>香港城市大学</td>
+      <td><a href="mailto:qingfu.zhang@cityu.edu.hk">qingfu.zhang@cityu.edu.hk</a></td>
+    </tr>
+  </tbody>
+</table>
 
 ## 引用
 
