@@ -63,7 +63,7 @@ DRDebug 从一个接近正确的算子出发，依据失败证据修复已有实
 
 ## 安装 Skill
 
-**沿用你当前的模型与工具，由 DRDebug 引擎验证修复结果。** [`drdebug`](skills/drdebug/SKILL.md) 将取证、完整验证、检查点／回滚与公开精度知识种子库带入已有 Agent 工作流，并附带 10 个历史参考案例，其中 7 个包含 AscendC 内核。
+**沿用你当前的模型与工具，由 DRDebug 引擎验证修复结果。** [`drdebug`](skills/drdebug/SKILL.md) 将取证、完整验证、检查点／回滚与公开精度知识种子库带入已有 Agent 工作流，并附带 10 个历史参考案例，其中 7 个包含 AscendC 算子实现。
 
 ```bash
 git clone https://github.com/Shenxiu-WU/DRDebug.git
@@ -115,11 +115,13 @@ kimi --skills-dir "$HOME/.config/agents/skills"
 
 *A Domain-Specific Agent for Repairing Near-Miss Accelerator Kernels* · 2026
 
-[论文摘要](https://arxiv.org/abs/2608.02712) · [全文 PDF](https://arxiv.org/pdf/2608.02712) · [代码与结果](papers/2026-dont-regenerate-debug/artifact/) · [任务与测例](papers/2026-dont-regenerate-debug/dataset/) · [初始内核与 wrapper](papers/2026-dont-regenerate-debug/artifact/inputs/)
+[论文摘要](https://arxiv.org/abs/2608.02712) · [全文 PDF](https://arxiv.org/pdf/2608.02712) · [代码与结果](papers/2026-dont-regenerate-debug/artifact/) · [任务与测例](papers/2026-dont-regenerate-debug/dataset/) · [初始 kernel 与 wrapper](papers/2026-dont-regenerate-debug/artifact/inputs/)
+
+网页导览：[论文与研究](https://shenxiu-wu.github.io/DRDebug/#research) · [修复闭环](https://shenxiu-wu.github.io/DRDebug/#method) · [受控实验](https://shenxiu-wu.github.io/DRDebug/#paper-experiments)。
 
 研究采用来自 [NPUKernelBench](https://github.com/weich97/NPUKernelBench/tree/master) 的 **27 个固定近成功算子**，使用 `Qwen3.8-max-preview` 进行受控比较：
 
-| 指标 | 重新生成 · 三次独立尝试 | 定向调试 · 单个连续任务 |
+| 指标 | 重新生成 · 三次独立尝试 | DRDebug（本文方法）· 单个连续任务 |
 | --- | ---: | ---: |
 | 成功算子 | 11 / 27 · 40.7% | **18 / 27 · 66.7%** |
 | 每成功产出一个算子的总 token | 397.50M | **28.44M** |
@@ -158,7 +160,7 @@ python3 -B tools/verify_paper_inputs.py
 ```
 
 - **论文表格**：核对冻结包，在临时副本中重算统计，输出到 `reproduced/tables.md`、`summary.json` 及相关分析文件。再次运行时，使用 `--output PATH` 指定新目录。
-- **初始候选源码**：按历史哈希核对 27 个任务的 289 个原始文件，包括 181 个内核文件；只检查语法与测例，不执行任务代码。
+- **初始候选源码**：按历史哈希核对 27 个任务的 289 个原始文件，包括 181 个 kernel 文件；只检查语法与测例，不执行任务代码。
 - **任务数据**：按照冻结清单核对 27 个参考实现、347 条精简和 1,134 条完整输入测例规格；此检查读取文件，不执行算子。
 
 <details>

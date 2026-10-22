@@ -117,9 +117,11 @@ The earlier [saved-replay and guided-repair records](examples/cumsum/validation.
 
 [Read the paper](https://arxiv.org/abs/2608.02712) · [PDF](https://arxiv.org/pdf/2608.02712) · [Code & results](papers/2026-dont-regenerate-debug/artifact/) · [Tasks & cases](papers/2026-dont-regenerate-debug/dataset/) · [Initial kernels & wrappers](papers/2026-dont-regenerate-debug/artifact/inputs/)
 
+Website guide: [Paper & research](https://shenxiu-wu.github.io/DRDebug/#research) · [Repair loop](https://shenxiu-wu.github.io/DRDebug/#method) · [Controlled experiments](https://shenxiu-wu.github.io/DRDebug/#paper-experiments).
+
 A controlled study on **27 frozen near-miss operators** from [NPUKernelBench](https://github.com/weich97/NPUKernelBench/tree/master), using `Qwen3.8-max-preview`:
 
-| Measure | Regenerate · three fresh trials | Debug · one continuous task |
+| Measure | Regenerate · three fresh trials | DRDebug (our method) · one continuous task |
 | --- | ---: | ---: |
 | Successful operators | 11 / 27 · 40.7% | **18 / 27 · 66.7%** |
 | Total tokens per successful operator | 397.50M | **28.44M** |

@@ -1290,6 +1290,47 @@ details[open]>summary::after {
   color:var(--accent);
 }
 
+.research-result-label {
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  min-width:0;
+}
+
+.research-result-name {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:5px 8px;
+  color:var(--accent);
+  font-size:12px;
+  font-weight:600;
+  line-height:1.5;
+}
+
+.research-result-badge {
+  display:inline-block;
+  border:1px solid var(--accent);
+  border-radius:3px;
+  padding:1px 5px;
+  background:var(--selected);
+  font-size:9px;
+  font-weight:500;
+  white-space:nowrap;
+}
+
+.research-result-setting {
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.6;
+}
+
+.study-row.is-ours strong,
+.token-cost-row.is-ours strong {
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
 .study-row small {
   font-size:9px;
   color:var(--faint);
@@ -2681,4 +2722,175 @@ html[lang=en] .hero-stats>div>span {
   .repair-source { font-size:10.5px; }
   .repair-sheet-top { font-size:7px; gap:5px; }
   .example-stamp { font-size:7px; padding-inline:4px; }
+}
+
+/* One research chapter: paper context, repair method, then controlled evidence. */
+.research-method-section .research-paper-intro {
+  display:grid;
+  grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);
+  gap:56px;
+  align-items:start;
+}
+
+.research-method-section .research-paper-intro>* {
+  min-width:0;
+}
+
+.research-method-section .paper-title {
+  font-size:clamp(27px,2.7vw,34px);
+  margin-bottom:18px;
+}
+
+.research-method-section .research-question {
+  background:var(--surface);
+  border:1px solid var(--line);
+  padding:26px 28px;
+}
+
+.research-method-section .research-question h3 {
+  font:25px/1.5 var(--serif);
+  margin:12px 0 16px;
+}
+
+.research-method-section .research-question dl {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin:20px 0;
+}
+
+.research-method-section .research-question dt {
+  font:10px/1.7 var(--mono);
+  color:var(--faint);
+}
+
+.research-method-section .research-question dd {
+  margin:4px 0 0;
+  font-size:13px;
+  color:var(--secondary);
+}
+
+.research-method-section .research-question dl>div:last-child:nth-child(odd) {
+  grid-column:1 / -1;
+}
+
+.research-method-section .research-reading-links {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 20px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+}
+
+.research-method-section .research-reading-links a {
+  font-size:12px;
+  color:var(--accent);
+  text-decoration:underline;
+  text-underline-offset:4px;
+}
+
+.research-method-section .research-reading-links a:hover {
+  color:var(--ink);
+}
+
+.research-method-section .research-method-block,
+.research-method-section .research-experiments {
+  margin-top:56px;
+  padding-top:38px;
+  border-top:1px solid var(--line);
+}
+
+.research-method-section .research-subheading {
+  max-width:800px;
+  margin-bottom:28px;
+}
+
+.research-method-section .research-subheading .eyebrow {
+  margin-bottom:12px;
+}
+
+.research-method-section .research-subheading h3 {
+  font:clamp(26px,2.8vw,34px)/1.4 var(--serif);
+  letter-spacing:-.025em;
+}
+
+.research-method-section .research-subheading h3+p {
+  max-width:730px;
+  margin-top:12px;
+  font-size:14px;
+  line-height:1.95;
+}
+
+.research-method-section .research-version-note {
+  margin-top:24px;
+  padding:12px 18px;
+  border-left:2px solid var(--accent);
+  background:var(--selected);
+  font-size:12px;
+  line-height:1.9;
+}
+
+.research-method-section .research-experiment-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:48px;
+  align-items:start;
+}
+
+.research-method-section .research-experiment-grid>.study-chart,
+.research-method-section .research-experiment-grid>.token-cost {
+  min-width:0;
+  margin-top:0;
+  padding-top:23px;
+}
+
+.research-method-section .research-experiment-grid .token-cost-heading h4 {
+  max-width:240px;
+  font:22px/1.5 var(--serif);
+}
+
+@media(max-width:1100px) {
+  .research-method-section .research-paper-intro {
+    gap:36px;
+  }
+  .research-method-section .research-experiment-grid {
+    gap:32px;
+  }
+}
+
+@media(max-width:850px) {
+  .research-method-section .research-paper-intro,
+  .research-method-section .research-experiment-grid {
+    grid-template-columns:1fr;
+    gap:30px;
+  }
+}
+
+@media(max-width:620px) {
+  .research-method-section .research-paper-intro {
+    gap:24px;
+  }
+  .research-method-section .paper-title {
+    font-size:28px;
+  }
+  .research-method-section .research-question {
+    padding:20px;
+  }
+  .research-method-section .research-question h3 {
+    font-size:23px;
+  }
+  .research-method-section .research-question dl {
+    grid-template-columns:1fr;
+  }
+  .research-method-section .research-method-block,
+  .research-method-section .research-experiments {
+    margin-top:42px;
+    padding-top:30px;
+  }
+  .research-method-section .research-subheading h3+p {
+    font-size:13px;
+  }
+  .research-method-section .research-version-note {
+    padding:12px 14px;
+  }
 }
