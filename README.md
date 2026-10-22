@@ -9,7 +9,7 @@
   </a>
 </p>
 
-<p align="center"><strong>A domain-specific agent for repairing near-miss accelerator kernels.</strong></p>
+<p align="center"><strong>Don't Regenerate, Debug: A Domain-Specific Agent for Repairing Near-Miss Accelerator Kernels</strong></p>
 
 <p align="center">Follow six correction sites with explanations of their causes and effects; each defect is evaluated separately. <a href="https://shenxiu-wu.github.io/DRDebug/#hero-title">Explore the inputs and evidence ↗</a> · <a href="assets/readme/hero-light-static.svg">Static overview</a></p>
 
